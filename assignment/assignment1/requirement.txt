@@ -1,0 +1,15 @@
+Assignment 1
+Due: Wed Oct 21, 2026 11:59pm
+25 Points Possible
+Attempt 1
+In Progress
+NEXT UP: Submit Assignment
+
+Available until Oct 21, 2026 11:59pm
+This is an individual Assignment.
+
+Download the SWE270P_A1.zipDownload SWE270P_A1.zip file for instructions, code guideline, and test cases.
+
+For instruction details, please read the A1_instructions.ipynb inside the zip folder very carefully.
+
+Submit through Gradescope by clicking the link below.
