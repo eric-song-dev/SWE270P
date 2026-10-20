@@ -1,0 +1,13 @@
+{
+  "passed": 3,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "returncode": 0,
+  "timeout": false,
+  "all_passed": true,
+  "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+  "same_raw_completion_as_original": true,
+  "model": "google/gemma-3-270m-it",
+  "python_environment": "../.venv"
+}

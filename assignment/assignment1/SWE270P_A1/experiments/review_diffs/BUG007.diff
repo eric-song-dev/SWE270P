@@ -1,0 +1,13 @@
+--- raw_gemma/BUG007_zero-shot_1.py
++++ final_patches/BUG007.py
+@@ -1,7 +1,9 @@
+ def reverse_linked_list(node):
++    """Reverse successor pointers in place and return the new head."""
+     prevnode = None
+-    while node:
++    while node is not None:
+         nextnode = node.successor
+         node.successor = prevnode
++        prevnode = node
+         node = nextnode
+     return prevnode

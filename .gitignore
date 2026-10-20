@@ -1,2 +1,9 @@
 # macOS
 .DS_Store
+
+# Python environments and local caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/

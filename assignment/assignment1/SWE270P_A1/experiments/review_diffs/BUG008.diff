@@ -1,0 +1,23 @@
+--- raw_gemma/BUG008_zero-shot_1.py
++++ final_patches/BUG008.py
+@@ -1,17 +1,9 @@
+ def detect_cycle(node):
++    """Detect a successor cycle using constant auxiliary space."""
+     hare = tortoise = node
+-
+-    while node:
+-        if hare is None:
+-            return False
+-
++    while hare is not None and hare.successor is not None:
+         tortoise = tortoise.successor
+-        hare = hare.successor
+-
++        hare = hare.successor.successor
+         if hare is tortoise:
+             return True
+-
+-        if hare is node:
+-            return True
+-
+     return False

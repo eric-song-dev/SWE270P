@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-10-20T02:55:04.352768+00:00",
+  "python": "/Users/ericsong/Courses/SWE270P/assignment/assignment1/SWE270P_A1/../.venv/bin/python",
+  "archive_sha256": "cdbe1ad68df3480ca72c4a7b79350f3503ee66672633fd84b1fff6293f0a5816",
+  "archive_files": 11,
+  "prompt_records": 92,
+  "prompt_methods": {
+    "zero-shot": 32,
+    "one-shot": 20,
+    "chain-of-thought": 20,
+    "few-shot": 20
+  },
+  "primary_prompt_designs_verified": 80,
+  "signatures_imports_and_archive_contents": "passed",
+  "supplied_tests_passed_by_bug": {
+    "BUG000": 3,
+    "BUG001": 3,
+    "BUG002": 3,
+    "BUG003": 3,
+    "BUG004": 3,
+    "BUG005": 3,
+    "BUG006": 3,
+    "BUG007": 3,
+    "BUG008": 3,
+    "BUG009": 3
+  },
+  "additional_cases_passed_on_extracted_archive": 109,
+  "total_archive_test_cases_passed": 139,
+  "notebook_code_cells_executed": 14,
+  "status": "passed",
+  "scope": "Local checks only; private Gradescope tests and instructor policy interpretation are not verified."
+}

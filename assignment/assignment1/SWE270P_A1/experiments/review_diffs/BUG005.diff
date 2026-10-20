@@ -1,0 +1,31 @@
+--- raw_gemma/BUG005_zero-shot_1.py
++++ final_patches/BUG005.py
+@@ -1,19 +1,17 @@
+ from collections import deque as Queue
+ 
++
+ def breadth_first_search(startnode, goalnode):
+-    queue = Queue()
+-    queue.append(startnode)
++    """Return whether goalnode is reachable along directed successor links."""
++    queue = Queue([startnode])
++    nodesseen = {startnode}
+ 
+-    nodesseen = set()
+-    nodesseen.add(startnode)
+-
+-    while True:
++    while queue:
+         node = queue.popleft()
+-
+         if node is goalnode:
+             return True
+-        else:
+-            queue.extend(node for node in node.successors if node not in nodesseen)
+-            nodesseen.update(node.successors)
+-
++        for nextnode in node.successors:
++            if nextnode not in nodesseen:
++                nodesseen.add(nextnode)
++                queue.append(nextnode)
+     return False

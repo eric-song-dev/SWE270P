@@ -1,0 +1,92 @@
+{
+  "BUG000": {
+    "source": "Unedited extracted Gemma output selected after review and tests.",
+    "raw_comparison_attempt": "BUG000_zero-shot_failure-guided",
+    "raw_candidate_sha256": "22109c64179779923f5111cc84e90152a0dcadd7b616a27b008bffd93c1bd96a",
+    "final_sha256": "22109c64179779923f5111cc84e90152a0dcadd7b616a27b008bffd93c1bd96a",
+    "repair": "Use absolute distance between distinct list positions and a strict threshold comparison.",
+    "unedited_gemma_output": true,
+    "review_diff": "experiments/review_diffs/BUG000.diff"
+  },
+  "BUG001": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG001_zero-shot_1",
+    "raw_candidate_sha256": "62056984ad91c43b0792d446064446cfb09a40b3d3092afc04ae7f19861b539f",
+    "final_sha256": "6b2e27e4fa8fc6a805e36ab56280cc734a06e9bbc6016d89c0cfc9a969de2766",
+    "repair": "Accumulate the current path distance, track best distances, skip settled nodes, and break heap ties without comparing Node objects. Preserve both original helpers and repair heap updates.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG001.diff"
+  },
+  "BUG002": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG002_zero-shot_1",
+    "raw_candidate_sha256": "0b62d588ac6c78966b334e605f6c37a18a20a69aee987af99cab8709974efef3",
+    "final_sha256": "1c6ce8a896304f7c4b85ce60d7008f9b806974717c1dc9113b495027576cc412",
+    "repair": "Initialize both endpoints plus the source and relax node distances without changing edge weights.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG002.diff"
+  },
+  "BUG003": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG003_zero-shot_1",
+    "raw_candidate_sha256": "db5076a4eeb05c0353e816f63cddb89914a5fd1627faa85620a0b71011b3cc76",
+    "final_sha256": "f0051e58220ecee6b5273e9442ed5fb793784ba0c5ec8841a68400f9a90c6e0d",
+    "repair": "Create a merged component set and associate every member with it, avoiding mutation during iteration.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG003.diff"
+  },
+  "BUG004": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG004_zero-shot_1",
+    "raw_candidate_sha256": "83d8fa8b6e51a78bf021aab07f2ec7e83a4f01a89164760bcaf2c3c38e6bdc96",
+    "final_sha256": "8afdbcf12c58fd94925028f911a6394c5cd23a3a8be3acc220e4411d3659eb93",
+    "repair": "Relax directed paths through (i, k) and (k, j), preserving zero-length diagonal paths with positive self edges.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG004.diff"
+  },
+  "BUG005": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG005_zero-shot_1",
+    "raw_candidate_sha256": "3dba28b576367e61b70e7a130067ca858aa5b0e506e8c909afd9401b5a173153",
+    "final_sha256": "44b0a19df67e1af25b2828fdc84c2cb8b390c15f43b6c999cdba6c18dd61303f",
+    "repair": "Enqueue the start node, stop on queue exhaustion, and mark nodes when discovered.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG005.diff"
+  },
+  "BUG006": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG006_zero-shot_1",
+    "raw_candidate_sha256": "5f9a2c6ea50f4339152a43695a1b03ec4c476c6738b679d01ceca3a7bb2eaaf3",
+    "final_sha256": "2ad51b1b3b7536cf417bbd1263b16e8363533cf9bea45861be741f84ab9083cd",
+    "repair": "Traverse successor lists with a visited set and an explicit DFS stack, including cyclic graphs and long paths.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG006.diff"
+  },
+  "BUG007": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG007_zero-shot_1",
+    "raw_candidate_sha256": "8c4d91ffed2c7c5239dbed1a4c371a4dad7659be7f445038742e132fad32c134",
+    "final_sha256": "1e143ffd16a4d09ebc6ee59a82d07cf981dc152653a468557ea6566606193713",
+    "repair": "Advance the previous-node pointer before moving to the saved successor; reverse existing nodes in place.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG007.diff"
+  },
+  "BUG008": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG008_zero-shot_1",
+    "raw_candidate_sha256": "63fdeb9d0391ee38071a653ce7ea2b5f8e7088b437cf6ebb797eca407816d149",
+    "final_sha256": "54d9b3e232ce8a1a10e834f7e3e0ab422f0e209f54b73a396c10248178bc9de4",
+    "repair": "Move the hare twice and tortoise once, guard both fast-pointer dereferences, and return False for finite/empty lists.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG008.diff"
+  },
+  "BUG009": {
+    "source": "Assistant-reviewed implementation after real local Gemma prompting experiments; includes assistant corrections.",
+    "raw_comparison_attempt": "BUG009_zero-shot_1",
+    "raw_candidate_sha256": "f7088de8149d8ad52bdee85544bc54074cff0e611b7a5784bd21cf7414653f71",
+    "final_sha256": "97ca2337e95b4e4684d3a3997b0e31175a7b8a7dc79d2b4701d68d6ea22012f0",
+    "repair": "Count two characters per matched pair and combine bounds/content checks with AND before indexing.",
+    "unedited_gemma_output": false,
+    "review_diff": "experiments/review_diffs/BUG009.diff"
+  }
+}

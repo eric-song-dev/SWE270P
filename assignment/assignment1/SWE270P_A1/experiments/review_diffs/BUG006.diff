@@ -1,0 +1,26 @@
+--- raw_gemma/BUG006_zero-shot_1.py
++++ final_patches/BUG006.py
+@@ -1,14 +1,14 @@
+ def depth_first_search(startnode, goalnode):
++    """Search with an explicit stack so long paths do not exhaust recursion."""
+     nodesvisited = set()
++    stack = [startnode]
+ 
+-    def search_from(node):
++    while stack:
++        node = stack.pop()
+         if node in nodesvisited:
+-            return False
+-        elif node is goalnode:
++            continue
++        if node is goalnode:
+             return True
+-        else:
+-            return any(
+-                search_from(nextnode) for nextnode in node
+-            )
+-
+-    return search_from(startnode)
++        nodesvisited.add(node)
++        stack.extend(reversed(node.successors))
++    return False

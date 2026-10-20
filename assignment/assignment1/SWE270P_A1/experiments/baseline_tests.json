@@ -1,0 +1,102 @@
+{
+  "BUG000": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "F..                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-w3274rhx/BUG000/test_bug.py:12: in test1\n    assert result == False\nE   assert True == False\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-w3274rhx/BUG000/test_bug.py::test1\n1 failed, 2 passed in 0.02s\n"
+  },
+  "BUG001": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FF.                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-vj_hi8zt/BUG001/test_bug.py:29: in test1\n    assert result == 4\nE   assert 1 == 4\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-vj_hi8zt/BUG001/test_bug.py:38: in test2\n    assert result == 7\nE   assert 10 == 7\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-vj_hi8zt/BUG001/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-vj_hi8zt/BUG001/test_bug.py::test2\n2 failed, 1 passed in 0.02s\n"
+  },
+  "BUG002": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py:24: in test1\n    assert result == expected\nE   AssertionError: assert {'B': inf, 'C...'D': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}\nE     \nE     Omitting 1 identical items, use -vv to show\nE     Differing items:\nE     {'B': inf} != {'B': 1}\nE     {'E': inf} != {'E': 5}\nE     {'D': inf} != {'D': 10}\nE     {'C': inf} != {'C': 3}\nE     {'F': inf} != {'F': 4}\nE     Use -v to get more diff\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py:42: in test2\n    assert result == expected\nE   AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}\nE     \nE     Omitting 1 identical items, use -vv to show\nE     Differing items:\nE     {'B': inf} != {'B': 1}\nE     {'E': inf} != {'E': 5}\nE     {'D': inf} != {'D': 6}\nE     {'C': inf} != {'C': 3}\nE     {'F': inf} != {'F': 9}\nE     Use -v to get more diff\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py:61: in test3\n    assert result == expected\nE   AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}\nE     \nE     Omitting 1 identical items, use -vv to show\nE     Differing items:\nE     {'B': inf} != {'B': 1}\nE     {'E': inf} != {'E': 5}\nE     {'D': inf} != {'D': 6}\nE     {'C': inf} != {'C': 3}\nE     {'F': inf} != {'F': 9}\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py::test2\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-bk1wno93/BUG002/test_bug.py::test3\n3 failed in 0.03s\n"
+  },
+  "BUG003": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py:11: in test1\n    result = minimum_spanning_tree(\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/buggy.py:10: in minimum_spanning_tree\n    for node in group_by_node[v]:\n                ^^^^^^^^^^^^^^^^\nE   RuntimeError: Set changed size during iteration\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py:28: in test2\n    result = minimum_spanning_tree(\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/buggy.py:10: in minimum_spanning_tree\n    for node in group_by_node[v]:\n                ^^^^^^^^^^^^^^^^\nE   RuntimeError: Set changed size during iteration\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py:51: in test3\n    result = minimum_spanning_tree(\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/buggy.py:10: in minimum_spanning_tree\n    for node in group_by_node[v]:\n                ^^^^^^^^^^^^^^^^\nE   RuntimeError: Set changed size during iteration\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py::test2\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-5hmsy0t3/BUG003/test_bug.py::test3\n3 failed in 0.03s\n"
+  },
+  "BUG004": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py:59: in test1\n    assert result == expected\nE   AssertionError: assert defaultdict(<..., (5, 4): -1}) == {(0, 0): 0, (...3, 3): 0, ...}\nE     \nE     Omitting 14 identical items, use -vv to show\nE     Differing items:\nE     {(4, 0): 4} != {(4, 0): inf}\nE     {(4, 3): -5} != {(4, 3): inf}\nE     {(5, 4): -1} != {(5, 4): inf}\nE     {(0, 2): -1} != {(0, 2): 3}...\nE     \nE     ...Full output truncated (19 lines hidden), use '-vv' to show\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py:101: in test2\n    assert result == expected\nE   AssertionError: assert defaultdict(<...f, (4, 3): 7}) == {(0, 0): 0, (...3, 3): 0, ...}\nE     \nE     Omitting 14 identical items, use -vv to show\nE     Differing items:\nE     {(2, 4): inf} != {(2, 4): 5}\nE     {(0, 4): inf} != {(0, 4): 13}\nE     {(2, 1): 5} != {(2, 1): inf}\nE     {(4, 3): 7} != {(4, 3): inf}...\nE     \nE     ...Full output truncated (8 lines hidden), use '-vv' to show\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py:132: in test3\n    assert result == expected\nE   assert defaultdict(<...f, (3, 2): 5}) == {(0, 0): 0, (...3, 3): 0, ...}\nE     \nE     Omitting 14 identical items, use -vv to show\nE     Differing items:\nE     {(1, 0): 3} != {(1, 0): inf}\nE     {(3, 2): 5} != {(3, 2): inf}\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py::test2\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-auj48szq/BUG004/test_bug.py::test3\n3 failed in 0.02s\n"
+  },
+  "BUG005": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "..F                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-fqc9r5rc/BUG005/test_bug.py:51: in test3\n    assert not path_found\nE   assert not True\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-fqc9r5rc/BUG005/test_bug.py::test3\n1 failed, 2 passed in 0.02s\n"
+  },
+  "BUG006": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py:19: in test1\n    path_found = depth_first_search(station6, station1)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:14: in depth_first_search\n    return search_from(startnode)\n           ^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:11: in search_from\n    search_from(nextnode) for nextnode in node\n                                          ^^^^\nE   TypeError: 'Node' object is not iterable\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py:36: in test2\n    path_found = depth_first_search(nodea, nodee)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:14: in depth_first_search\n    return search_from(startnode)\n           ^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:11: in search_from\n    search_from(nextnode) for nextnode in node\n                                          ^^^^\nE   TypeError: 'Node' object is not iterable\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py:49: in test3\n    path_found = depth_first_search(nodef, nodee)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:14: in depth_first_search\n    return search_from(startnode)\n           ^^^^^^^^^^^^^^^^^^^^^^\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/buggy.py:11: in search_from\n    search_from(nextnode) for nextnode in node\n                                          ^^^^\nE   TypeError: 'Node' object is not iterable\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py::test2\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-cs5m9fuv/BUG006/test_bug.py::test3\n3 failed in 0.04s\n"
+  },
+  "BUG007": {
+    "passed": 1,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FF.                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-lr9yjhka/BUG007/test_bug.py:19: in test1\n    assert result == node1\nE   assert None == <BUG007.node.Node object at 0x109048320>\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-lr9yjhka/BUG007/test_bug.py:36: in test2\n    assert result == node\nE   assert None == <BUG007.node.Node object at 0x109048980>\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-lr9yjhka/BUG007/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-lr9yjhka/BUG007/test_bug.py::test2\n2 failed, 1 passed in 0.02s\n"
+  },
+  "BUG008": {
+    "passed": 2,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "F..                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-v3s3d8tx/BUG008/test_bug.py:21: in test1\n    assert not detected\nE   assert not True\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-v3s3d8tx/BUG008/test_bug.py::test1\n1 failed, 2 passed in 0.02s\n"
+  },
+  "BUG009": {
+    "passed": 0,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 1,
+    "timeout": false,
+    "all_passed": false,
+    "output": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n____________________________________ test1 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py:7: in test1\n    assert longestValidParentheses(s) == 2\nE   AssertionError: assert 1 == 2\nE    +  where 1 = longestValidParentheses('()')\n____________________________________ test2 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py:12: in test2\n    assert longestValidParentheses(s) == 4\nE   AssertionError: assert 2 == 4\nE    +  where 2 = longestValidParentheses('(())')\n____________________________________ test3 _____________________________________\n/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py:17: in test3\n    assert longestValidParentheses(s) == 4\nE   AssertionError: assert 2 == 4\nE    +  where 2 = longestValidParentheses('()()')\n=========================== short test summary info ============================\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py::test1\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py::test2\nFAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-a1-iwxqp_b_/BUG009/test_bug.py::test3\n3 failed in 0.02s\n"
+  }
+}

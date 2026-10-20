@@ -1,0 +1,21 @@
+{
+  "model": "google/gemma-3-270m-it",
+  "model_revision": "ac82b4e820549b854eebf28ce6dedaf9fdfa17b3",
+  "device": "cpu",
+  "dtype": "torch.float32",
+  "python": "3.12.14",
+  "packages": {
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "pytest": "9.1.1",
+    "huggingface-hub": "2.2.0",
+    "accelerate": "1.15.0"
+  },
+  "decoding": {
+    "do_sample": false,
+    "max_new_tokens": 768
+  },
+  "started_at": "2026-10-20T02:37:44.029266+00:00",
+  "model_revision_evidence": "Resolved from the local cached config snapshot path during the review; original model.config._commit_hash was unavailable.",
+  "cached_config_sha256": "8983343e5bfbf8e336d222a522a1d781443491e9de2d081b8856f8fd26ab6046"
+}

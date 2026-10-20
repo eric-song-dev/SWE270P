@@ -1,0 +1,7 @@
+{
+  "method": "Sequential execution of every code cell in the assignment venv",
+  "python": "/Users/ericsong/Courses/SWE270P/assignment/assignment1/SWE270P_A1/../.venv/bin/python",
+  "code_cells_executed": 14,
+  "status": "passed",
+  "timestamp": "2026-10-20T02:55:04.350918+00:00"
+}

@@ -1,0 +1,112 @@
+{
+  "BUG000": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "22109c64179779923f5111cc84e90152a0dcadd7b616a27b008bffd93c1bd96a"
+  },
+  "BUG001": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "6b2e27e4fa8fc6a805e36ab56280cc734a06e9bbc6016d89c0cfc9a969de2766"
+  },
+  "BUG002": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "1c6ce8a896304f7c4b85ce60d7008f9b806974717c1dc9113b495027576cc412"
+  },
+  "BUG003": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "f0051e58220ecee6b5273e9442ed5fb793784ba0c5ec8841a68400f9a90c6e0d"
+  },
+  "BUG004": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "8afdbcf12c58fd94925028f911a6394c5cd23a3a8be3acc220e4411d3659eb93"
+  },
+  "BUG005": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "44b0a19df67e1af25b2828fdc84c2cb8b390c15f43b6c999cdba6c18dd61303f"
+  },
+  "BUG006": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "2ad51b1b3b7536cf417bbd1263b16e8363533cf9bea45861be741f84ab9083cd"
+  },
+  "BUG007": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "1e143ffd16a4d09ebc6ee59a82d07cf981dc152653a468557ea6566606193713"
+  },
+  "BUG008": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "54d9b3e232ce8a1a10e834f7e3e0ab422f0e209f54b73a396c10248178bc9de4"
+  },
+  "BUG009": {
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "returncode": 0,
+    "timeout": false,
+    "all_passed": true,
+    "output": "...                                                                      [100%]\n3 passed in 0.01s\n",
+    "code_sha256": "97ca2337e95b4e4684d3a3997b0e31175a7b8a7dc79d2b4701d68d6ea22012f0"
+  }
+}

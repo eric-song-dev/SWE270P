@@ -1,0 +1,52 @@
+--- raw_gemma/BUG002_zero-shot_1.py
++++ final_patches/BUG002.py
+@@ -1,36 +1,18 @@
+-
+ def shortest_paths(source, weight_by_edge):
+-    weight_by_node = {
+-        v: float('inf') for u, v in weight_by_edge
+-    }
++    """Compute Bellman-Ford distances without changing the edge dictionary."""
++    nodes = {source}
++    for u, v in weight_by_edge:
++        nodes.update((u, v))
++    weight_by_node = {node: float("inf") for node in nodes}
+     weight_by_node[source] = 0
+ 
+-    for i in range(len(weight_by_node) - 1):
++    for _ in range(len(nodes) - 1):
++        changed = False
+         for (u, v), weight in weight_by_edge.items():
+-            weight_by_edge[u, v] = min(
+-                weight_by_node[u] + weight,
+-                weight_by_node[v]
+-            )
+-
++            candidate = weight_by_node[u] + weight
++            if candidate < weight_by_node[v]:
++                weight_by_node[v] = candidate
++                changed = True
++        if not changed:
++            break
+     return weight_by_node
+-
+-
+-"""
+-Minimum-Weight Paths
+-bellman-ford
+-
+-Bellman-Ford algorithm implementation
+-
+-Given a directed graph that may contain negative edges (as long as there are no negative-weight cycles), efficiently calculates the minimum path weights from a source node to every other node in the graph.
+-
+-Input:
+-    source: A node id
+-    weight_by_edge: A dict containing edge weights keyed by an ordered pair of node ids
+-
+-Precondition:
+-    The input graph contains no negative-weight cycles
+-
+-Output:
+-   A dict mapping each node id to the minimum weight of a path from the source node to that node
+-
+-"""
