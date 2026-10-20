@@ -1,0 +1,31 @@
+{
+  "feat-codex-generated-1": {
+    "heap_priority_increase": {
+      "expected_next_priority": 2,
+      "actual_next_priority": 2,
+      "passed": true
+    },
+    "heap_nonorderable_ties": {
+      "passed": true
+    },
+    "dfs_set_successors": {
+      "passed": false,
+      "error": "TypeError: 'set' object is not reversible"
+    }
+  },
+  "feat-codex-generated-2": {
+    "heap_priority_increase": {
+      "expected_next_priority": 2,
+      "actual_next_priority": 8,
+      "passed": false
+    },
+    "heap_nonorderable_ties": {
+      "passed": false,
+      "error": "TypeError: '<' not supported between instances of 'Node' and 'Node'"
+    },
+    "dfs_set_successors": {
+      "passed": true,
+      "actual": true
+    }
+  }
+}

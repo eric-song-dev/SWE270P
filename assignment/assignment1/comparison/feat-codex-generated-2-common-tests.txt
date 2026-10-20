@@ -1,0 +1,14 @@
+........................................................................ [ 29%]
+........................................................................ [ 58%]
+...........F............................................................ [ 87%]
+................................                                         [100%]
+=================================== FAILURES ===================================
+______________ test_dijkstra_helpers_restore_heap_and_handle_ties ______________
+tests/test_robustness.py:90: in test_dijkstra_helpers_restore_heap_and_handle_ties
+    module.insert_or_update(heap, entry)
+results/final_patches/BUG001.py:33: in insert_or_update
+    heappush(node_heap, dist_node)
+E   TypeError: '<' not supported between instances of 'Node' and 'Node'
+=========================== short test summary info ============================
+FAILED ../../../../../../../var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-common-tests-vg1gucfq/test_robustness.py::test_dijkstra_helpers_restore_heap_and_handle_ties
+1 failed, 247 passed in 0.37s

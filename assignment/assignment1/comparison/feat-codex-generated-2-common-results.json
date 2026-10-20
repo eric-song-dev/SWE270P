@@ -1,0 +1,21 @@
+{
+  "branch": "feat-codex-generated-2",
+  "python": "/Users/ericsong/Courses/SWE270P/assignment/assignment1/.venv/bin/python",
+  "returncode": 1,
+  "total_cases": 248,
+  "passed": 247,
+  "failed": 1,
+  "supplied_cases": 30,
+  "supplied_passed": 30,
+  "auxiliary_cases": 1,
+  "target_cases_excluding_auxiliary": 247,
+  "target_passed_excluding_auxiliary": 247,
+  "failures": [
+    {
+      "name": "test_dijkstra_helpers_restore_heap_and_handle_ties",
+      "classname": "test_robustness",
+      "message": "TypeError: '<' not supported between instances of 'Node' and 'Node'",
+      "detail": "tests/test_robustness.py:90: in test_dijkstra_helpers_restore_heap_and_handle_ties\n    module.insert_or_update(heap, entry)\nresults/final_patches/BUG001.py:33: in insert_or_update\n    heappush(node_heap, dist_node)\nE   TypeError: '<' not supported between instances of 'Node' and 'Node'"
+    }
+  ]
+}

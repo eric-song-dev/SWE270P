@@ -1,0 +1,11 @@
+{
+  "directory": "/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-branch-comparison-fc9mxf34",
+  "snapshots": {
+    "feat-codex-generated-1": "/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-branch-comparison-fc9mxf34/feat-codex-generated-1/assignment/assignment1/SWE270P_A1",
+    "feat-codex-generated-2": "/var/folders/zn/rb7wvf4j7954scc7x_7mkn7r0000gn/T/swe270p-branch-comparison-fc9mxf34/feat-codex-generated-2/assignment/assignment1/SWE270P_A1"
+  },
+  "commits": {
+    "feat-codex-generated-1": "f4bfb542f06a90f22bec6c0ba2a8c1098043a6dc",
+    "feat-codex-generated-2": "98256b48377c3ee0baea707823d7c4eb97623ac4"
+  }
+}

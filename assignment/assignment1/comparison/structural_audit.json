@@ -1,0 +1,144 @@
+{
+  "feat-codex-generated-1": {
+    "archive_sha256": "cdbe1ad68df3480ca72c4a7b79350f3503ee66672633fd84b1fff6293f0a5816",
+    "archive_exact_structure_and_matches_working_files": true,
+    "prompt_records": 92,
+    "complete_raw_outputs": 92,
+    "interrupted_records": 0,
+    "prompt_method_counts": {
+      "zero-shot": 32,
+      "one-shot": 20,
+      "chain-of-thought": 20,
+      "few-shot": 20
+    },
+    "final_target_bodies_matching_any_logged_raw_model_output": {
+      "BUG000": true,
+      "BUG001": false,
+      "BUG002": false,
+      "BUG003": false,
+      "BUG004": false,
+      "BUG005": false,
+      "BUG006": false,
+      "BUG007": false,
+      "BUG008": false,
+      "BUG009": false
+    },
+    "matching_attempt_ids": {
+      "BUG000": [
+        "BUG000_zero-shot_failure-guided",
+        "BUG000_zero-shot_review-recheck"
+      ],
+      "BUG001": [],
+      "BUG002": [],
+      "BUG003": [],
+      "BUG004": [],
+      "BUG005": [],
+      "BUG006": [],
+      "BUG007": [],
+      "BUG008": [],
+      "BUG009": []
+    },
+    "all_original_imports_retained": true,
+    "helpers_unchanged_from_starter": {
+      "BUG000": {},
+      "BUG001": {
+        "get": false,
+        "insert_or_update": false
+      },
+      "BUG002": {},
+      "BUG003": {},
+      "BUG004": {},
+      "BUG005": {},
+      "BUG006": {},
+      "BUG007": {},
+      "BUG008": {},
+      "BUG009": {}
+    },
+    "notebook_code_cells": 14,
+    "notebook_has_saved_error_outputs": false
+  },
+  "feat-codex-generated-2": {
+    "archive_sha256": "14b918c50259446a41697a7dcdd5a8eab610dac48d1286b56b2c74164294c0ba",
+    "archive_exact_structure_and_matches_working_files": true,
+    "prompt_records": 173,
+    "complete_raw_outputs": 172,
+    "interrupted_records": 1,
+    "prompt_method_counts": {
+      "zero-shot": 65,
+      "one-shot": 36,
+      "chain-of-thought": 36,
+      "few-shot": 36
+    },
+    "final_target_bodies_matching_any_logged_raw_model_output": {
+      "BUG000": true,
+      "BUG001": true,
+      "BUG002": true,
+      "BUG003": true,
+      "BUG004": true,
+      "BUG005": true,
+      "BUG006": true,
+      "BUG007": true,
+      "BUG008": true,
+      "BUG009": true
+    },
+    "matching_attempt_ids": {
+      "BUG000": [
+        "BUG000_chain-of-thought_v2_code-plan_primary"
+      ],
+      "BUG001": [
+        "BUG001_indented_probe_1",
+        "BUG001_indented_probe_2"
+      ],
+      "BUG002": [
+        "BUG002_zero-shot_v1_code-plan_primary",
+        "BUG002_zero-shot_v2_code-plan_primary",
+        "BUG002_chain-of-thought_v1_code-plan_primary"
+      ],
+      "BUG003": [
+        "BUG003_chain-of-thought_v1_code-plan_primary",
+        "BUG003_indented_probe_3",
+        "BUG003_indented_probe_4"
+      ],
+      "BUG004": [
+        "BUG004_literal_probe_3"
+      ],
+      "BUG005": [
+        "BUG005_zero-shot_literal-plan_r1_1"
+      ],
+      "BUG006": [
+        "BUG006_chain-of-thought_v1_code-plan_primary"
+      ],
+      "BUG007": [
+        "BUG007_zero-shot_v1_code-plan_primary"
+      ],
+      "BUG008": [
+        "BUG008_zero-shot_literal-plan_r1_1"
+      ],
+      "BUG009": [
+        "BUG009_zero-shot_v1_code-plan_primary",
+        "BUG009_zero-shot_v2_code-plan_primary",
+        "BUG009_one-shot_v1_code-plan_primary",
+        "BUG009_chain-of-thought_v1_code-plan_primary",
+        "BUG009_chain-of-thought_v2_code-plan_primary"
+      ]
+    },
+    "all_original_imports_retained": true,
+    "helpers_unchanged_from_starter": {
+      "BUG000": {},
+      "BUG001": {
+        "get": true,
+        "insert_or_update": true
+      },
+      "BUG002": {},
+      "BUG003": {},
+      "BUG004": {},
+      "BUG005": {},
+      "BUG006": {},
+      "BUG007": {},
+      "BUG008": {},
+      "BUG009": {}
+    },
+    "notebook_code_cells": 17,
+    "notebook_has_saved_error_outputs": false
+  }
+}
