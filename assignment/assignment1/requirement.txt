@@ -13,3 +13,37 @@ Download the SWE270P_A1.zipDownload SWE270P_A1.zip file for instructions, code g
 For instruction details, please read the A1_instructions.ipynb inside the zip folder very carefully.
 
 Submit through Gradescope by clicking the link below.
+
+## A1 Rubric
+
+| Criteria | Points |
+|---|---|
+| Completeness | /10 pts |
+| Diversity of Prompts | /5 pts |
+| Test Coverage | /10 pts |
+
+### Completeness (/10 pts)
+
+| Rating | Points | Description |
+|---|---|---|
+| Full Marks | 10 pts | The results/prompts.jsonl file shows the use of all four prompting methods (zero-shot, one-shot, chain-of-thought, and few-shot), and the submission includes all repaired versions of the 10 buggy Python functions (BUG000–BUG009). |
+| Partial Credit | 8 pts | The results/prompts.jsonl file shows the use of at least three prompting methods and the submission includes repaired versions of at least 8 of the 10 buggy Python functions (BUG000–BUG009). |
+| Partial Credit | 5 pts | Only a few prompting methods (less than two) are shown in the results/prompts.jsonl file, and at least 5 of the buggy Python functions (BUG000–BUG009) have been repaired. |
+| No Marks | 0 pts | The results/prompts.jsonl file is missing, incomplete, or fails to demonstrate a meaningful implementation of four required prompting methods, and the submission includes fewer than 5 repaired buggy Python functions (BUG000–BUG009). |
+
+### Diversity of Prompts (/5 pts)
+
+| Rating | Points | Description |
+|---|---|---|
+| Full Marks | 5 pts | The prompts demonstrate meaningful variation in approach, style, and strategy within each method category, showing creative exploration of different prompting techniques. |
+| Partial Credit | 3 pts | The prompts show some variation in technique and structure within each method category, but the exploration is limited and lacks depth across different approaches. |
+| No Marks | 0 pts | The prompts show no meaningful variation in approach, style, or strategy, and fail to demonstrate any exploration of different prompting techniques. |
+
+### Test Coverage (/10 pts)
+
+| Rating | Points | Description |
+|---|---|---|
+| Full Marks | 10 pts | All autograder test cases passed successfully for all 10 buggy Python functions (BUG000–BUG009).<br><br>i.e., Each repaired version of the buggy Python functions (BUG000–BUG009) must pass ALL test cases in the autograder system to be awarded 1 point. |
+| Partial Credit | 8 pts | All autograder test cases passed successfully for at least 8 buggy Python codes. |
+| Partial Credit | 5 pts | All autograder test cases passed successfully for at least 5 buggy Python codes. |
+| No Marks | 0 pts | All 10 buggy Python codes failed all autograder test cases. |
