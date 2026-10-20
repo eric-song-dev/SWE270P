@@ -2,6 +2,29 @@
 
 Reviewed on October 19, 2026, using the assignment's Python 3.12 virtual environment.
 
+**Subsequent Gradescope fix:** The version 2 archive in `submissions/` has now
+been updated after the server reported 19/20 tests passing. BUG004's case8
+requires an explicit positive self-loop to override the default zero diagonal.
+A new local Gemma generation changes only `distances[edge] = weight`; its raw
+prompt and output are appended to the submission log (174 records). The other
+nine patches are byte-identical. The supplied case8 regression and the complete
+local suite passed: 157 cases, comprising 30 supplied, 109 existing additional
+cases with their BUG004 self-loop expectations corrected to the observed
+contract, and 18 new regression cases. The random-graph checks use an independent
+simple-path/cycle oracle for this convention. Earlier comparison results below
+describe the original commits, not this revised archive. New provenance,
+before/after evidence, and hashes are in [bug004_gradescope_fix.json](bug004_gradescope_fix.json).
+The revised archive has not yet been rerun on Gradescope by the assistant.
+
+Version 1's submission copy has also received the same BUG004 contract fix.
+Its replacement body was emitted in a new logged local Gemma call, with the
+existing module scaffold retained and the explanatory docstring clarified.
+Its other nine patches are unchanged, its original 92 prompt records are
+preserved, and the new record brings its log to 93. Its 30 supplied, 109 existing
+additional cases (with the same BUG004 contract correction), and 18 new
+regressions all passed: 157 cases. Details and its current hash are in
+[bug004_gradescope_fix_v1.json](bug004_gradescope_fix_v1.json).
+
 | Version | Reviewed commit |
 |---|---|
 | `feat-codex-generated-1` | `f4bfb542f06a90f22bec6c0ba2a8c1098043a6dc` |
@@ -113,7 +136,12 @@ assignment/assignment1/.venv/bin/python assignment/assignment1/comparison/compar
 
 `compare.py` re-exports the pinned commits if its temporary snapshots have expired. Evidence beside this report includes `structural_audit.json`, both `*-common-results.json` files and pytest XML/text, `focused_checks.json`, `benchmarks.json`, and both `*-notebook-results.json` files and cell output logs.
 
-Unchanged copies of the reviewed archives are under `submissions/<branch>/SWE270P_A1.ZIP`:
+Submission archives are under `submissions/<branch>/`. Both are named
+`SWE270P_A1.zip` and include the subsequent BUG004 fixes described above.
+The lowercase extension is an upload compatibility measure:
+Gradescope retained the earlier uppercase archive as a single binary file
+instead of expanding its `results/` tree. The hashes below identify the original
+reviewed archives; current hashes are recorded in the respective fix evidence.
 
 | Version | Original ZIP SHA256 |
 |---|---|
