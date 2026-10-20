@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="22" skipped="0" tests="30" time="0.052" timestamp="2026-10-19T20:21:35.958691-07:00" hostname="ERICS-MACBOOK-PRO.local"><testcase classname="data.BUG000.test_bug" name="test1" time="0.001"><failure message="assert True == False">E   assert True == False</failure></testcase><testcase classname="data.BUG000.test_bug" name="test2" time="0.000" /><testcase classname="data.BUG000.test_bug" name="test3" time="0.000" /><testcase classname="data.BUG001.test_bug" name="test1" time="0.000"><failure message="assert 1 == 4">E   assert 1 == 4</failure></testcase><testcase classname="data.BUG001.test_bug" name="test2" time="0.000"><failure message="assert 10 == 7">E   assert 10 == 7</failure></testcase><testcase classname="data.BUG001.test_bug" name="test3" time="0.000" /><testcase classname="data.BUG002.test_bug" name="test1" time="0.000"><failure message="AssertionError: assert {'B': inf, 'C...'D': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'C': inf} != {'C': 3}&#10;  {'E': inf} != {'E': 5}&#10;  {'B': inf} != {'B': 1}&#10;  {'D': inf} != {'D': 10}&#10;  {'F': inf} != {'F': 4}&#10;  Use -v to get more diff">E   AssertionError: assert {'B': inf, 'C...'D': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}
+      
+      Omitting 1 identical items, use -vv to show
+      Differing items:
+      {'C': inf} != {'C': 3}
+      {'E': inf} != {'E': 5}
+      {'B': inf} != {'B': 1}
+      {'D': inf} != {'D': 10}
+      {'F': inf} != {'F': 4}
+      Use -v to get more diff</failure></testcase><testcase classname="data.BUG002.test_bug" name="test2" time="0.000"><failure message="AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'C': inf} != {'C': 3}&#10;  {'E': inf} != {'E': 5}&#10;  {'B': inf} != {'B': 1}&#10;  {'D': inf} != {'D': 6}&#10;  {'F': inf} != {'F': 9}&#10;  Use -v to get more diff">E   AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}
+      
+      Omitting 1 identical items, use -vv to show
+      Differing items:
+      {'C': inf} != {'C': 3}
+      {'E': inf} != {'E': 5}
+      {'B': inf} != {'B': 1}
+      {'D': inf} != {'D': 6}
+      {'F': inf} != {'F': 9}
+      Use -v to get more diff</failure></testcase><testcase classname="data.BUG002.test_bug" name="test3" time="0.000"><failure message="AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'C': inf} != {'C': 3}&#10;  {'E': inf} != {'E': 5}&#10;  {'B': inf} != {'B': 1}&#10;  {'D': inf} != {'D': 6}&#10;  {'F': inf} != {'F': 9}&#10;  Use -v to get more diff">E   AssertionError: assert {'B': inf, 'C...'E': inf, ...} == {'A': 0, 'C':..., 'E': 5, ...}
+      
+      Omitting 1 identical items, use -vv to show
+      Differing items:
+      {'C': inf} != {'C': 3}
+      {'E': inf} != {'E': 5}
+      {'B': inf} != {'B': 1}
+      {'D': inf} != {'D': 6}
+      {'F': inf} != {'F': 9}
+      Use -v to get more diff</failure></testcase><testcase classname="data.BUG003.test_bug" name="test1" time="0.000"><failure message="RuntimeError: Set changed size during iteration">E   RuntimeError: Set changed size during iteration</failure></testcase><testcase classname="data.BUG003.test_bug" name="test2" time="0.000"><failure message="RuntimeError: Set changed size during iteration">E   RuntimeError: Set changed size during iteration</failure></testcase><testcase classname="data.BUG003.test_bug" name="test3" time="0.000"><failure message="RuntimeError: Set changed size during iteration">E   RuntimeError: Set changed size during iteration</failure></testcase><testcase classname="data.BUG004.test_bug" name="test1" time="0.000"><failure message="AssertionError: assert defaultdict(&lt;..., (5, 4): -1}) == {(0, 0): 0, (...3, 3): 0, ...}&#10;  &#10;  Omitting 14 identical items, use -vv to show&#10;  Differing items:&#10;  {(4, 0): 4} != {(4, 0): inf}&#10;  {(4, 3): -5} != {(4, 3): inf}&#10;  {(5, 4): -1} != {(5, 4): inf}&#10;  {(0, 2): -1} != {(0, 2): 3}...&#10;  &#10;  ...Full output truncated (19 lines hidden), use '-vv' to show">E   AssertionError: assert defaultdict(&lt;..., (5, 4): -1}) == {(0, 0): 0, (...3, 3): 0, ...}
+      
+      Omitting 14 identical items, use -vv to show
+      Differing items:
+      {(4, 0): 4} != {(4, 0): inf}
+      {(4, 3): -5} != {(4, 3): inf}
+      {(5, 4): -1} != {(5, 4): inf}
+      {(0, 2): -1} != {(0, 2): 3}...
+      
+      ...Full output truncated (19 lines hidden), use '-vv' to show</failure></testcase><testcase classname="data.BUG004.test_bug" name="test2" time="0.000"><failure message="AssertionError: assert defaultdict(&lt;...f, (4, 3): 7}) == {(0, 0): 0, (...3, 3): 0, ...}&#10;  &#10;  Omitting 14 identical items, use -vv to show&#10;  Differing items:&#10;  {(2, 4): inf} != {(2, 4): 5}&#10;  {(0, 4): inf} != {(0, 4): 13}&#10;  {(2, 1): 5} != {(2, 1): inf}&#10;  {(4, 3): 7} != {(4, 3): inf}...&#10;  &#10;  ...Full output truncated (8 lines hidden), use '-vv' to show">E   AssertionError: assert defaultdict(&lt;...f, (4, 3): 7}) == {(0, 0): 0, (...3, 3): 0, ...}
+      
+      Omitting 14 identical items, use -vv to show
+      Differing items:
+      {(2, 4): inf} != {(2, 4): 5}
+      {(0, 4): inf} != {(0, 4): 13}
+      {(2, 1): 5} != {(2, 1): inf}
+      {(4, 3): 7} != {(4, 3): inf}...
+      
+      ...Full output truncated (8 lines hidden), use '-vv' to show</failure></testcase><testcase classname="data.BUG004.test_bug" name="test3" time="0.000"><failure message="assert defaultdict(&lt;...f, (3, 2): 5}) == {(0, 0): 0, (...3, 3): 0, ...}&#10;  &#10;  Omitting 14 identical items, use -vv to show&#10;  Differing items:&#10;  {(1, 0): 3} != {(1, 0): inf}&#10;  {(3, 2): 5} != {(3, 2): inf}&#10;  Use -v to get more diff">E   assert defaultdict(&lt;...f, (3, 2): 5}) == {(0, 0): 0, (...3, 3): 0, ...}
+      
+      Omitting 14 identical items, use -vv to show
+      Differing items:
+      {(1, 0): 3} != {(1, 0): inf}
+      {(3, 2): 5} != {(3, 2): inf}
+      Use -v to get more diff</failure></testcase><testcase classname="data.BUG005.test_bug" name="test1" time="0.000" /><testcase classname="data.BUG005.test_bug" name="test2" time="0.000" /><testcase classname="data.BUG005.test_bug" name="test3" time="0.000"><failure message="assert not True">E   assert not True</failure></testcase><testcase classname="data.BUG006.test_bug" name="test1" time="0.000"><failure message="TypeError: 'Node' object is not iterable">E   TypeError: 'Node' object is not iterable</failure></testcase><testcase classname="data.BUG006.test_bug" name="test2" time="0.000"><failure message="TypeError: 'Node' object is not iterable">E   TypeError: 'Node' object is not iterable</failure></testcase><testcase classname="data.BUG006.test_bug" name="test3" time="0.000"><failure message="TypeError: 'Node' object is not iterable">E   TypeError: 'Node' object is not iterable</failure></testcase><testcase classname="data.BUG007.test_bug" name="test1" time="0.000"><failure message="assert None == &lt;BUG007.node.Node object at 0x10717cfb0&gt;">E   assert None == &lt;BUG007.node.Node object at 0x10717cfb0&gt;</failure></testcase><testcase classname="data.BUG007.test_bug" name="test2" time="0.000"><failure message="assert None == &lt;BUG007.node.Node object at 0x10717e540&gt;">E   assert None == &lt;BUG007.node.Node object at 0x10717e540&gt;</failure></testcase><testcase classname="data.BUG007.test_bug" name="test3" time="0.000" /><testcase classname="data.BUG008.test_bug" name="test1" time="0.000"><failure message="assert not True">E   assert not True</failure></testcase><testcase classname="data.BUG008.test_bug" name="test2" time="0.000" /><testcase classname="data.BUG008.test_bug" name="test3" time="0.000" /><testcase classname="data.BUG009.test_bug" name="test1" time="0.000"><failure message="AssertionError: assert 1 == 2&#10; +  where 1 = longestValidParentheses('()')">E   AssertionError: assert 1 == 2
+     +  where 1 = longestValidParentheses('()')</failure></testcase><testcase classname="data.BUG009.test_bug" name="test2" time="0.000"><failure message="AssertionError: assert 2 == 4&#10; +  where 2 = longestValidParentheses('(())')">E   AssertionError: assert 2 == 4
+     +  where 2 = longestValidParentheses('(())')</failure></testcase><testcase classname="data.BUG009.test_bug" name="test3" time="0.000"><failure message="AssertionError: assert 2 == 4&#10; +  where 2 = longestValidParentheses('()()')">E   AssertionError: assert 2 == 4
+     +  where 2 = longestValidParentheses('()()')</failure></testcase></testsuite></testsuites>

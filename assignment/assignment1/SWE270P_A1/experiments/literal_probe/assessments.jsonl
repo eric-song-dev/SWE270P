@@ -1,0 +1,3 @@
+{"attempt_id": "BUG004_literal_probe_1", "bug": "BUG004", "status": "rejected", "error": "No complete parseable target function in the raw response."}
+{"attempt_id": "BUG004_literal_probe_2", "bug": "BUG004", "status": "rejected", "error": "No complete parseable target function in the raw response."}
+{"attempt_id": "BUG004_literal_probe_3", "bug": "BUG004", "tests": {"status": "passed", "all_passed": true, "passed": 7, "failed": 0, "errors": 0, "skipped": 0, "code_sha256": "0e84ba9a236efde4d2b6cdcfdbca2a76c0878025d99531b35deaec894c15db0a", "returncode": 0, "failure_messages": [], "output": ".......                                                                  [100%]\n7 passed, 105 deselected in 0.13s\n"}, "status": "passed"}

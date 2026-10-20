@@ -1,0 +1,31 @@
+{
+  "python": "/Users/ericsong/Courses/SWE270P/assignment/assignment1/SWE270P_A1/../.venv/bin/python",
+  "archive_sha256": "14b918c50259446a41697a7dcdd5a8eab610dac48d1286b56b2c74164294c0ba",
+  "archive_files": 11,
+  "prompt_records": 173,
+  "completed_generations": 172,
+  "explicitly_interrupted_calls": 1,
+  "prompt_method_counts": {
+    "zero-shot": 65,
+    "one-shot": 36,
+    "chain-of-thought": 36,
+    "few-shot": 36
+  },
+  "all_ten_repairs_reconstructed_from_raw_model_outputs": true,
+  "all_ten_generated_and_final_executable_asts_match": true,
+  "supplied_tests_passed_by_bug": {
+    "BUG000": 3,
+    "BUG001": 3,
+    "BUG002": 3,
+    "BUG003": 3,
+    "BUG004": 3,
+    "BUG005": 3,
+    "BUG006": 3,
+    "BUG007": 3,
+    "BUG008": 3,
+    "BUG009": 3
+  },
+  "additional_target_cases_passed": 109,
+  "total_target_cases_passed": 139,
+  "status": "passed"
+}
