@@ -1,0 +1,64 @@
+Assignment 2
+Due: Wed Nov 4, 2026 11:59pm
+25 Points Possible
+Attempt 1
+In Progress
+NEXT UP: Submit Assignment
+
+Unlimited Attempts Allowed
+This is a Group Assignment. Please make sure to assign yourself to your group in the People tab. Only one submission per group is required.Please read the instructions for Assignment 2Download instructions for Assignment 2 very carefully.Download the SWE270P_A2.zipDownload SWE270P_A2.zip file for template code and test cases.Note that we are using Gemini 2.5 Flash Lite. Be sure to check the rate limits (https://ai.google.dev/gemini-api/docs/rate-limits) for using these models and stay within the free tier.The example images for handwritten code can be found inside the folder named 'code_images_example' inside the zip file.
+
+Demo Schedule Link: Be sure to schedule an appointment early to secure your time slot. I will not be opening any additional slots. The scheduling window will close 12 hours prior to the demo time, so please make sure to book your preferred time in advance. Only one member of the group needs to schedule one 15-minute slot appointment, but you must invite everyone in the group using their UCI email addresses to the meeting invite.
+
+Some Rubric (1)
+Criteria	Ratings	Points
+UI Application
+
+Full Marks
+The UI application includes all required features: image upload, accurate transcription of handwritten Python code, static analysis with clear natural-language bug explanations, and meaningful suggestions for improvements or bug fixes.
+14 pts
+
+Partial Credit
+The application includes most core features, with only minor issues in functionality or UI integration.
+10 pts
+
+Partial Credit
+The application demonstrates a working prototype but lacks key features (e.g., inaccurate image processing, limited static analysis on improvement or bug fix, or poor UI integration).
+7 pts
+
+Partial Credit
+The application demonstrates basic input/output capability but lacks meaningful LLM integration for transcription, static analysis, and improvement suggestions. Major components are either non-functional or missing.
+4 pts
+
+No Marks
+The UI is non-functional, lacks required components, or fails to demonstrate meaningful integration of a multimodal LLM for the task.
+0 pts
+/14 pts
+Submission Format
+
+Full Marks
+Correct file name and submission format and scheduled the demo on time with a TA.
+1 pts
+
+No Marks
+0 pts
+/1 pts
+Demo Presentation
+
+Full Marks
+Clear demonstration of the full workflow. The app handles handwritten code image upload (using the image provided by the TA at demo time), performs accurate transcription, static analysis with clear explanations, and provides relevant suggestions for improvement. The student confidently explains each step and answers all follow-up questions during the demo.
+10 pts
+
+Partial Credit
+The demo covers the full workflow, but one or two component is slightly flawed or shows inconsistency across different examples. The student explains the overall process clearly and answers most follow-up questions.
+8 pts
+
+Partial Credit
+The demo includes parts of the intended workflow, but multiple components are missing, incomplete, or fail to run. The student provides a basic explanation but cannot fully clarify the process or respond confidently to follow-up questions.
+4 pts
+
+No Marks
+No demo was scheduled, or the application failed to run or did not demonstrate any meaningful part of the required workflow (e.g., no image upload, transcription, or analysis shown). The student did not provide a clear explanation of the system.
+0 pts
+/10 pts
+Keep in mind, this submission will count for everyone in your Assignment 2 Group group.
