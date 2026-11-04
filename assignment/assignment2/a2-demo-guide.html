@@ -1,0 +1,2108 @@
+<title>Whiteboard Tutor Demo Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Caveat:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<script>
+  // Apply the saved language before first paint (default: English).
+  (function () {
+    var lang = "en";
+    try { lang = localStorage.getItem("a2guide-lang") || "en"; } catch (e) {}
+    document.documentElement.setAttribute("data-lang", lang === "zh" ? "zh" : "en");
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+  })();
+</script>
+<style>
+/* Layout: sticky top bar; on wide screens a left contents rail beside one reading column (~820px).
+   Identity: lined notebook paper, ballpoint-blue ink, a highlighter for the bug. */
+:root {
+  --paper: #f5f6fa;
+  --surface: #ffffff;
+  --ink: #171b30;
+  --muted: #5b6178;
+  --rule: #dbe0ec;
+  --paper-line: #c9d6f0;
+  --marker: #2a44c4;
+  --marker-soft: #e9edfd;
+  --hl: #fff0a0;
+  --ok: #1d7a4c;
+  --ok-soft: #e4f4ea;
+  --warn: #9a5200;
+  --warn-soft: #fff4e2;
+  --code-bg: #f1f3f9;
+  --code-fg: #1d2238;
+  --tk-kw: #7a2bb5;
+  --tk-str: #1d7a4c;
+  --tk-com: #747a92;
+  --tk-num: #b54708;
+  --tk-fn: #2a44c4;
+  --tk-bi: #0f6c8a;
+  --shadow: 0 1px 2px rgba(23, 27, 48, .06), 0 4px 16px rgba(23, 27, 48, .05);
+
+  --display: "Bricolage Grotesque", "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+
+  --step--1: .84rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.55rem;
+  --step-3: 2.1rem;
+  --step-4: clamp(2.3rem, 5vw, 3.4rem);
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #10131d; --surface: #171b28; --ink: #e5e8f2; --muted: #9aa1b8; --rule: #2a3043;
+    --paper-line: #2b3656; --marker: #93a5ff; --marker-soft: #1d2442; --hl: #5a4f1c;
+    --ok: #63d197; --ok-soft: #14291f; --warn: #f0b35a; --warn-soft: #2d2416;
+    --code-bg: #12162a; --code-fg: #dfe3f0; --tk-kw: #c99bff; --tk-str: #8fdba8; --tk-com: #858ca4;
+    --tk-num: #f5a35a; --tk-fn: #93a5ff; --tk-bi: #6fc8e0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #10131d; --surface: #171b28; --ink: #e5e8f2; --muted: #9aa1b8; --rule: #2a3043;
+  --paper-line: #2b3656; --marker: #93a5ff; --marker-soft: #1d2442; --hl: #5a4f1c;
+  --ok: #63d197; --ok-soft: #14291f; --warn: #f0b35a; --warn-soft: #2d2416;
+  --code-bg: #12162a; --code-fg: #dfe3f0; --tk-kw: #c99bff; --tk-str: #8fdba8; --tk-com: #858ca4;
+  --tk-num: #f5a35a; --tk-fn: #93a5ff; --tk-bi: #6fc8e0;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+/* ---------- language switching ---------- */
+:root:not([data-lang="zh"]) .zh,
+:root:not([data-lang="zh"]) .bi-zh { display: none !important; }
+:root[data-lang="zh"] .en { display: none !important; }
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--surface);
+}
+[id] { scroll-margin-top: 84px; }
+@media (max-width: 1099px) { [id] { scroll-margin-top: 124px; } }
+h1, h2, h3, h4 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h2 { font-size: var(--step-3); font-weight: 700; letter-spacing: -.01em; }
+h3 { font-size: var(--step-1); font-weight: 700; }
+h4 { font-size: var(--step-0); font-weight: 700; }
+p { margin: 0; }
+a { color: var(--marker); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, label:focus-within {
+  outline: 2px solid var(--marker); outline-offset: 2px; border-radius: 4px;
+}
+code, kbd { font-family: var(--mono); font-size: .88em; }
+:not(pre) > code {
+  background: var(--code-bg); color: var(--code-fg); padding: .08em .35em; border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+mark { background: var(--hl); color: inherit; padding: 0 .15em; border-radius: 2px; }
+ul, ol { margin: 0; padding-left: 1.3em; display: grid; gap: .35em; }
+strong { font-weight: 600; }
+.muted { color: var(--muted); }
+.kicker {
+  font-family: var(--mono); font-size: var(--step--1); color: var(--muted);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--surface); border-bottom: 1px solid var(--rule);
+}
+.topbar-inner {
+  max-width: 1240px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand b { font-family: var(--display); font-size: 1.05rem; white-space: nowrap; }
+.brand span { font-family: var(--hand); font-size: 1.25rem; color: var(--marker); white-space: nowrap; }
+@media (max-width: 520px) { .brand span { display: none; } }
+.controls { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; background: var(--paper); }
+.seg button {
+  font: 500 .85rem var(--body); border: 0; background: transparent; color: var(--muted);
+  padding: 6px 12px; cursor: pointer; min-height: 32px;
+}
+.seg button[aria-pressed="true"] { background: var(--marker); color: var(--surface); }
+.iconbtn {
+  font: 500 .85rem var(--body); border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  border-radius: 999px; padding: 6px 12px; cursor: pointer; min-height: 32px;
+}
+.mobile-nav {
+  flex-basis: 100%; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  margin: 0 -4px; padding: 2px 4px;
+}
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a {
+  white-space: nowrap; font-size: .85rem; color: var(--muted); text-decoration: none;
+  padding: 4px 10px; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper);
+}
+.mobile-nav a[aria-current="true"] { color: var(--marker); border-color: var(--marker); }
+@media (min-width: 1100px) { .mobile-nav { display: none; } }
+
+/* ---------- page grid ---------- */
+.page {
+  max-width: 1240px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 80px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px;
+}
+@media (min-width: 1100px) { .page { grid-template-columns: 210px minmax(0, 1fr); } }
+.toc { display: none; }
+@media (min-width: 1100px) {
+  .toc {
+    display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 76px);
+    align-self: start; padding-top: 40px; max-height: calc(100vh - 90px); overflow-y: auto;
+  }
+}
+.toc ol { list-style: none; padding: 0; gap: 2px; }
+.toc a {
+  display: block; text-decoration: none; color: var(--muted); font-size: .92rem;
+  padding: 4px 10px; border-left: 2px solid transparent;
+}
+.toc a:hover { color: var(--ink); }
+.toc a[aria-current="true"] { color: var(--marker); border-left-color: var(--marker); font-weight: 500; }
+.toc .sub a { font-size: .84rem; padding-left: 22px; font-family: var(--mono); }
+.toc .sub a span { font-family: var(--body); }
+main { min-width: 0; max-width: 840px; display: grid; gap: 88px; padding-top: 40px; }
+section { display: grid; gap: 24px; min-width: 0; }
+.sec-head { display: grid; gap: 8px; }
+.sec-head p.lede { color: var(--muted); max-width: 64ch; }
+
+/* ---------- hero ---------- */
+.hero { display: grid; gap: 32px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 860px) { .hero { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); } }
+.hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -.02em; }
+.hero-text { display: grid; gap: 18px; }
+.hero-text .lede { font-size: 1.08rem; max-width: 56ch; }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; font-size: .93rem; margin: 0; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-family: var(--mono); font-size: .78rem; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--muted);
+}
+.sketch { display: grid; gap: 10px; min-width: 0; }
+.paper {
+  position: relative; background-color: var(--surface);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 33px, var(--paper-line) 33px 34px);
+  background-position: 0 14px;
+  border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow);
+  padding: 14px 18px 18px 46px; overflow-x: auto;
+}
+.paper::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 32px; width: 1px; background: #e7a3a3; opacity: .7;
+}
+.paper pre {
+  margin: 0; font-family: var(--hand); font-size: 1.42rem; line-height: 34px; color: var(--marker);
+  white-space: pre; background: none;
+}
+.paper mark { background: var(--hl); color: var(--marker); border-radius: 3px; padding: 0 2px; }
+.bugnote {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 14px 16px; display: grid; gap: 6px; font-size: .93rem; box-shadow: var(--shadow);
+}
+.bugnote .tag { font-family: var(--mono); font-size: .78rem; color: var(--warn); font-weight: 600; }
+.sketch figcaption { font-size: .8rem; color: var(--muted); font-family: var(--mono); }
+
+/* ---------- generic blocks ---------- */
+.prose { display: grid; gap: 12px; max-width: 70ch; }
+.grid-2 { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.block { display: grid; gap: 10px; min-width: 0; }
+.callout {
+  border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius);
+  padding: 14px 16px; display: grid; gap: 8px; font-size: .95rem;
+}
+.callout.warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+.callout.warn .ttl { color: var(--warn); }
+.callout.note { background: var(--marker-soft); border-color: color-mix(in srgb, var(--marker) 25%, transparent); }
+.callout .ttl { font-weight: 600; font-family: var(--display); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--display); font-weight: 700; font-size: .85rem; background: var(--paper); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap; }
+tfoot td { font-weight: 600; background: var(--paper); }
+.table-wrap table { min-width: 640px; }
+
+/* checklist */
+.checklist { list-style: none; padding: 0; gap: 6px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.checklist input { margin-top: .35em; width: 16px; height: 16px; accent-color: var(--marker); flex: none; }
+.checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+
+/* pipeline */
+.pipeline { list-style: none; padding: 0; display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); counter-reset: none; }
+@media (min-width: 760px) { .pipeline { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pipeline li {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 14px; display: grid; gap: 6px; align-content: start; position: relative; min-width: 0;
+}
+.pipeline li.llm { border-color: color-mix(in srgb, var(--marker) 45%, var(--rule)); }
+.pipeline li.human { border-style: dashed; }
+.pipeline .n { font-family: var(--mono); font-size: .78rem; color: var(--muted); }
+.pipeline .who { font-family: var(--mono); font-size: .75rem; color: var(--marker); }
+.pipeline h4 { font-size: 1rem; }
+.pipeline p { font-size: .88rem; color: var(--muted); }
+.pipeline .hand { font-family: var(--hand); font-size: 1.2rem; color: var(--marker); line-height: 1.1; }
+
+/* decision list */
+.decisions { display: grid; gap: 14px; margin: 0; }
+.decisions div { display: grid; gap: 2px; padding-left: 14px; border-left: 2px solid var(--rule); }
+.decisions dt { font-weight: 600; }
+.decisions dd { margin: 0; color: var(--muted); font-size: .95rem; }
+
+/* ---------- walkthrough cells ---------- */
+.cells { display: grid; gap: 28px; }
+.cell {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 20px; display: grid; gap: 18px; min-width: 0;
+}
+@media (max-width: 520px) { .cell { padding: 16px 14px; } }
+.cell-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.cell-tag {
+  font-family: var(--mono); font-size: .78rem; color: var(--marker); background: var(--marker-soft);
+  padding: 2px 8px; border-radius: 6px; white-space: nowrap;
+}
+.chunk { display: grid; gap: 12px; min-width: 0; }
+.chunk + .chunk { border-top: 1px dashed var(--rule); padding-top: 18px; }
+.explain { display: grid; gap: 10px; font-size: .96rem; min-width: 0; }
+.explain > div { display: grid; gap: 10px; }
+.explain .why { color: var(--muted); }
+.explain .why b { color: var(--ink); }
+.mdcell {
+  display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: .92rem; color: var(--muted);
+  padding: 2px 4px;
+}
+.mdcell .md-text { font-family: var(--mono); color: var(--ink); font-size: .85rem; }
+
+figure.code, figure.output { margin: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--rule); background: var(--code-bg); min-width: 0; }
+figure.code figcaption, figure.output figcaption {
+  display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 14px;
+  border-bottom: 1px solid var(--rule); font-family: var(--mono); font-size: .76rem; color: var(--muted);
+}
+figure.code figcaption .what { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.copy {
+  margin-left: auto; font: 500 .75rem var(--body); color: var(--muted); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 3px 10px; cursor: pointer; flex: none;
+}
+.copy:hover { color: var(--ink); }
+figure pre { margin: 0; overflow-x: auto; padding: 14px; }
+figure pre code { font-size: .82rem; line-height: 1.6; color: var(--code-fg); background: none; padding: 0; white-space: pre; }
+figure.output pre { font-family: var(--mono); font-size: .8rem; color: var(--muted); white-space: pre; }
+figure.output pre.pass { color: var(--ok); }
+.hljs-keyword, .hljs-meta .hljs-keyword { color: var(--tk-kw); }
+.hljs-string, .hljs-subst .hljs-string { color: var(--tk-str); }
+.hljs-comment { color: var(--tk-com); font-style: italic; }
+.hljs-number, .hljs-literal { color: var(--tk-num); }
+.hljs-title, .hljs-title.function_, .hljs-title.class_ { color: var(--tk-fn); }
+.hljs-built_in, .hljs-type { color: var(--tk-bi); }
+.hljs-subst { color: var(--code-fg); }
+.hljs-meta { color: var(--tk-com); }
+.hljs-params { color: var(--code-fg); }
+
+/* talking points (always English, plus Chinese in zh mode) */
+.say {
+  border-left: 3px solid var(--marker); background: var(--marker-soft); border-radius: 0 8px 8px 0;
+  padding: 10px 14px; display: grid; gap: 6px; font-size: .95rem;
+}
+.say .lbl { font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--marker); }
+.say .bi-en { font-style: italic; }
+.bi-zh { color: var(--muted); }
+
+/* ---------- demo ---------- */
+.steps { list-style: none; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+.steps > li {
+  counter-increment: step; display: grid; grid-template-columns: 2.2rem minmax(0, 1fr); gap: 4px 12px;
+}
+.steps > li::before {
+  content: counter(step); grid-row: 1 / span 3; width: 2rem; height: 2rem; border-radius: 50%;
+  display: grid; place-items: center; font-family: var(--mono); font-size: .85rem; font-weight: 600;
+  color: var(--marker); border: 1.5px solid var(--marker);
+}
+.steps > li > * { grid-column: 2; }
+.steps .act { font-size: .95rem; }
+.pitch {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px;
+  display: grid; gap: 10px;
+}
+.pitch .bi-en { font-size: 1.04rem; }
+.timeline { display: flex; flex-wrap: wrap; gap: 6px; }
+.timeline span {
+  font-size: .82rem; padding: 4px 10px; border-radius: 6px; background: var(--surface); border: 1px solid var(--rule);
+}
+.timeline b { font-family: var(--mono); font-weight: 600; color: var(--marker); margin-right: 4px; }
+
+/* ---------- Q&A ---------- */
+.qa-tools { display: grid; gap: 12px; }
+.qa-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.search {
+  flex: 1 1 220px; min-width: 0; font: inherit; font-size: .95rem; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button {
+  font: 500 .82rem var(--body); color: var(--muted); background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 5px 12px; cursor: pointer; min-height: 30px;
+}
+.filters button[aria-pressed="true"] { color: var(--surface); background: var(--ink); border-color: var(--ink); }
+.qa-count { font-size: .85rem; color: var(--muted); }
+.qa-group { display: grid; gap: 8px; }
+.qa-group > h3 { font-size: 1rem; color: var(--muted); font-weight: 600; margin-top: 10px; }
+details.qa { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+details.qa[open] { border-color: color-mix(in srgb, var(--marker) 40%, var(--rule)); }
+details.qa summary {
+  list-style: none; cursor: pointer; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) 1rem;
+  gap: 8px; padding: 12px 14px; align-items: start;
+}
+details.qa summary::-webkit-details-marker { display: none; }
+details.qa summary::after {
+  content: "+"; font-family: var(--mono); color: var(--muted); text-align: right; line-height: 1.5;
+}
+details.qa[open] summary::after { content: "–"; }
+.qn { font-family: var(--mono); font-size: .8rem; color: var(--marker); padding-top: .2em; }
+.qt { display: grid; gap: 2px; font-weight: 500; }
+.qt .bi-zh { font-weight: 400; font-size: .92rem; }
+.qa-body {
+  padding: 0 14px 14px calc(14px + 2.6rem + 8px); display: grid; gap: 10px; font-size: .96rem;
+}
+@media (max-width: 520px) { .qa-body { padding-left: 14px; } }
+.qa-body .bi-zh { border-top: 1px dashed var(--rule); padding-top: 10px; }
+.empty { padding: 20px; text-align: center; color: var(--muted); border: 1px dashed var(--rule); border-radius: 10px; }
+
+/* ---------- glossary ---------- */
+.gloss { display: grid; gap: 0; margin: 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+.gloss > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px 20px; padding: 12px 16px; border-bottom: 1px solid var(--rule); }
+.gloss > div:last-child { border-bottom: 0; }
+@media (min-width: 680px) { .gloss > div { grid-template-columns: 220px minmax(0, 1fr); } }
+.gloss dt { font-weight: 600; display: grid; gap: 0; }
+.gloss dt .zh { font-weight: 400; color: var(--muted); font-size: .9rem; }
+.gloss dd { margin: 0; font-size: .94rem; }
+
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--rule); padding-top: 20px; }
+</style>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top"><b>A2 Demo Guide</b><span>Code Whiteboard Tutor</span></a>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Language">
+        <button type="button" id="lang-en" data-set-lang="en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-zh" data-set-lang="zh" aria-pressed="false">中文</button>
+      </div>
+      <button type="button" class="iconbtn" id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+    </div>
+    <nav class="mobile-nav" aria-label="Sections">
+      <a href="#requirements"><span class="en">Requirements</span><span class="zh">作业要求</span></a>
+      <a href="#architecture"><span class="en">Architecture</span><span class="zh">架构</span></a>
+      <a href="#walkthrough"><span class="en">Walkthrough</span><span class="zh">逐 cell 讲解</span></a>
+      <a href="#demo"><span class="en">Demo runbook</span><span class="zh">Demo 流程</span></a>
+      <a href="#qa">Q&amp;A</a>
+      <a href="#glossary"><span class="en">Glossary</span><span class="zh">术语表</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#top"><span class="en">Overview</span><span class="zh">概览</span></a></li>
+      <li><a href="#requirements"><span class="en">Requirements</span><span class="zh">作业要求</span></a></li>
+      <li><a href="#architecture"><span class="en">Architecture</span><span class="zh">架构总览</span></a></li>
+      <li><a href="#walkthrough"><span class="en">Notebook walkthrough</span><span class="zh">Notebook 逐 cell 讲解</span></a></li>
+      <li class="sub"><a href="#cell-0">0–5 <span class="en">Setup</span><span class="zh">环境准备</span></a></li>
+      <li class="sub"><a href="#cell-7">7 <span class="en">Helpers</span><span class="zh">工具函数</span></a></li>
+      <li class="sub"><a href="#cell-9">9 <span class="en">Languages</span><span class="zh">多语言</span></a></li>
+      <li class="sub"><a href="#cell-11">11 <span class="en">Transcribe</span><span class="zh">转写</span></a></li>
+      <li class="sub"><a href="#cell-13">13 <span class="en">Analyze</span><span class="zh">分析</span></a></li>
+      <li class="sub"><a href="#cell-15">15 <span class="en">Gradio UI</span><span class="zh">Gradio 界面</span></a></li>
+      <li class="sub"><a href="#cell-17">17–18 <span class="en">Tests</span><span class="zh">测试</span></a></li>
+      <li><a href="#demo"><span class="en">Demo runbook</span><span class="zh">Demo 流程</span></a></li>
+      <li><a href="#qa">Q&amp;A</a></li>
+      <li><a href="#glossary"><span class="en">Glossary</span><span class="zh">术语表</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section id="top" class="hero" data-spy>
+      <div class="hero-text">
+        <p class="kicker"><span class="en">SWE 270P · Assignment 2 · Demo prep</span><span class="zh">SWE 270P · 作业 2 · Demo 备考</span></p>
+        <h1>Code Whiteboard Tutor</h1>
+        <p class="lede en">A Gradio app that reads a photo of handwritten code with Gemini, explains the bugs in plain English, and hands back a fixed version. This guide covers what the assignment asks for, how every notebook cell works, how to run the demo, and the questions a TA is likely to ask.</p>
+        <p class="lede zh">一个 Gradio 应用：用 Gemini 读取手写代码照片，用通俗的语言解释 bug，并给出修好的代码。本指南包含作业要求、notebook 每个 cell 的原理、demo 流程，以及 TA 可能会问的问题。</p>
+        <dl class="facts">
+          <dt><span class="en">Team</span><span class="zh">组员</span></dt>
+          <dd>Mouhamed Osman · Zhenyu Song · Jennifer Sun</dd>
+          <dt><span class="en">Due</span><span class="zh">截止</span></dt>
+          <dd><span class="en">Wed, Nov 4, 2026, 11:59 pm</span><span class="zh">2026 年 11 月 4 日（周三）晚 11:59</span></dd>
+          <dt>Notebook</dt>
+          <dd><code>SWE270P_A2_2.ipynb</code> <span class="en">→ submit as</span><span class="zh">→ 提交时命名为</span> <code>SWE270P-A2.ipynb</code></dd>
+          <dt><span class="en">Score</span><span class="zh">分值</span></dt>
+          <dd><span class="en">25 points + extra credit</span><span class="zh">25 分 + 额外加分</span></dd>
+        </dl>
+        <div class="chips">
+          <span class="chip">Gradio</span><span class="chip">google-genai SDK</span><span class="chip">gemini-3.5-flash-lite</span><span class="chip">Pydantic schemas</span><span class="chip">9 languages</span>
+        </div>
+      </div>
+      <figure class="sketch" aria-label="Example: the bucketsort photo and the bug the app reports">
+        <div class="paper"><pre>def bucketsort(arr, k):
+    counts = [0] * k
+    for x in arr:
+        counts[x] += 1
+    sorted_arr = []
+    for i, count in enumerate(<mark>arr</mark>):
+        sorted_arr.extend([i] * count)
+    return sorted_arr</pre></div>
+        <div class="bugnote">
+          <span class="tag">BUG · line 6</span>
+          <span class="en">The second loop enumerates <code>arr</code> instead of <code>counts</code>, so the input values are treated as counts and the output is wrong. <b>Fix:</b> <code>enumerate(counts)</code>.</span>
+          <span class="zh">第二个循环遍历的是 <code>arr</code> 而不是 <code>counts</code>，把输入值当成了计数，结果错误。<b>修复：</b><code>enumerate(counts)</code>。</span>
+        </div>
+        <figcaption>code_image_01.jpg · bucketsort</figcaption>
+      </figure>
+    </section>
+
+    <!-- ================= REQUIREMENTS ================= -->
+    <section id="requirements" data-spy>
+      <div class="sec-head">
+        <p class="kicker">requirement.txt · instructions for Assignment 2.pdf</p>
+        <h2><span class="en">What the assignment asks for</span><span class="zh">作业要求</span></h2>
+        <p class="lede en">Build a UI app that uses a multimodal LLM to turn a photo of handwritten Python code into code, explain its bugs, and suggest fixes. The grade comes from the submitted notebook (code and comments) and a live demo with a TA.</p>
+        <p class="lede zh">做一个 UI 应用：用多模态大模型把手写 Python 代码的照片转成代码、解释 bug 并给出修复建议。成绩来自提交的 notebook（代码和注释）和与 TA 的现场 demo。</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="block">
+          <h3><span class="en">Required features</span><span class="zh">必须实现的功能</span></h3>
+          <ol class="en">
+            <li>Transcribe handwritten Python code into a code snippet.</li>
+            <li>Run static analysis and explain bugs (if any) in natural language.</li>
+            <li>Suggest bug fixes, improvements, or efficiency tweaks.</li>
+          </ol>
+          <ol class="zh">
+            <li>把手写 Python 代码转写成代码片段。</li>
+            <li>做静态分析，用自然语言解释 bug（如果有）。</li>
+            <li>给出 bug 修复、改进或效率优化建议。</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3><span class="en">What to submit</span><span class="zh">提交要求</span></h3>
+          <ul class="en">
+            <li>One <code>.ipynb</code> per group, named exactly <code>SWE270P-A2.ipynb</code>.</li>
+            <li>A comment at the top with every member's name and student ID.</li>
+            <li>Comments explaining each function or method.</li>
+            <li>No late submissions. A wrong format can score 0.</li>
+          </ul>
+          <ul class="zh">
+            <li>每组一个 <code>.ipynb</code>，文件名必须是 <code>SWE270P-A2.ipynb</code>。</li>
+            <li>文件顶部用注释写明所有组员的姓名和学号。</li>
+            <li>每个函数或方法都要有注释说明。</li>
+            <li>不接受迟交，格式不对可能直接 0 分。</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3><span class="en">What the demo must show</span><span class="zh">Demo 要展示什么</span></h3>
+          <ul class="en">
+            <li>Uploading the code image.</li>
+            <li>Transcribing the code snippet.</li>
+            <li>Running static analysis to explain the code and suggest improvements.</li>
+            <li>The TA brings the images, and you may run several rounds. Use the exact version you submitted.</li>
+            <li>One member books a 15-minute slot and invites everyone with their UCI email.</li>
+          </ul>
+          <ul class="zh">
+            <li>上传代码图片。</li>
+            <li>转写代码片段。</li>
+            <li>运行静态分析，解释代码并给出改进建议。</li>
+            <li>图片由 TA 现场提供，可能要跑好几轮。必须使用提交的那一版代码。</li>
+            <li>一位组员预约 15 分钟的时段，并用 UCI 邮箱邀请所有组员。</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3><span class="en">Extra credit and grading notes</span><span class="zh">额外加分与评分说明</span></h3>
+          <ul class="en">
+            <li><b>Extra credit:</b> support multiple programming languages. Ours supports nine, with auto-detect.</li>
+            <li>You are <b>not</b> graded on how well the LLM performs, only on completeness and the demo.</li>
+            <li>Test with different handwriting styles and colored pens, and be ready to answer questions about the code.</li>
+          </ul>
+          <ul class="zh">
+            <li><b>额外加分：</b>支持多种编程语言。我们支持 9 种，并能自动检测。</li>
+            <li>评分<b>不看</b>大模型本身表现多好，只看完成度和 demo。</li>
+            <li>要测试不同的字迹和彩色笔，并准备好回答关于代码的问题。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Rubric, mapped to our notebook</span><span class="zh">评分标准与 notebook 的对应关系</span></h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><span class="en">Criterion</span><span class="zh">评分项</span></th>
+                <th><span class="en">Points</span><span class="zh">分值</span></th>
+                <th><span class="en">Full marks means</span><span class="zh">满分标准</span></th>
+                <th><span class="en">Where we cover it</span><span class="zh">我们在哪里满足</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="en">UI Application</span><span class="zh">UI 应用</span></td>
+                <td class="num">14</td>
+                <td><span class="en">Image upload, accurate transcription, static analysis with clear natural-language bug explanations, meaningful fixes or improvements.</span><span class="zh">能上传图片、转写准确、静态分析并用清楚的自然语言解释 bug、给出有意义的修复或改进。</span></td>
+                <td><code>gr.Image</code> (cell 15) · <code>transcribe_image_code</code> (cell 11) · <code>analyze_code</code>, <code>format_review</code> (cell 13)</td>
+              </tr>
+              <tr>
+                <td><span class="en">Submission Format</span><span class="zh">提交格式</span></td>
+                <td class="num">1</td>
+                <td><span class="en">Correct file name and format, demo scheduled on time.</span><span class="zh">文件名和格式正确，按时预约 demo。</span></td>
+                <td><span class="en">Header comment (cell 0), a docstring on every function. Rename the file before submitting.</span><span class="zh">顶部注释（cell 0）、每个函数都有 docstring。提交前要改文件名。</span></td>
+              </tr>
+              <tr>
+                <td><span class="en">Demo Presentation</span><span class="zh">Demo 展示</span></td>
+                <td class="num">10</td>
+                <td><span class="en">Full workflow on the TA's image, accurate results, and confident answers to follow-up questions. 8 pts if a component is slightly flawed or inconsistent across examples.</span><span class="zh">用 TA 的图片跑完整流程、结果准确、能自信地回答追问。若某个环节有小问题或不同例子结果不一致，给 8 分。</span></td>
+                <td><span class="en">The demo runbook and Q&amp;A on this page.</span><span class="zh">本页的 Demo 流程和 Q&amp;A。</span></td>
+              </tr>
+              <tr>
+                <td><span class="en">Extra credit</span><span class="zh">额外加分</span></td>
+                <td class="num">+</td>
+                <td><span class="en">Multiple programming languages.</span><span class="zh">支持多种编程语言。</span></td>
+                <td><code>LANGUAGES</code>, <code>Language</code> (cell 9) · <span class="en">language-aware prompts (cells 11, 13)</span><span class="zh">感知语言的 prompt（cell 11、13）</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr><td><span class="en">Total</span><span class="zh">合计</span></td><td class="num">25</td><td colspan="2"></td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <p class="ttl"><span class="en">Check the file name before you submit</span><span class="zh">提交前检查文件名</span></p>
+        <p class="en">The final code lives in <code>SWE270P_A2_2.ipynb</code>. The folder also has an older <code>SWE270P-A2.ipynb</code> that still says <code>TODO: &lt;Full Name&gt;</code>, saves to <code>llm_fixed_code.py</code>, and has the old test cell. Submit the contents of <code>SWE270P_A2_2.ipynb</code> under the name <code>SWE270P-A2.ipynb</code>, and demo from that same file.</p>
+        <p class="zh">最终代码在 <code>SWE270P_A2_2.ipynb</code>。文件夹里还有一个旧版 <code>SWE270P-A2.ipynb</code>：组员名字还是 <code>TODO: &lt;Full Name&gt;</code>，输出文件是 <code>llm_fixed_code.py</code>，测试 cell 也是旧的。请把 <code>SWE270P_A2_2.ipynb</code> 的内容以 <code>SWE270P-A2.ipynb</code> 的名字提交，并用同一个文件做 demo。</p>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Before you submit</span><span class="zh">提交前清单</span></h3>
+        <ul class="checklist">
+          <li><label><input type="checkbox" id="chk-name"><span><span class="en">The notebook is named exactly <code>SWE270P-A2.ipynb</code> and contains the final code.</span><span class="zh">notebook 文件名正好是 <code>SWE270P-A2.ipynb</code>，内容是最终版代码。</span></span></label></li>
+          <li><label><input type="checkbox" id="chk-header"><span><span class="en">Cell 0 lists all three members with student IDs.</span><span class="zh">Cell 0 写了三位组员的姓名和学号。</span></span></label></li>
+          <li><label><input type="checkbox" id="chk-key"><span><span class="en">No API key appears anywhere in the notebook or its outputs.</span><span class="zh">notebook 及其输出里都没有 API key。</span></span></label></li>
+          <li><label><input type="checkbox" id="chk-run"><span><span class="en">Run all cells top to bottom once in a fresh runtime and confirm the app launches.</span><span class="zh">在新的 runtime 里从头到尾运行一遍，确认应用能启动。</span></span></label></li>
+          <li><label><input type="checkbox" id="chk-canvas"><span><span class="en">One group member uploads it to Canvas before 11:59 pm.</span><span class="zh">由一位组员在晚 11:59 前上传到 Canvas。</span></span></label></li>
+          <li><label><input type="checkbox" id="chk-slot"><span><span class="en">The demo slot is booked and every member is invited with their UCI email.</span><span class="zh">已预约 demo 时段，并用 UCI 邮箱邀请了所有组员。</span></span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= ARCHITECTURE ================= -->
+    <section id="architecture" data-spy>
+      <div class="sec-head">
+        <p class="kicker">SWE270P_A2_2.ipynb</p>
+        <h2><span class="en">How the app fits together</span><span class="zh">架构总览</span></h2>
+        <p class="lede en">Two buttons, two model requests, and an editable step in between. Everything the model returns is JSON that matches a Pydantic schema.</p>
+        <p class="lede zh">两个按钮、两次模型请求，中间有一个可编辑的环节。模型返回的内容都是符合 Pydantic schema 的 JSON。</p>
+      </div>
+
+      <ol class="pipeline">
+        <li>
+          <span class="n">1 · <span class="en">user</span><span class="zh">用户</span></span>
+          <h4><span class="en">Upload a photo</span><span class="zh">上传照片</span></h4>
+          <p><span class="en"><code>gr.Image(type="pil")</code> hands the function a PIL image. Pick a language or leave Auto-detect.</span><span class="zh"><code>gr.Image(type="pil")</code> 把 PIL 图片传给函数。选择语言，或保持 Auto-detect。</span></p>
+        </li>
+        <li class="llm">
+          <span class="n">2 · <span class="en">model request 1</span><span class="zh">第 1 次模型请求</span></span>
+          <h4><span class="en">Transcribe Code</span><span class="zh">转写代码</span></h4>
+          <p><span class="en"><code>transcribe_image_code</code> sends the image and <code>TRANSCRIBE_PROMPT</code>. Schema: <code>Transcription</code> (language, code).</span><span class="zh"><code>transcribe_image_code</code> 发送图片和 <code>TRANSCRIBE_PROMPT</code>。Schema：<code>Transcription</code>（语言、代码）。</span></p>
+        </li>
+        <li class="human">
+          <span class="n">3 · <span class="en">user</span><span class="zh">用户</span></span>
+          <h4><span class="en">Review and edit</span><span class="zh">检查并修改</span></h4>
+          <p><span class="en">The code lands in an editable <code>gr.Code</code> box. Fix any misread character here.</span><span class="zh">代码显示在可编辑的 <code>gr.Code</code> 框里，在这里改掉识别错的字符。</span></p>
+          <span class="hand"><span class="en">← human in the loop</span><span class="zh">← 人工把关</span></span>
+        </li>
+        <li class="llm">
+          <span class="n">4 · <span class="en">model request 2</span><span class="zh">第 2 次模型请求</span></span>
+          <h4><span class="en">Analyze Code</span><span class="zh">分析代码</span></h4>
+          <p><span class="en"><code>analyze_code</code> sends only the code text and a review prompt. Schema: <code>CodeReview</code>.</span><span class="zh"><code>analyze_code</code> 只发送代码文本和审查 prompt。Schema：<code>CodeReview</code>。</span></p>
+        </li>
+        <li>
+          <span class="n">5 · <span class="en">app</span><span class="zh">应用</span></span>
+          <h4><span class="en">Show the results</span><span class="zh">展示结果</span></h4>
+          <p><span class="en"><code>format_review</code> builds the Markdown report. The refined code is displayed and saved to <code>file.&lt;ext&gt;</code>.</span><span class="zh"><code>format_review</code> 生成 Markdown 报告。修好的代码会显示出来并保存为 <code>file.&lt;ext&gt;</code>。</span></p>
+        </li>
+        <li>
+          <span class="n">6 · <span class="en">notebook</span><span class="zh">notebook</span></span>
+          <h4><span class="en">Run the tests</span><span class="zh">运行测试</span></h4>
+          <p><span class="en"><code>run_tests</code> imports <code>file.py</code> and checks it against a <code>test_case_*.json</code> file (Python only).</span><span class="zh"><code>run_tests</code> 导入 <code>file.py</code>，用 <code>test_case_*.json</code> 检查（仅限 Python）。</span></p>
+        </li>
+      </ol>
+
+      <div class="block">
+        <h3><span class="en">The two model requests side by side</span><span class="zh">两次模型请求对比</span></h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th></th><th><span class="en">Request 1: transcription</span><span class="zh">请求 1：转写</span></th><th><span class="en">Request 2: analysis</span><span class="zh">请求 2：分析</span></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="en">Function</span><span class="zh">函数</span></td><td><code>transcribe_image_code</code></td><td><code>analyze_code</code></td></tr>
+              <tr><td><span class="en">Contents</span><span class="zh">输入内容</span></td><td><code>[image_file, prompt]</code></td><td><code>[prompt]</code> <span class="en">(code embedded in the prompt)</span><span class="zh">（代码嵌在 prompt 里）</span></td></tr>
+              <tr><td><span class="en">Schema</span><span class="zh">Schema</span></td><td><code>Transcription</code>: language, code</td><td><code>CodeReview</code>: language, summary, bugs, improvements, fixed_code</td></tr>
+              <tr><td><span class="en">Prompt's job</span><span class="zh">Prompt 的任务</span></td><td><span class="en">Copy exactly, bugs included</span><span class="zh">原样照抄，包括 bug</span></td><td><span class="en">Find bugs, explain, suggest, fix</span><span class="zh">找 bug、解释、建议、修复</span></td></tr>
+              <tr><td><span class="en">Output goes to</span><span class="zh">输出去向</span></td><td><span class="en">Editable code box</span><span class="zh">可编辑代码框</span></td><td><span class="en">Markdown report, refined-code box, <code>file.&lt;ext&gt;</code></span><span class="zh">Markdown 报告、修复代码框、<code>file.&lt;ext&gt;</code></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Design decisions to mention</span><span class="zh">值得一提的设计决策</span></h3>
+        <dl class="decisions en">
+          <div><dt>Two steps with a human check in the middle</dt><dd>Misreading handwriting is the most likely failure, so the user confirms the code before it is analyzed.</dd></div>
+          <div><dt>Transcription never fixes bugs</dt><dd>If the model quietly corrected the code while reading it, the analysis would have nothing to find.</dd></div>
+          <div><dt>Structured JSON output</dt><dd>Pydantic schemas give each piece (summary, bugs, fixed code) its own field, so nothing is parsed out of free text.</dd></div>
+          <div><dt>One request per click, automatic retry on 429</dt><dd>Keeps the app inside the free-tier rate limits and avoids failing on a brief limit.</dd></div>
+          <div><dt>No API key in the notebook</dt><dd>Read from Colab Secrets or an environment variable.</dd></div>
+          <div><dt>Language as an enum</dt><dd>The model can only answer with one of the nine supported languages, so lookups never fail.</dd></div>
+        </dl>
+        <dl class="decisions zh">
+          <div><dt>两步走，中间人工确认</dt><dd>最容易出错的是手写识别，所以分析之前先让用户确认代码。</dd></div>
+          <div><dt>转写时绝不修 bug</dt><dd>如果模型在读代码时顺手改了，分析环节就找不到 bug 了。</dd></div>
+          <div><dt>结构化 JSON 输出</dt><dd>用 Pydantic schema 让每部分（总结、bug、修复代码）各占一个字段，不需要从自由文本里解析。</dd></div>
+          <div><dt>每次点击一个请求，遇到 429 自动重试</dt><dd>保证不超免费额度的速率限制，短暂超限时也不会直接失败。</dd></div>
+          <div><dt>notebook 里没有 API key</dt><dd>从 Colab Secrets 或环境变量读取。</dd></div>
+          <div><dt>语言用枚举表示</dt><dd>模型只能回答 9 种支持的语言之一，查表永远不会出错。</dd></div>
+        </dl>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">What we changed from the starter template</span><span class="zh">相比 TA 模板我们改了什么</span></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><span class="en">Area</span><span class="zh">部分</span></th><th><span class="en">Template</span><span class="zh">模板</span></th><th><span class="en">Our notebook</span><span class="zh">我们的实现</span></th></tr></thead>
+            <tbody>
+              <tr><td><span class="en">Packages</span><span class="zh">依赖包</span></td><td><code>gradio unstructured sentence-transformers google-genai</code></td><td><span class="en">Only <code>gradio</code> and <code>google-genai</code>, the two we use.</span><span class="zh">只装用得到的 <code>gradio</code> 和 <code>google-genai</code>。</span></td></tr>
+              <tr><td>API key</td><td><span class="en">Colab secret cell, plus a cell for pasting the key</span><span class="zh">Colab secret 一个 cell，另一个 cell 直接粘贴 key</span></td><td><span class="en">One cell: Colab secret, otherwise the environment variable</span><span class="zh">一个 cell：Colab secret，否则读环境变量</span></td></tr>
+              <tr><td><span class="en">Transcription</span><span class="zh">转写</span></td><td>TODO</td><td><span class="en">Faithful-copy prompt, <code>Transcription</code> schema, fence stripping, <code>NO_CODE_FOUND</code> check</span><span class="zh">照抄型 prompt、<code>Transcription</code> schema、去除代码围栏、<code>NO_CODE_FOUND</code> 检查</span></td></tr>
+              <tr><td><span class="en">Analysis</span><span class="zh">分析</span></td><td><span class="en">TODO prompt, free-text reply</span><span class="zh">prompt 待写，自由文本回复</span></td><td><span class="en"><code>CodeReview</code> schema, bug list with location, explanation and fix, refined code saved to a file</span><span class="zh"><code>CodeReview</code> schema，bug 列表含位置、解释和修复，修好的代码保存到文件</span></td></tr>
+              <tr><td><span class="en">Rate limits</span><span class="zh">速率限制</span></td><td><span class="en">A note only</span><span class="zh">只有一段说明</span></td><td><code>generate_with_retry</code></td></tr>
+              <tr><td>UI</td><td>TODO</td><td><span class="en">Gradio Blocks with upload, language dropdown, editable code, report, refined code</span><span class="zh">Gradio Blocks：上传、语言下拉框、可编辑代码、报告、修复代码</span></td></tr>
+              <tr><td><span class="en">Languages</span><span class="zh">语言</span></td><td>Python</td><td><span class="en">9 languages plus auto-detect</span><span class="zh">9 种语言 + 自动检测</span></td></tr>
+              <tr><td><span class="en">Tests</span><span class="zh">测试</span></td><td><code>run_tests</code> <span class="en">example</span><span class="zh">示例</span></td><td><span class="en">Docstring added, test cell checks for missing files and offers a Colab upload</span><span class="zh">加了 docstring，测试 cell 会检查缺失文件并提供 Colab 上传</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WALKTHROUGH ================= -->
+    <section id="walkthrough" data-spy>
+      <div class="sec-head">
+        <p class="kicker">SWE270P_A2_2.ipynb · cells 0–18</p>
+        <h2><span class="en">Notebook walkthrough, cell by cell</span><span class="zh">Notebook 逐 cell 讲解</span></h2>
+        <p class="lede en">The code below is copied verbatim from the notebook. Long cells are split into parts so each explanation sits next to the code it describes. Each card ends with one line you can say in the demo.</p>
+        <p class="lede zh">下面的代码一字不差地取自 notebook。较长的 cell 拆成几段，讲解紧挨着对应代码。每张卡片最后都有一句 demo 时可以直接说的英文。</p>
+      </div>
+
+      <div class="cells">
+
+        <!-- cell 0 -->
+        <article class="cell" id="cell-0">
+          <div class="cell-head"><span class="cell-tag">cell 0 · code</span><h3><span class="en">Header comment</span><span class="zh">文件头注释</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">header</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># SWE 270P Assignment 2: Code Whiteboard Tutor
+# Group members (Name - Student ID):
+# Mouhamed Osman - 47083028
+# Zhenyu Song - 15305920
+# Jennifer Sun - 31687536</code></pre></figure>
+            <div class="explain">
+              <p class="en">The assignment requires a comment at the top with each member's name and student ID. Because the cell only contains comments, running it does nothing.</p>
+              <p class="zh">作业要求文件顶部用注释写明每位组员的姓名和学号。这个 cell 只有注释，运行时什么都不做。</p>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"The first cell lists our group members and student IDs, as the submission rules require."</p><p class="bi-zh" lang="zh-CN">“第一个 cell 按提交要求列出了组员和学号。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 1 · markdown</span><span class="en">Intro: the goal, the three required features, the workflow (upload → Transcribe → Analyze) and the extra-credit language list.</span><span class="zh">介绍：目标、三个必需功能、流程（上传 → 转写 → 分析）以及额外加分的多语言支持。</span></div>
+
+        <!-- cell 2 -->
+        <article class="cell" id="cell-2">
+          <div class="cell-head"><span class="cell-tag">cell 2 · code</span><h3><span class="en">Install packages</span><span class="zh">安装依赖</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">%pip install</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Install required packages
+%pip -q install gradio "google-genai&gt;=1.50"</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li><code>%pip</code> is the notebook magic that installs into the kernel's own environment. <code>-q</code> keeps the log short.</li>
+                  <li><code>google-genai</code> is Google's current Gen AI SDK (<code>from google import genai</code>). The version is quoted because <code>&gt;=</code> would otherwise be read as a shell redirect.</li>
+                  <li>We dropped <code>unstructured</code> and <code>sentence-transformers</code> from the template because nothing uses them, which makes setup faster.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li><code>%pip</code> 是 notebook 魔法命令，安装到当前 kernel 的环境里；<code>-q</code> 让输出更简洁。</li>
+                  <li><code>google-genai</code> 是 Google 当前的 Gen AI SDK（<code>from google import genai</code>）。版本号加引号，是因为 <code>&gt;=</code> 否则会被 shell 当成重定向。</li>
+                  <li>去掉了模板里没用到的 <code>unstructured</code> 和 <code>sentence-transformers</code>，安装更快。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"We only install what we use: Gradio for the UI and the google-genai SDK to call Gemini."</p><p class="bi-zh" lang="zh-CN">“我们只装用得到的：Gradio 做界面，google-genai SDK 调用 Gemini。”</p></div>
+        </article>
+
+        <!-- cell 3 -->
+        <article class="cell" id="cell-3">
+          <div class="cell-head"><span class="cell-tag">cell 3 · code</span><h3><span class="en">Imports</span><span class="zh">导入库</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">imports</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Import necessary libraries
+import os
+import time
+from enum import Enum
+from PIL import Image
+from pydantic import BaseModel
+
+import gradio as gr
+from google import genai
+from google.genai import types, errors</code></pre></figure>
+            <div class="explain">
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Import</th><th><span class="en">Used for</span><span class="zh">用途</span></th></tr></thead>
+                  <tbody>
+                    <tr><td><code>os</code></td><td><span class="en">Reading <code>GEMINI_API_KEY</code> from the environment outside Colab.</span><span class="zh">在 Colab 之外从环境变量读取 <code>GEMINI_API_KEY</code>。</span></td></tr>
+                    <tr><td><code>time</code></td><td><span class="en"><code>time.sleep</code> between retries after a 429.</span><span class="zh">遇到 429 后重试前 <code>time.sleep</code> 等待。</span></td></tr>
+                    <tr><td><code>Enum</code></td><td><span class="en">Building the <code>Language</code> enum used in the schemas.</span><span class="zh">构建 schema 中用到的 <code>Language</code> 枚举。</span></td></tr>
+                    <tr><td><code>PIL.Image</code></td><td><span class="en">Type of the uploaded image (the Gradio component uses <code>type="pil"</code>).</span><span class="zh">上传图片的类型（Gradio 组件设置了 <code>type="pil"</code>）。</span></td></tr>
+                    <tr><td><code>BaseModel</code></td><td><span class="en">Pydantic base class for the response schemas.</span><span class="zh">响应 schema 的 Pydantic 基类。</span></td></tr>
+                    <tr><td><code>gradio as gr</code></td><td><span class="en">The UI.</span><span class="zh">界面。</span></td></tr>
+                    <tr><td><code>genai, types, errors</code></td><td><span class="en">The client, <code>GenerateContentConfig</code>, and <code>APIError</code> for detecting 429s.</span><span class="zh">客户端、<code>GenerateContentConfig</code>，以及用于识别 429 的 <code>APIError</code>。</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- cell 4 -->
+        <article class="cell" id="cell-4">
+          <div class="cell-head"><span class="cell-tag">cell 4 · code</span><h3><span class="en">API key and model</span><span class="zh">API key 与模型</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">client setup</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Load the Gemini API key.
+# - Google Colab: add GEMINI_API_KEY in the Secrets tab (key symbol on the left navigation bar).
+# - Local environment: set the GEMINI_API_KEY environment variable before starting Jupyter,
+#   e.g. `export GEMINI_API_KEY=...`, so the key is never stored in this notebook.
+try:
+    from google.colab import userdata
+    api_key = userdata.get('GEMINI_API_KEY')
+except ImportError:
+    api_key = os.environ.get('GEMINI_API_KEY', '')
+
+client = genai.Client(api_key=api_key)
+MODEL_ID = "gemini-3.5-flash-lite"</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>In Colab, <code>google.colab.userdata</code> exists, so the key comes from the Secrets tab. Anywhere else that import raises <code>ImportError</code> and we fall back to the <code>GEMINI_API_KEY</code> environment variable.</li>
+                  <li>The key is never typed into the notebook, so the submitted file holds no secret.</li>
+                  <li>One <code>genai.Client</code> is created and reused by every request.</li>
+                  <li><code>MODEL_ID</code> is the only place the model name appears, so switching models is a one-line change.</li>
+                </ul>
+                <p class="why"><b>Watch out:</b> in Colab, the secret's "Notebook access" toggle must be on. If it is off, <code>userdata.get</code> raises an error (not <code>ImportError</code>), so this cell fails.</p>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>在 Colab 中 <code>google.colab.userdata</code> 存在，key 从 Secrets 标签页读取；在其他环境 import 会抛 <code>ImportError</code>，于是改读 <code>GEMINI_API_KEY</code> 环境变量。</li>
+                  <li>key 从来不写进 notebook，提交的文件里没有任何密钥。</li>
+                  <li>只创建一个 <code>genai.Client</code>，所有请求共用。</li>
+                  <li>模型名只出现在 <code>MODEL_ID</code> 一处，换模型只需改一行。</li>
+                </ul>
+                <p class="why"><b>注意：</b>在 Colab 中 secret 的 “Notebook access” 开关必须打开。如果没开，<code>userdata.get</code> 会抛出别的错误（不是 <code>ImportError</code>），这个 cell 会直接失败。</p>
+              </div>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"The key comes from Colab Secrets, or from an environment variable locally, so it's never stored in the notebook."</p><p class="bi-zh" lang="zh-CN">“key 来自 Colab Secrets，本地则读环境变量，所以从不保存在 notebook 里。”</p></div>
+        </article>
+
+        <div class="mdcell" id="cell-5"><span class="cell-tag">cell 5 · markdown</span><span class="en">Rate limits: RPM (requests per minute), TPM (input tokens per minute) and RPD (requests per day, reset at midnight Pacific). Going over any of them returns <code>429 RESOURCE_EXHAUSTED</code>. The app makes one request per click and retries 429s automatically.</span><span class="zh">速率限制：RPM（每分钟请求数）、TPM（每分钟输入 token 数）、RPD（每天请求数，太平洋时间午夜重置）。任一超限都会返回 <code>429 RESOURCE_EXHAUSTED</code>。应用每次点击只发一个请求，并自动重试 429。</span></div>
+        <div class="mdcell"><span class="cell-tag">cell 6 · markdown</span><span class="md-text">### Helper functions</span></div>
+
+        <!-- cell 7 -->
+        <article class="cell" id="cell-7">
+          <div class="cell-head"><span class="cell-tag">cell 7 · code</span><h3><span class="en">Helpers: retry and fence stripping</span><span class="zh">工具函数：重试与去除代码围栏</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">generate_with_retry</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def generate_with_retry(contents, config=None, max_retries=3):
+    """
+    Sends one request to the Gemini model, retrying if the free-tier rate limit is hit.
+
+    A 429 RESOURCE_EXHAUSTED error means the RPM/TPM limit was exceeded; waiting a few
+    seconds is usually enough, so we back off (5s, 10s, ...) and retry. Any other error,
+    or a 429 on the last attempt, is raised to the caller.
+
+    Parameters:
+        contents (list): The request contents (PIL images and/or text prompts).
+        config (types.GenerateContentConfig | None): Optional generation config.
+        max_retries (int): Maximum number of attempts.
+
+    Returns:
+        The GenerateContentResponse returned by the model.
+    """
+    for attempt in range(max_retries):
+        try:
+            return client.models.generate_content(model=MODEL_ID, contents=contents, config=config)
+        except errors.APIError as e:
+            if e.code != 429 or attempt == max_retries - 1:
+                raise
+            time.sleep(5 * (attempt + 1))</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>Every model call in the app goes through this function.</li>
+                  <li>It tries up to <code>max_retries = 3</code> times. Only an <code>errors.APIError</code> with <code>code == 429</code> is retried.</li>
+                  <li>The wait is <code>5 * (attempt + 1)</code>: 5 s after the first failure, 10 s after the second. That is linear backoff. A third 429 is raised.</li>
+                  <li>Any other error (bad key, bad request, server error) is raised immediately, and the caller turns it into a <code>gr.Error</code>.</li>
+                </ul>
+                <p class="why"><b>Why:</b> on the free tier a short wait usually clears a per-minute limit, so retrying keeps the demo from failing on a brief spike.</p>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>应用里所有模型调用都经过这个函数。</li>
+                  <li>最多尝试 <code>max_retries = 3</code> 次，只有 <code>code == 429</code> 的 <code>errors.APIError</code> 会重试。</li>
+                  <li>等待时间是 <code>5 * (attempt + 1)</code>：第一次失败等 5 秒，第二次等 10 秒，属于线性退避。第三次还是 429 就抛出。</li>
+                  <li>其他错误（key 无效、请求错误、服务器错误）立刻抛出，由调用方转成 <code>gr.Error</code>。</li>
+                </ul>
+                <p class="why"><b>原因：</b>免费额度下，稍等一下通常就能解除每分钟的限制，自动重试能避免 demo 因为短暂超限而失败。</p>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">strip_code_fences</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def strip_code_fences(text: str) -&gt; str:
+    """
+    Removes a surrounding markdown code fence (```python ... ```) if the model added one,
+    so the result can be shown in the code editor and saved directly as a .py file.
+    Indentation inside the code is preserved.
+    """
+    lines = text.strip("\n").rstrip().splitlines()
+    if lines and lines[0].strip().startswith("```"):
+        lines = lines[1:]
+    if lines and lines[-1].strip().startswith("```"):
+        lines = lines[:-1]
+    return "\n".join(lines)</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>Models often wrap code in <code>```python … ```</code> even when told not to. That would break the editor and the saved <code>.py</code> file.</li>
+                  <li><code>strip("\n")</code> removes only blank lines at the ends, so the first line keeps its indentation. <code>rstrip()</code> drops trailing whitespace.</li>
+                  <li>If the first line starts with <code>```</code> it is dropped, and the same for the last line.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>即使明确要求不要加，模型也常把代码包在 <code>```python … ```</code> 里，这会破坏编辑器显示和保存的 <code>.py</code> 文件。</li>
+                  <li><code>strip("\n")</code> 只去掉首尾的空行，所以第一行的缩进得以保留；<code>rstrip()</code> 去掉末尾空白。</li>
+                  <li>第一行以 <code>```</code> 开头就删掉，最后一行同理。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"Every model call goes through one helper that retries on 429 rate-limit errors, waiting five and then ten seconds."</p><p class="bi-zh" lang="zh-CN">“所有模型调用都经过一个辅助函数，遇到 429 限流错误会重试，先等 5 秒再等 10 秒。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 8 · markdown</span><span class="md-text">### Supported programming languages (extra credit)</span></div>
+
+        <!-- cell 9 -->
+        <article class="cell" id="cell-9">
+          <div class="cell-head"><span class="cell-tag">cell 9 · code</span><h3><span class="en">Supported languages (extra credit)</span><span class="zh">支持的语言（额外加分）</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">LANGUAGES, AUTO_DETECT</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Each supported language maps to:
+#   (gr.Code syntax-highlighting name, or None when Gradio has no highlighter for it,
+#    file extension used when saving the refined code)
+LANGUAGES = {
+    "Python": ("python", ".py"),
+    "Java": (None, ".java"),
+    "C": ("c", ".c"),
+    "C++": ("cpp", ".cpp"),
+    "C#": (None, ".cs"),
+    "JavaScript": ("javascript", ".js"),
+    "TypeScript": ("typescript", ".ts"),
+    "Go": (None, ".go"),
+    "Rust": (None, ".rs"),
+}
+AUTO_DETECT = "Auto-detect"</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>Each language maps to a pair: the highlighter name for <code>gr.Code</code>, and the file extension for the saved code.</li>
+                  <li><code>gr.Code</code> only ships highlighters for some languages. Java, C#, Go and Rust aren't among them, so they get <code>None</code> and show as plain text.</li>
+                  <li><code>AUTO_DETECT</code> is the extra dropdown choice that lets the model decide.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>每种语言对应一个二元组：<code>gr.Code</code> 的高亮名称，以及保存代码时用的文件扩展名。</li>
+                  <li><code>gr.Code</code> 只内置部分语言的高亮，Java、C#、Go、Rust 不在其中，所以填 <code>None</code>，以纯文本显示。</li>
+                  <li><code>AUTO_DETECT</code> 是下拉框里额外的选项，让模型自己判断语言。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">Language enum</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Enum of the language names. It is used in the JSON response schemas below, so the model
+# can only answer with one of the supported languages.
+Language = Enum("Language", {name: name for name in LANGUAGES})</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>This is Python's functional <code>Enum</code> API: it builds an enum from a dict. It accepts names such as <code>"C++"</code> and <code>"C#"</code> that aren't valid identifiers.</li>
+                  <li>Used as a field type in the Pydantic schemas, it becomes a JSON-schema <code>enum</code>, so Gemini can only answer with one of the nine names.</li>
+                  <li>That is why <code>LANGUAGES[result.language.value]</code> can never raise a <code>KeyError</code>.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>这是 Python <code>Enum</code> 的函数式写法：用字典直接生成枚举，可以使用 <code>"C++"</code>、<code>"C#"</code> 这种不是合法标识符的名字。</li>
+                  <li>作为 Pydantic schema 的字段类型时，它会变成 JSON schema 里的 <code>enum</code>，Gemini 只能从这 9 个名字里选一个回答。</li>
+                  <li>所以 <code>LANGUAGES[result.language.value]</code> 永远不会出现 <code>KeyError</code>。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">language_instruction</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def language_instruction(language: str) -&gt; str:
+    """
+    Returns the sentence that tells the model which language the code is in.
+    For "Auto-detect" the model is asked to identify the language itself.
+    """
+    if language == AUTO_DETECT:
+        return "First identify which programming language the code is written in and report it in the language field."
+    return f"The code is written in {language}; report {language} in the language field."</code></pre></figure>
+            <div class="explain">
+              <p class="en">Returns one sentence that goes into both prompts. With Auto-detect it asks the model to identify the language; otherwise it states the language. Sharing it keeps the two steps consistent.</p>
+              <p class="zh">返回一句话，同时插入两个 prompt。选 Auto-detect 时让模型自己识别语言，否则直接告诉模型是哪种语言。两步共用同一句，行为保持一致。</p>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"For extra credit we support nine languages. The language is an enum in the response schema, so the model can only answer with one we support."</p><p class="bi-zh" lang="zh-CN">“为了额外加分，我们支持 9 种语言。语言在响应 schema 里是枚举，所以模型只能回答我们支持的语言。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 10 · markdown</span><span class="md-text">### Step 1: Transcription (image → code)</span></div>
+
+        <!-- cell 11 -->
+        <article class="cell" id="cell-11">
+          <div class="cell-head"><span class="cell-tag">cell 11 · code</span><h3><span class="en">Step 1: transcription</span><span class="zh">第一步：转写</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">Transcription schema</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">class Transcription(BaseModel):
+    """Structured output schema for the transcription step."""
+    language: Language   # programming language the code is written in
+    code: str            # the code exactly as written in the image</code></pre></figure>
+            <div class="explain">
+              <p class="en">The shape of the reply: the language (restricted to the enum) and the code as text. Passing this class as <code>response_schema</code> makes Gemini return JSON with exactly these two fields.</p>
+              <p class="zh">回复的结构：语言（限定在枚举范围内）和代码文本。把这个类作为 <code>response_schema</code> 传入，Gemini 就会返回正好包含这两个字段的 JSON。</p>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">TRANSCRIBE_PROMPT</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Prompt for transcription. The model must copy the code exactly as written (bugs included),
+# because finding and fixing bugs is the job of the separate analysis step.
+TRANSCRIBE_PROMPT = """
+You are an expert at reading handwritten source code.
+Transcribe the handwritten code in this image into plain text, exactly as written.
+{language_instruction}
+
+Rules:
+- Copy the code faithfully. Do NOT fix bugs, logic errors, or style, even if they look wrong;
+  the code will be reviewed in a separate step.
+- Reproduce the indentation structure shown in the image using 4 spaces per level.
+- Keep the original identifiers, operators, literals, comments, and line order.
+- Ignore paper lines, margins, crossed-out text, and anything that is not code.
+- If a handwritten character is ambiguous (e.g. `[` vs `C`, `:` vs `;`, `1` vs `l`, `x` vs `X`),
+  choose the reading that is valid in the code's language and consistent with the rest of the code.
+- Put only the code in the code field, with no explanations and no markdown code fences.
+- If the image contains no code, set the code field to exactly: NO_CODE_FOUND
+"""</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <p>Each rule targets a specific failure:</p>
+                <ul>
+                  <li><b>Do NOT fix bugs.</b> Otherwise the bugs silently disappear and the analysis has nothing to find.</li>
+                  <li><b>4 spaces per level.</b> Indentation is syntax in Python, so it must be reproduced consistently.</li>
+                  <li><b>Ignore paper lines, margins, crossed-out text.</b> The photos are of lined notebook paper.</li>
+                  <li><b>Ambiguous characters:</b> pick the reading that is valid in the language (<code>[</code> vs <code>C</code>, <code>:</code> vs <code>;</code>, <code>1</code> vs <code>l</code>). This is where an LLM does better than plain OCR.</li>
+                  <li><b>Code only, no fences</b>, and the <code>NO_CODE_FOUND</code> sentinel for images without code.</li>
+                  <li><code>{language_instruction}</code> is filled in later with <code>.format()</code>.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <p>每条规则都针对一种具体的问题：</p>
+                <ul>
+                  <li><b>不要修 bug。</b>否则 bug 会悄悄消失，分析环节就找不到了。</li>
+                  <li><b>每级缩进 4 个空格。</b>缩进在 Python 中是语法，必须一致地还原。</li>
+                  <li><b>忽略横线、页边、划掉的字。</b>照片都是横线笔记本纸。</li>
+                  <li><b>有歧义的字符：</b>选在该语言中合法的读法（<code>[</code> 和 <code>C</code>、<code>:</code> 和 <code>;</code>、<code>1</code> 和 <code>l</code>）。这正是 LLM 比普通 OCR 强的地方。</li>
+                  <li><b>只输出代码、不加围栏</b>；图片里没有代码时返回 <code>NO_CODE_FOUND</code> 标记。</li>
+                  <li><code>{language_instruction}</code> 之后用 <code>.format()</code> 填入。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">transcribe_image_code</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def transcribe_image_code(image_file: Image.Image, language: str = AUTO_DETECT):
+    """
+    Step 1: Transcribes code from the input image using a multimodal LLM.
+
+    The PIL image and the transcription prompt are sent together in one request
+    (the google-genai SDK accepts PIL images directly). The reply is JSON matching the
+    Transcription schema, so we get both the code and its programming language.
+    Markdown fences are stripped from the code so it can be edited and analyzed as-is.
+
+    Parameters:
+        image_file (Image.Image): The uploaded image containing handwritten code.
+        language (str): A key of LANGUAGES, or AUTO_DETECT to let the model identify it.
+
+    Returns:
+        A gr.update for the code editor: the transcribed code, with syntax highlighting
+        and label set to the detected language.
+    """
+    if image_file is None:
+        raise gr.Error("Please upload an image of handwritten code first.")
+
+    try:
+        prompt = TRANSCRIBE_PROMPT.format(language_instruction=language_instruction(language))
+        config = types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=Transcription,
+        )
+        response = generate_with_retry([image_file, prompt], config=config)
+        result = Transcription.model_validate_json(response.text)
+    except Exception as e:
+        raise gr.Error(f"Error during transcription: {str(e)}")
+
+    code = strip_code_fences(result.code)
+    if not code.strip() or code.strip() == "NO_CODE_FOUND":
+        raise gr.Error("No code could be read from this image. Please try a clearer photo.")
+
+    detected = result.language.value
+    return gr.update(value=code, language=LANGUAGES[detected][0],
+                     label=f"2. Transcribed code ({detected}, editable)")</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ol>
+                  <li>No image uploaded: raise <code>gr.Error</code> right away, so no API call is wasted.</li>
+                  <li>Fill the prompt, then build a config with <code>response_mime_type="application/json"</code> and <code>response_schema=Transcription</code>.</li>
+                  <li>Send <code>[image_file, prompt]</code> as one request. The SDK accepts the PIL image directly. The image comes first, then the instructions.</li>
+                  <li><code>Transcription.model_validate_json</code> parses and validates the reply. Any failure, from the API or from parsing, becomes <code>gr.Error("Error during transcription: …")</code>.</li>
+                  <li>Strip fences as a safety net. An empty result or <code>NO_CODE_FOUND</code> gives a friendly "try a clearer photo" error.</li>
+                  <li>Return <code>gr.update(...)</code>, which sets the editor's value, its syntax highlighting and its label (e.g. "Transcribed code (Java, editable)") in one go.</li>
+                </ol>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ol>
+                  <li>没有上传图片：直接抛 <code>gr.Error</code>，不浪费 API 调用。</li>
+                  <li>填好 prompt，构建 config：<code>response_mime_type="application/json"</code>、<code>response_schema=Transcription</code>。</li>
+                  <li>把 <code>[image_file, prompt]</code> 作为一次请求发送。SDK 可以直接接收 PIL 图片，图片在前，指令在后。</li>
+                  <li><code>Transcription.model_validate_json</code> 解析并校验回复。无论是 API 出错还是解析出错，都会变成 <code>gr.Error("Error during transcription: …")</code>。</li>
+                  <li>保险起见再去一次围栏。结果为空或是 <code>NO_CODE_FOUND</code> 时，提示用户换一张更清晰的照片。</li>
+                  <li>返回 <code>gr.update(...)</code>，一次性设置编辑器的内容、语法高亮和标签（例如 “Transcribed code (Java, editable)”）。</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"Transcription is a single request: the image plus our prompt, with a JSON schema. The model returns the language and the code, copied exactly as written, bugs included."</p><p class="bi-zh" lang="zh-CN">“转写只用一次请求：图片加我们的 prompt，再配一个 JSON schema。模型返回语言和代码，完全照原样抄写，包括 bug。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 12 · markdown</span><span class="en">Explains that the model must return JSON matching <code>CodeReview</code>, so the explanation and the refined code are separated reliably instead of parsed out of free text.</span><span class="zh">说明模型必须返回符合 <code>CodeReview</code> 的 JSON，这样解释和修复后的代码能可靠地分开，而不是从自由文本里解析。</span></div>
+
+        <!-- cell 13 -->
+        <article class="cell" id="cell-13">
+          <div class="cell-head"><span class="cell-tag">cell 13 · code</span><h3><span class="en">Step 2: static analysis</span><span class="zh">第二步：静态分析</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">Bug, CodeReview</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">class Bug(BaseModel):
+    """One bug found by the static analysis."""
+    location: str      # line number(s) / code fragment where the bug is
+    explanation: str   # what goes wrong, in plain English
+    fix: str           # how to fix it
+
+
+class CodeReview(BaseModel):
+    """Structured output schema for the analysis step."""
+    language: Language        # programming language of the code
+    summary: str              # what the code is intended to do
+    bugs: list[Bug]           # empty if no bugs were found
+    improvements: list[str]   # readability / robustness / efficiency suggestions
+    fixed_code: str           # complete corrected code</code></pre></figure>
+            <div class="explain">
+              <p class="en">A <code>Bug</code> has a location, a plain-English explanation and a fix. <code>CodeReview</code> holds the whole answer: language, summary, a list of bugs, a list of improvements and the complete fixed code. Each field maps to a part of the UI. Empty lists are allowed when the code is already correct.</p>
+              <p class="zh"><code>Bug</code> 包含位置、通俗解释和修复方法。<code>CodeReview</code> 是完整答复：语言、总结、bug 列表、改进建议列表和完整的修复代码。每个字段对应界面的一部分。代码本来就正确时，列表可以为空。</p>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">FIXED_CODE_BASENAME</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># The refined code is saved as file + the language's extension (e.g. file.py),
+# so Python results can be run against the JSON test cases below.
+FIXED_CODE_BASENAME = "file"</code></pre></figure>
+            <div class="explain">
+              <p class="en">The refined code is saved as <code>file.py</code>, <code>file.java</code> and so on, so the test cell can import <code>file.py</code>. The name is one constant, easy to change.</p>
+              <p class="zh">修复后的代码保存为 <code>file.py</code>、<code>file.java</code> 等，测试 cell 就能导入 <code>file.py</code>。文件名是一个常量，方便修改。</p>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">format_review</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def format_review(review: CodeReview) -&gt; str:
+    """
+    Converts the structured CodeReview into Markdown for the analysis panel of the UI:
+    the language, a short summary, a numbered list of bugs (location, explanation, fix),
+    and a list of improvement suggestions.
+    """
+    parts = [f"**Language:** {review.language.value}", "### What the code does", review.summary, "### Bugs found"]
+    if review.bugs:
+        for i, bug in enumerate(review.bugs, start=1):
+            parts.append(f"**{i}. {bug.location}**: {bug.explanation}\n\n*Fix:* {bug.fix}")
+    else:
+        parts.append("No bugs found.")
+
+    parts.append("### Suggested improvements")
+    if review.improvements:
+        parts.append("\n".join(f"- {s}" for s in review.improvements))
+    else:
+        parts.append("No further improvements suggested.")
+    return "\n\n".join(parts)</code></pre></figure>
+            <div class="explain">
+              <p class="en">Turns the <code>CodeReview</code> object into Markdown for the report panel: language, "What the code does", a numbered bug list with an italic <i>Fix</i>, then bullet-point improvements. It falls back to "No bugs found." and "No further improvements suggested." The model returns data; our code decides how it looks.</p>
+              <p class="zh">把 <code>CodeReview</code> 对象转成报告面板里的 Markdown：语言、“What the code does”、带斜体 <i>Fix</i> 的编号 bug 列表，然后是改进建议的项目符号列表。没有内容时显示 “No bugs found.” 和 “No further improvements suggested.”。模型只返回数据，展示方式由我们的代码决定。</p>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">analyze_code · validation and prompt</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">def analyze_code(code_block: str, language: str = AUTO_DETECT):
+    """
+    Step 2: Performs static analysis using LLM on the transcribed code.
+
+    The code is sent with a review prompt and the CodeReview JSON schema
+    (response_mime_type="application/json"), so the reply always has separate fields for
+    the language, the explanation, and the refined code. The refined code is also saved to
+    file.&lt;ext&gt; using the extension of the code's language.
+
+    Parameters:
+        code_block (str): The transcribed code snippet.
+        language (str): A key of LANGUAGES, or AUTO_DETECT to let the model identify it.
+
+    Returns:
+        (1) The analysis text explaining bugs, improvements, or efficiency suggestions.
+        (2) The refined version of the code snippet with the suggested fixes and enhancements
+            (as a gr.update that also sets syntax highlighting for the language).
+    """
+
+    if not code_block or not code_block.strip():
+        raise gr.Error("Please provide a valid code snippet.")
+
+    try:
+        prompt = f"""
+        You are an expert software developer and code reviewer. Analyze the following code.
+        {language_instruction(language)}
+        It was transcribed from a photo of handwritten code and may contain logic bugs,
+        syntax errors, or edge cases it does not handle.
+
+        Perform a static analysis: reason about the code by reading it (it has not been run).
+        Fill in these fields:
+        1. language: The programming language of the code.
+        2. summary: In 2-4 sentences, explain what the code is intended to do and how it works.
+        3. bugs: Every bug you find (logic errors, off-by-one errors, wrong variables or indices,
+           infinite loops or recursion, missing base cases, unhandled edge cases, null/undefined
+           or memory errors, type errors, syntax errors).
+           For each bug give its location (line number and the code on that line), explain in
+           plain English what goes wrong (include a concrete input that triggers it when possible),
+           and describe the fix. Use an empty list if the code is correct.
+        4. improvements: Suggestions beyond the bug fixes for readability, style (the language's
+           conventions, e.g. PEP 8 for Python), robustness, or efficiency (mention time/space
+           complexity where relevant). Use an empty list if there is nothing worth changing.
+        5. fixed_code: The complete corrected code, in the same language, with all bug fixes
+           applied. Keep the same function name(s) and parameters so it can replace the original.
+           Do not add example usage, tests, or print statements that were not in the original,
+           and do not wrap it in markdown fences.
+
+        Code to analyze:
+        ```
+        {code_block}
+        ```
+        """</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>Empty code: raise <code>gr.Error</code> before any request.</li>
+                  <li>The prompt sets a reviewer role, adds the language sentence, and explains that the code came from a handwritten photo.</li>
+                  <li>"Reason about the code by reading it (it has not been run)" is what makes this <em>static</em> analysis.</li>
+                  <li>The five numbered items mirror the five schema fields. For each bug we ask for the line, a plain-English explanation with a concrete input that triggers it, and the fix.</li>
+                  <li>Improvements cover style (e.g. PEP 8), robustness and efficiency with time and space complexity.</li>
+                  <li><code>fixed_code</code> must keep the same function names and parameters and must not add example usage or prints, because the test cell imports the file and calls the function by name.</li>
+                  <li>The code sits between <code>```</code> delimiters so the model knows exactly where it starts and ends.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>代码为空：在发请求之前抛 <code>gr.Error</code>。</li>
+                  <li>prompt 设定代码审查者的角色，加入语言说明，并告诉模型代码来自手写照片。</li>
+                  <li>“通过阅读来推理代码（代码没有被运行）”，这就是<em>静态</em>分析的含义。</li>
+                  <li>5 个编号条目和 schema 的 5 个字段一一对应。每个 bug 都要求给出行号、带具体触发输入的通俗解释和修复方法。</li>
+                  <li>改进建议涵盖代码风格（如 PEP 8）、健壮性和效率（时间、空间复杂度）。</li>
+                  <li><code>fixed_code</code> 必须保持函数名和参数不变，不能加示例调用或 print，因为测试 cell 会导入文件并按名字调用函数。</li>
+                  <li>代码放在 <code>```</code> 分隔符之间，让模型清楚代码从哪开始到哪结束。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">analyze_code · request, parse, save</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">        contents = [prompt]  # The LLM input is now a text prompt, not an image
+        config = types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=CodeReview,
+        )
+        response = generate_with_retry(contents, config=config)
+
+        # Parse the JSON reply into the schema, then build the two outputs
+        review = CodeReview.model_validate_json(response.text)
+        fixed_code = strip_code_fences(review.fixed_code)
+        highlight, extension = LANGUAGES[review.language.value]
+        with open(FIXED_CODE_BASENAME + extension, "w") as f:
+            f.write(fixed_code + "\n")
+
+        return format_review(review), gr.update(value=fixed_code, language=highlight,
+                                                label=f"Refined code ({review.language.value})")
+
+    except Exception as e:
+        raise gr.Error(f"Error during analysis: {str(e)}")</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li><code>contents = [prompt]</code>: text only. The image isn't needed any more, and the analysis uses the code the user confirmed.</li>
+                  <li>Same JSON setup as step 1, with <code>CodeReview</code> as the schema.</li>
+                  <li>Parse, strip fences, look up the highlighter and extension, then write <code>file.&lt;ext&gt;</code> with a trailing newline. Each run overwrites the previous file.</li>
+                  <li>Return two values for the two outputs: the Markdown report and a <code>gr.update</code> for the refined-code box.</li>
+                  <li>Any exception (API, validation, file write) becomes <code>gr.Error("Error during analysis: …")</code>.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li><code>contents = [prompt]</code>：只有文本。不再需要图片，而且分析的是用户确认过的代码。</li>
+                  <li>和第一步一样的 JSON 设置，schema 换成 <code>CodeReview</code>。</li>
+                  <li>解析、去围栏、查高亮名和扩展名，然后写入 <code>file.&lt;ext&gt;</code>（末尾加换行）。每次运行都会覆盖上一次的文件。</li>
+                  <li>返回两个值对应两个输出：Markdown 报告，以及修复代码框的 <code>gr.update</code>。</li>
+                  <li>任何异常（API、校验、写文件）都会变成 <code>gr.Error("Error during analysis: …")</code>。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"The analysis request sends only the code text, with a second schema: a summary, a list of bugs with location, explanation and fix, improvement suggestions, and the complete fixed code."</p><p class="bi-zh" lang="zh-CN">“分析请求只发送代码文本，配第二个 schema：总结、包含位置/解释/修复的 bug 列表、改进建议，以及完整的修复代码。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 14 · markdown</span><span class="md-text">### Gradio app</span></div>
+
+        <!-- cell 15 -->
+        <article class="cell" id="cell-15">
+          <div class="cell-head"><span class="cell-tag">cell 15 · code</span><h3><span class="en">The Gradio app</span><span class="zh">Gradio 应用</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">layout</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python"># Gradio interface: upload -&gt; transcribe (editable, so transcription mistakes can be corrected) -&gt; analyze.
+with gr.Blocks(title="Code Whiteboard Tutor") as app:
+    gr.Markdown(
+        "# Code Whiteboard Tutor\n"
+        "Upload a photo of handwritten code, transcribe it, then run static analysis "
+        "to get bug explanations, improvement suggestions, and a refined version of the code. "
+        "Supports " + ", ".join(LANGUAGES) + "."
+    )
+
+    with gr.Row():
+        with gr.Column():
+            image_input = gr.Image(type="pil", label="1. Handwritten code image")
+            language_input = gr.Dropdown(choices=[AUTO_DETECT, *LANGUAGES], value=AUTO_DETECT,
+                                         label="Programming language")
+            transcribe_btn = gr.Button("Transcribe Code", variant="primary")
+        with gr.Column():
+            code_input = gr.Code(language="python", label="2. Transcribed code (editable)", interactive=True)
+            analyze_btn = gr.Button("Analyze Code", variant="primary")
+
+    gr.Markdown("## 3. Static analysis")
+    with gr.Row():
+        with gr.Column():
+            analysis_output = gr.Markdown()
+        with gr.Column():
+            fixed_code_output = gr.Code(language="python", label="Refined code", interactive=False)</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li><code>gr.Blocks</code> is Gradio's flexible layout API. Components created inside the <code>with</code> block are placed in order. <code>Row</code> and <code>Column</code> arrange them.</li>
+                  <li>Left column: <code>gr.Image(type="pil")</code>, the language <code>Dropdown</code> (Auto-detect plus the nine languages) and the Transcribe button.</li>
+                  <li>Right column: an <b>editable</b> <code>gr.Code(interactive=True)</code> and the Analyze button.</li>
+                  <li>Below: a <code>gr.Markdown</code> for the report and a read-only <code>gr.Code</code> for the refined code.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li><code>gr.Blocks</code> 是 Gradio 的灵活布局 API。在 <code>with</code> 块里创建的组件按顺序排列，<code>Row</code> 和 <code>Column</code> 控制排版。</li>
+                  <li>左列：<code>gr.Image(type="pil")</code>、语言 <code>Dropdown</code>（Auto-detect + 9 种语言）和转写按钮。</li>
+                  <li>右列：<b>可编辑</b>的 <code>gr.Code(interactive=True)</code> 和分析按钮。</li>
+                  <li>下方：显示报告的 <code>gr.Markdown</code> 和只读的修复代码框 <code>gr.Code</code>。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">events and launch</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">    # Wire the buttons to the two steps (both use the selected language, or auto-detect it)
+    transcribe_btn.click(transcribe_image_code, inputs=[image_input, language_input], outputs=code_input)
+    analyze_btn.click(analyze_code, inputs=[code_input, language_input], outputs=[analysis_output, fixed_code_output])
+
+
+if __name__ == "__main__":
+    app.launch(share=True)</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li><code>.click(fn, inputs, outputs)</code>: Gradio passes the current input values as arguments in order and writes the return values to the outputs.</li>
+                  <li>Transcribe: <code>[image, language]</code> → code editor. Analyze: <code>[code, language]</code> → <code>[report, refined code]</code>, which is why <code>analyze_code</code> returns two values.</li>
+                  <li><code>__name__ == "__main__"</code> is true in a notebook kernel, so the app launches when the cell runs.</li>
+                  <li><code>share=True</code> creates a temporary public <code>gradio.live</code> link that tunnels to the app running in Colab.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li><code>.click(fn, inputs, outputs)</code>：Gradio 按顺序把输入组件的当前值作为参数传入，再把返回值写到输出组件。</li>
+                  <li>转写：<code>[image, language]</code> → 代码编辑器。分析：<code>[code, language]</code> → <code>[报告, 修复代码]</code>，所以 <code>analyze_code</code> 返回两个值。</li>
+                  <li>在 notebook kernel 里 <code>__name__ == "__main__"</code> 为真，运行这个 cell 就会启动应用。</li>
+                  <li><code>share=True</code> 生成一个临时的公开 <code>gradio.live</code> 链接，转发到 Colab 里运行的应用。</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="output"><figcaption>output <span class="en">(share URL hidden)</span><span class="zh">（已隐藏分享链接）</span></figcaption><pre>Colab notebook detected. To show errors in colab notebook, set debug=True in launch()
+* Running on public URL: https://xxxxxxxxxxxx.gradio.live
+
+This share link is temporary and will last for up to 1 week (best effort). For free permanent hosting and GPU upgrades, run `gradio deploy` from the terminal in the working directory to deploy to Hugging Face Spaces (https://huggingface.co/spaces)</pre></figure>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"The UI is built with Gradio Blocks. The transcribed code sits in an editable code box, so if the model misreads a character we can fix it before the analysis."</p><p class="bi-zh" lang="zh-CN">“界面用 Gradio Blocks 搭建。转写结果放在可编辑的代码框里，如果模型读错了字符，我们可以在分析前改正。”</p></div>
+        </article>
+
+        <div class="mdcell"><span class="cell-tag">cell 16 · markdown</span><span class="md-text">### Additional Resource: Running test cases on LLM-generated code.</span></div>
+
+        <!-- cell 17 -->
+        <article class="cell" id="cell-17">
+          <div class="cell-head"><span class="cell-tag">cell 17 · code</span><h3><span class="en">run_tests (from the template)</span><span class="zh">run_tests（来自模板）</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">run_tests</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">"""
+Example of running test cases on LLM-generated code.
+You do not need to follow this exact implementation for your code."""
+
+import json
+import importlib.util
+
+def run_tests(filename_original, function_name, json_test_path):
+    """
+    Runs the JSON test cases against a function loaded from a Python file.
+
+    Parameters:
+        filename_original (str): Path to the .py file containing the function.
+        function_name (str): Name of the function to test.
+        json_test_path (str): Path to a JSON file of the form
+            {"test_case": [{"input": [...], "expected": ...}, ...]}.
+
+    Each test's "input" list is unpacked as the function's arguments; the result is
+    compared with "expected" and a pass/fail line is printed per test.
+    """
+    # Load test cases
+    with open(json_test_path, 'r') as f:
+        test_cases = json.load(f)["test_case"]
+
+    # Load the function from the file
+    spec = importlib.util.spec_from_file_location(function_name, filename_original)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    func = getattr(module, function_name)
+
+    # Run tests
+    for idx, case in enumerate(test_cases):
+        try:
+            inputs = case["input"]
+            expected = case["expected"]
+            result = func(*inputs) if isinstance(inputs, (list, tuple)) else func(inputs)
+            assert result == expected, f"input={inputs}, expected={expected}, got={result}"
+            print(f"Test {idx+1} passed.")
+        except Exception as e:
+            print(f"Test {idx+1} failed: {e}")</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>The TA provided this function. We added the docstring.</li>
+                  <li><code>spec_from_file_location</code> → <code>module_from_spec</code> → <code>exec_module</code> is how you import a module from a file path. <code>getattr</code> then fetches the function by name.</li>
+                  <li>Each test's <code>input</code> list is unpacked with <code>*</code> as the arguments, and the result is compared with <code>==</code> to <code>expected</code>.</li>
+                  <li>Each test has its own <code>try</code>, so one failure (including a <code>RecursionError</code>) doesn't stop the rest. A true infinite loop would hang, though.</li>
+                  <li><code>exec_module</code> runs the whole file, which is why the analysis prompt forbids extra prints or example calls.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>这个函数是 TA 提供的，我们补充了 docstring。</li>
+                  <li><code>spec_from_file_location</code> → <code>module_from_spec</code> → <code>exec_module</code> 是从文件路径导入模块的标准写法，然后用 <code>getattr</code> 按名字取函数。</li>
+                  <li>每个测试的 <code>input</code> 列表用 <code>*</code> 解包成参数，结果用 <code>==</code> 与 <code>expected</code> 比较。</li>
+                  <li>每个测试有自己的 <code>try</code>，一个失败（包括 <code>RecursionError</code>）不会影响其他测试。不过真正的死循环会卡住。</li>
+                  <li><code>exec_module</code> 会执行整个文件，所以分析 prompt 禁止添加 print 或示例调用。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- cell 18 -->
+        <article class="cell" id="cell-18">
+          <div class="cell-head"><span class="cell-tag">cell 18 · code</span><h3><span class="en">Run the tests on the refined code</span><span class="zh">对修复代码运行测试</span></h3></div>
+          <div class="chunk">
+            <figure class="code"><figcaption><span class="what">test runner</span><button class="copy" type="button">Copy</button></figcaption><pre><code class="language-python">import os
+from google.colab import files
+
+# Run "Analyze Code" first so file.py is generated.
+code_path = os.path.abspath("file.py")
+json_test_path = os.path.abspath("test_case_bucketsort.json")
+
+missing_files = [
+    path for path in [code_path, json_test_path]
+    if not os.path.isfile(path)
+]
+
+if missing_files:
+    print("Upload these missing files:")
+    for path in missing_files:
+        print("-", os.path.basename(path))
+    files.upload()
+
+if not os.path.isfile(code_path):
+    raise FileNotFoundError(
+        "file.py is missing. Click 'Analyze Code' "
+        "in your app first, or upload the generated Python file."
+    )
+
+if not os.path.isfile(json_test_path):
+    raise FileNotFoundError(
+        "Please upload test_case_bucketsort.json and rerun this cell."
+    )
+
+if "run_tests" not in globals():
+    raise RuntimeError(
+        "Run the earlier notebook cell that defines run_tests first."
+    )
+
+run_tests(
+    filename_original=code_path,
+    function_name="bucketsort",
+    json_test_path=json_test_path
+)</code></pre></figure>
+            <div class="explain">
+              <div class="en">
+                <ul>
+                  <li>Builds absolute paths to <code>file.py</code> and the test JSON. If either is missing, it opens Colab's upload dialog with <code>files.upload()</code>.</li>
+                  <li>If a file is still missing, or <code>run_tests</code> wasn't defined, it stops with a clear message.</li>
+                  <li>To test another program, change <code>json_test_path</code> and <code>function_name</code> (e.g. <code>test_case_pascal.json</code> and <code>pascal</code>).</li>
+                  <li>It imports <code>google.colab</code>, so this cell is Colab-only. Locally you would call <code>run_tests</code> directly.</li>
+                </ul>
+              </div>
+              <div class="zh" lang="zh-CN">
+                <ul>
+                  <li>拼出 <code>file.py</code> 和测试 JSON 的绝对路径；缺文件时用 <code>files.upload()</code> 弹出 Colab 上传框。</li>
+                  <li>如果文件仍然缺失，或者 <code>run_tests</code> 还没定义，就给出清楚的报错并停止。</li>
+                  <li>测试别的程序时，修改 <code>json_test_path</code> 和 <code>function_name</code>（例如 <code>test_case_pascal.json</code> 和 <code>pascal</code>）。</li>
+                  <li>它导入了 <code>google.colab</code>，只能在 Colab 运行；本地直接调用 <code>run_tests</code> 即可。</li>
+                </ul>
+              </div>
+            </div>
+            <figure class="output"><figcaption>output</figcaption><pre class="pass">Test 1 passed.
+Test 2 passed.
+Test 3 passed.
+Test 4 passed.
+Test 5 passed.
+Test 6 passed.</pre></figure>
+          </div>
+          <div class="say"><span class="lbl">say it</span><p class="bi-en">"To check the fix objectively, we load the saved file.py and run the provided JSON test cases. Bucketsort passes all six."</p><p class="bi-zh" lang="zh-CN">“为了客观验证修复结果，我们加载保存的 file.py，运行提供的 JSON 测试用例。bucketsort 六个全部通过。”</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= DEMO ================= -->
+    <section id="demo" data-spy>
+      <div class="sec-head">
+        <p class="kicker"><span class="en">15-minute slot · TA's images</span><span class="zh">15 分钟 · TA 提供图片</span></p>
+        <h2><span class="en">Demo runbook</span><span class="zh">Demo 流程</span></h2>
+        <p class="lede en">What to prepare, what to click, and what to say at each step. The English lines are written to be said out loud.</p>
+        <p class="lede zh">要准备什么、点哪里、每一步说什么。英文句子是可以直接念出来的讲稿。</p>
+      </div>
+
+      <div class="pitch">
+        <span class="kicker"><span class="en">30-second pitch</span><span class="zh">30 秒开场介绍</span></span>
+        <p class="bi-en">"Our app is a code whiteboard tutor. You upload a photo of handwritten code, and Gemini transcribes it exactly as written, bugs included, into an editable editor. When you click Analyze, a second request reviews the code and returns structured JSON: a summary, each bug with its location, explanation and fix, improvement suggestions, and a complete fixed version, which we save to a file and check against the provided test cases. For extra credit, it supports nine languages with auto-detection."</p>
+        <p class="bi-zh" lang="zh-CN">“我们的应用是一个代码白板辅导工具。上传手写代码的照片，Gemini 会把代码原样转写（包括 bug）到可编辑的编辑器里。点击 Analyze 后，第二个请求审查代码并返回结构化 JSON：总结、每个 bug 的位置/解释/修复、改进建议，以及完整的修复版本；修复版本会保存成文件，并用提供的测试用例验证。额外加分部分，它支持 9 种语言并能自动检测。”</p>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Suggested use of the 15 minutes</span><span class="zh">15 分钟的建议分配</span></h3>
+        <div class="timeline">
+          <span><b>1′</b><span class="en">Pitch</span><span class="zh">开场介绍</span></span>
+          <span><b>4′</b><span class="en">First image, full flow</span><span class="zh">第一张图完整流程</span></span>
+          <span><b>2′</b><span class="en">Run the tests</span><span class="zh">跑测试</span></span>
+          <span><b>3′</b><span class="en">More TA images, Java for extra credit</span><span class="zh">TA 的其他图片、Java 额外加分</span></span>
+          <span><b>5′</b><span class="en">Questions</span><span class="zh">回答问题</span></span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="block">
+          <h3><span class="en">Before the slot (about 15 minutes early)</span><span class="zh">开始前（约提前 15 分钟）</span></h3>
+          <ul class="checklist">
+            <li><label><input type="checkbox" id="pre-open"><span><span class="en">Open the <b>submitted</b> notebook in Colab.</span><span class="zh">在 Colab 打开<b>提交的那份</b> notebook。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-secret"><span><span class="en">Secrets tab: <code>GEMINI_API_KEY</code> is set and "Notebook access" is on.</span><span class="zh">Secrets 标签页：已设置 <code>GEMINI_API_KEY</code>，并打开 “Notebook access”。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-run"><span><span class="en">Runtime → Run all. Wait for "Running on public URL".</span><span class="zh">Runtime → Run all，等到出现 “Running on public URL”。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-link"><span><span class="en">Open the <code>gradio.live</code> link in a new tab (the inline UI also works).</span><span class="zh">在新标签页打开 <code>gradio.live</code> 链接（notebook 内嵌界面也可以用）。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-warm"><span><span class="en">Warm up with one example image to confirm the key and quota work.</span><span class="zh">用一张示例图预热，确认 key 和额度都正常。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-json"><span><span class="en">Upload the five <code>test_case_*.json</code> files to Colab's Files panel.</span><span class="zh">把 5 个 <code>test_case_*.json</code> 上传到 Colab 的文件面板。</span></span></label></li>
+            <li><label><input type="checkbox" id="pre-share"><span><span class="en">Share your screen with the browser tab and the notebook ready.</span><span class="zh">准备好共享屏幕：浏览器标签页和 notebook 都打开。</span></span></label></li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3><span class="en">If something goes wrong</span><span class="zh">出问题怎么办</span></h3>
+          <div class="table-wrap">
+            <table style="min-width: 0">
+              <tbody>
+                <tr><td><b>429 RESOURCE_EXHAUSTED</b></td><td><span class="en">The app already retried (5 s, then 10 s). Wait 30–60 s and click once. Don't click repeatedly.</span><span class="zh">应用已经自动重试过（5 秒、10 秒）。等 30–60 秒再点一次，不要连续点。</span></td></tr>
+                <tr><td><b>503 / overloaded</b></td><td><span class="en">Not retried automatically. Wait a few seconds and click again.</span><span class="zh">不会自动重试。等几秒再点一次。</span></td></tr>
+                <tr><td><span class="en"><b>Misread character</b></span><span class="zh"><b>字符识别错</b></span></td><td><span class="en">Fix it in the editor, say "this is why the editor is editable", then Analyze.</span><span class="zh">在编辑器里改正，顺势说明“这就是编辑器可编辑的原因”，再点 Analyze。</span></td></tr>
+                <tr><td><span class="en"><b>"No code could be read"</b></span><span class="zh"><b>“No code could be read”</b></span></td><td><span class="en">Crop or retake the photo, then try again.</span><span class="zh">裁剪或重拍照片后重试。</span></td></tr>
+                <tr><td><span class="en"><b>Share link won't load</b></span><span class="zh"><b>分享链接打不开</b></span></td><td><span class="en">Use the inline UI in the notebook output, or rerun cell 15.</span><span class="zh">使用 notebook 输出里的内嵌界面，或重新运行 cell 15。</span></td></tr>
+                <tr><td><span class="en"><b>Runtime restarted</b></span><span class="zh"><b>Runtime 重启了</b></span></td><td><span class="en">Run all again from the top. The client and functions must be redefined.</span><span class="zh">从头再 Run all，client 和函数都需要重新定义。</span></td></tr>
+                <tr><td><span class="en"><b>Test cell: FileNotFoundError</b></span><span class="zh"><b>测试 cell：FileNotFoundError</b></span></td><td><span class="en">Click Analyze first so <code>file.py</code> exists, or upload the JSON.</span><span class="zh">先点 Analyze 生成 <code>file.py</code>，或上传 JSON。</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Live flow, with what to say</span><span class="zh">现场流程与讲稿</span></h3>
+        <ol class="steps">
+          <li>
+            <h4><span class="en">Upload the TA's image</span><span class="zh">上传 TA 的图片</span></h4>
+            <p class="act en">Drag the image into "1. Handwritten code image".</p>
+            <p class="act zh">把图片拖进 “1. Handwritten code image”。</p>
+            <div class="say"><p class="bi-en">"I'll upload your image. The image component passes it to our function as a PIL image."</p><p class="bi-zh" lang="zh-CN">“我来上传您的图片。图片组件会把它作为 PIL 图片传给我们的函数。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Leave the language on Auto-detect</span><span class="zh">语言保持 Auto-detect</span></h4>
+            <p class="act en">Or pick Python explicitly if the TA prefers.</p>
+            <p class="act zh">如果 TA 希望，也可以直接选 Python。</p>
+            <div class="say"><p class="bi-en">"This dropdown is part of our extra credit. On Auto-detect, the model identifies the language itself."</p><p class="bi-zh" lang="zh-CN">“这个下拉框是额外加分的一部分。选 Auto-detect 时，模型会自己识别语言。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Click Transcribe Code</span><span class="zh">点击 Transcribe Code</span></h4>
+            <p class="act en">Point at the label: it now shows the detected language.</p>
+            <p class="act zh">指出标签现在显示了检测到的语言。</p>
+            <div class="say"><p class="bi-en">"That's one request with the image and our transcription prompt. It returns JSON with the language and the code. Notice it copied the code faithfully, bug included. That's on purpose: finding bugs is the next step's job."</p><p class="bi-zh" lang="zh-CN">“这是一次请求，包含图片和转写 prompt，返回包含语言和代码的 JSON。可以看到它忠实地照抄了代码，连 bug 也保留了。这是故意的：找 bug 是下一步的事。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Check the transcription against the photo</span><span class="zh">对照照片检查转写结果</span></h4>
+            <p class="act en">If a character is wrong, fix it live.</p>
+            <p class="act zh">如果有字符错了，现场改掉。</p>
+            <div class="say"><p class="bi-en">"The editor is editable, so if the model misreads a character, we fix it here before analysis, and the analysis only sees code we've confirmed."</p><p class="bi-zh" lang="zh-CN">“编辑器可以编辑，如果模型读错了字符，我们在分析前就地改正，分析只会看到我们确认过的代码。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Click Analyze Code</span><span class="zh">点击 Analyze Code</span></h4>
+            <div class="say"><p class="bi-en">"Now a second request sends just the code text with a review prompt and a second schema."</p><p class="bi-zh" lang="zh-CN">“现在第二个请求只发送代码文本，加上审查 prompt 和第二个 schema。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Walk through the report</span><span class="zh">讲解分析报告</span></h4>
+            <p class="act en">Read one bug out loud, then point at the refined code.</p>
+            <p class="act zh">念出一个 bug，然后指向修复后的代码。</p>
+            <div class="say"><p class="bi-en">"Here's what the code is meant to do. Here's the bug: it says where it is, why it's wrong with a concrete input, and how to fix it. Below that are improvement suggestions, and on the right is the complete fixed code, which is also saved to file.py."</p><p class="bi-zh" lang="zh-CN">“这里是代码的用途。这是 bug：指出位置、用具体输入解释为什么错、以及怎么修。下面是改进建议，右边是完整的修复代码，同时保存到了 file.py。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Run the tests (Python)</span><span class="zh">运行测试（Python）</span></h4>
+            <p class="act en">In cell 18, set <code>json_test_path</code> and <code>function_name</code> to match the program, then run cells 17 and 18.</p>
+            <p class="act zh">在 cell 18 中把 <code>json_test_path</code> 和 <code>function_name</code> 改成对应的程序，然后运行 cell 17 和 18。</p>
+            <div class="say"><p class="bi-en">"To check the fix instead of just trusting the explanation, we load file.py and run the provided test cases."</p><p class="bi-zh" lang="zh-CN">“为了验证修复，而不是只相信模型的解释，我们加载 file.py 运行提供的测试用例。”</p></div>
+          </li>
+          <li>
+            <h4><span class="en">Extra credit: another language</span><span class="zh">额外加分：其他语言</span></h4>
+            <p class="act en">Upload <code>code_image_java.png</code> with Auto-detect. The label switches to Java, and the analysis saves <code>file.java</code>.</p>
+            <p class="act zh">用 Auto-detect 上传 <code>code_image_java.png</code>。标签会变成 Java，分析后保存 <code>file.java</code>。</p>
+            <div class="say"><p class="bi-en">"Same pipeline, different language. Auto-detect picked Java, the schema restricts it to our supported list, and the refined code is saved with a .java extension."</p><p class="bi-zh" lang="zh-CN">“同样的流程，换一种语言。自动检测识别出了 Java，schema 把它限制在支持的列表里，修复代码保存为 .java 文件。”</p></div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="block">
+        <h3><span class="en">Example images and their known bugs</span><span class="zh">示例图片及其已知 bug</span></h3>
+        <p class="en muted">These are classic buggy programs, so expect the TA's images to be similar. Knowing the intended bug lets you judge the analysis on the spot.</p>
+        <p class="zh muted">这些都是经典的有 bug 程序，TA 的图片大概率类似。提前知道预期的 bug，现场就能判断分析结果对不对。</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><span class="en">Images</span><span class="zh">图片</span></th><th><span class="en">Function</span><span class="zh">函数</span></th><th><span class="en">Known bug and fix</span><span class="zh">已知 bug 与修复</span></th><th><span class="en">Test file</span><span class="zh">测试文件</span></th></tr></thead>
+            <tbody>
+              <tr><td class="num">01–04</td><td><code>bucketsort(arr, k)</code></td><td><span class="en">Second loop uses <code>enumerate(arr)</code>; should be <code>enumerate(counts)</code>.</span><span class="zh">第二个循环用了 <code>enumerate(arr)</code>，应为 <code>enumerate(counts)</code>。</span></td><td><code>test_case_bucketsort.json</code> (6)</td></tr>
+              <tr><td class="num">05–08, green</td><td><code>flatten(arr)</code></td><td><span class="en"><code>yield flatten(x)</code> should be <code>yield x</code>. Image 07 is also missing a colon after <code>isinstance(x, list)</code>.</span><span class="zh"><code>yield flatten(x)</code> 应为 <code>yield x</code>。图 07 在 <code>isinstance(x, list)</code> 后还少了冒号。</span></td><td><code>test_case_flatten.json</code> (7)</td></tr>
+              <tr><td class="num">09–12</td><td><code>find_in_sorted(arr, x)</code></td><td><span class="en"><code>binsearch(mid, end)</code> should be <code>binsearch(mid + 1, end)</code>; otherwise it can recurse forever, e.g. searching for 5 in <code>[1, 2, 3, 4, 6, 7, 8]</code>.</span><span class="zh"><code>binsearch(mid, end)</code> 应为 <code>binsearch(mid + 1, end)</code>，否则会无限递归，例如在 <code>[1, 2, 3, 4, 6, 7, 8]</code> 中找 5。</span></td><td><code>test_case_find_in_sorted.json</code> (7)</td></tr>
+              <tr><td class="num">13–15</td><td><code>pascal(n)</code></td><td><span class="en"><code>range(0, r)</code> should be <code>range(0, r + 1)</code>; each row is missing its last 1.</span><span class="zh"><code>range(0, r)</code> 应为 <code>range(0, r + 1)</code>，每一行都少了最后的 1。</span></td><td><code>test_case_pascal.json</code> (5)</td></tr>
+              <tr><td class="num">16–18</td><td><code>possible_change(coins, total)</code></td><td><span class="en">Missing base case for no coins left: <code>first, *rest = coins</code> raises <code>ValueError</code> on an empty list. Fix: <code>if total &lt; 0 or not coins: return 0</code>.</span><span class="zh">缺少“没有硬币”的边界条件：空列表时 <code>first, *rest = coins</code> 会抛 <code>ValueError</code>。修复：<code>if total &lt; 0 or not coins: return 0</code>。</span></td><td><code>test_case_possible_change.json</code> (10)</td></tr>
+              <tr><td class="num">java</td><td><code>class Program</code></td><td><span class="en"><code>main</code> creates <code>new Sum()</code>, but the class is <code>Program</code>, and calls <code>add(10, 5)</code>, but <code>add()</code> takes no parameters.</span><span class="zh"><code>main</code> 里 <code>new Sum()</code>，但类名是 <code>Program</code>；调用 <code>add(10, 5)</code>，但 <code>add()</code> 没有参数。</span></td><td><span class="en">none (Java)</span><span class="zh">无（Java）</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout note">
+          <p class="ttl"><span class="en">Heads-up for flatten</span><span class="zh">flatten 的注意事项</span></p>
+          <p class="en"><code>flatten</code> is a generator, but its tests expect a list. If the refined code is still a generator, every test prints <code>got=&lt;generator object flatten …&gt;</code>. That doesn't mean the fix is wrong: <code>list(flatten(...))</code> gives the expected list. Be ready to explain this.</p>
+          <p class="zh"><code>flatten</code> 是生成器，但测试期望的是列表。如果修复后的代码仍是生成器，每个测试都会显示 <code>got=&lt;generator object flatten …&gt;</code>。这并不代表修复错了，<code>list(flatten(...))</code> 就是期望的列表。要准备好解释这一点。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Q&A ================= -->
+    <section id="qa" data-spy>
+      <div class="sec-head">
+        <p class="kicker"><span class="en">Practice: read the question, answer out loud, then open it</span><span class="zh">练习方法：看问题、先自己用英文回答，再展开对照</span></p>
+        <h2><span class="en">Questions the TA may ask</span><span class="zh">TA 可能会问的问题</span></h2>
+        <p class="lede en">Short, spoken-style answers that match what the code actually does, including its limits.</p>
+        <p class="lede zh">口语化的简短回答，与代码的实际行为一致，也如实说明局限。中文模式下会同时显示英文原文和中文翻译。</p>
+      </div>
+
+      <div class="qa-tools">
+        <div class="qa-row">
+          <input class="search" id="qa-search" type="search" placeholder="Search questions" aria-label="Search questions" autocomplete="off">
+          <button type="button" class="iconbtn" id="qa-toggle-all"><span class="en">Expand all</span><span class="zh">全部展开</span></button>
+        </div>
+        <div class="filters" role="group" aria-label="Filter by topic">
+          <button type="button" data-cat="all" aria-pressed="true"><span class="en">All</span><span class="zh">全部</span></button>
+          <button type="button" data-cat="overview" aria-pressed="false"><span class="en">Overview</span><span class="zh">整体</span></button>
+          <button type="button" data-cat="llm" aria-pressed="false"><span class="en">LLM &amp; prompts</span><span class="zh">模型与 prompt</span></button>
+          <button type="button" data-cat="code" aria-pressed="false"><span class="en">Code details</span><span class="zh">代码细节</span></button>
+          <button type="button" data-cat="limits" aria-pressed="false"><span class="en">Rate limits &amp; keys</span><span class="zh">限流与密钥</span></button>
+          <button type="button" data-cat="lang" aria-pressed="false"><span class="en">Multi-language</span><span class="zh">多语言</span></button>
+          <button type="button" data-cat="testing" aria-pressed="false"><span class="en">Testing</span><span class="zh">测试与健壮性</span></button>
+          <button type="button" data-cat="future" aria-pressed="false"><span class="en">Limitations</span><span class="zh">局限与改进</span></button>
+        </div>
+        <p class="qa-count" id="qa-count" aria-live="polite"></p>
+      </div>
+
+      <div id="qa-list" class="cells" style="gap: 18px">
+
+        <div class="qa-group" data-cat="overview">
+          <h3><span class="en">Overview</span><span class="zh">整体</span></h3>
+          <details class="qa"><summary><span class="qn">Q1</span><span class="qt"><span class="bi-en">Can you walk me through how the app works?</span><span class="bi-zh" lang="zh-CN">能讲一下你们的应用是怎么工作的吗？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Sure. It's a two-step pipeline. First you upload a photo and click Transcribe Code. We send the image with a transcription prompt to Gemini and get back JSON with the language and the code, which shows up in an editable code box. Then you click Analyze Code. We send that code with a review prompt and a second schema, and get back a summary, a list of bugs, improvement suggestions and a fixed version. The fixed version is also saved to a file so we can run test cases on it.</p>
+            <p class="bi-zh" lang="zh-CN">好的，这是一个两步流程。第一步上传照片、点 Transcribe Code：把图片和转写 prompt 一起发给 Gemini，返回包含语言和代码的 JSON，显示在可编辑的代码框里。第二步点 Analyze Code：把这段代码连同审查 prompt 和第二个 schema 发出去，返回总结、bug 列表、改进建议和修复版本。修复版本还会保存成文件，方便运行测试用例。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q2</span><span class="qt"><span class="bi-en">Why did you split it into two steps instead of one call?</span><span class="bi-zh" lang="zh-CN">为什么拆成两步，而不是一次调用完成？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Two reasons. Misreading the handwriting is the most likely failure, so we show the transcription first and let the user correct it. That way the analysis always runs on code the user has confirmed. It also keeps each prompt focused: the first one only reads, the second one only reviews. And each button is exactly one request, which helps with the free-tier rate limits.</p>
+            <p class="bi-zh" lang="zh-CN">两个原因。最容易出错的是手写识别，所以先展示转写结果，让用户修正，这样分析永远基于用户确认过的代码。另外每个 prompt 更专注：第一个只负责读，第二个只负责审查。而且每个按钮正好一次请求，有利于控制免费额度的速率限制。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q3</span><span class="qt"><span class="bi-en">Why is the transcribed code editable?</span><span class="bi-zh" lang="zh-CN">为什么转写出来的代码可以编辑？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Handwriting is ambiguous, and the model can misread a character, like a square bracket versus a C. If that happens, we don't want the analysis to report a bug that isn't in the original. An editable box keeps a human in the loop: fix the typo, then analyze.</p>
+            <p class="bi-zh" lang="zh-CN">手写有歧义，模型可能读错字符，比如方括号和字母 C。出现这种情况时，我们不希望分析报告一个原代码里并不存在的 bug。可编辑的代码框让人参与把关：先改掉误读，再分析。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q4</span><span class="qt"><span class="bi-en">What does the user get at the end?</span><span class="bi-zh" lang="zh-CN">用户最后能得到什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">On the left, a Markdown report: the detected language, a short summary of what the code does, a numbered list of bugs, each with its location, an explanation and a fix, and then improvement suggestions. On the right, the complete refined code with syntax highlighting. The refined code is also saved as file.py, or with the matching extension for other languages.</p>
+            <p class="bi-zh" lang="zh-CN">左边是 Markdown 报告：检测到的语言、代码功能的简短总结、编号的 bug 列表（每个都有位置、解释和修复），然后是改进建议。右边是带语法高亮的完整修复代码。修复代码还会保存为 file.py，其他语言则用对应的扩展名。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q5</span><span class="qt"><span class="bi-en">What did you change from the starter template?</span><span class="bi-zh" lang="zh-CN">相比模板你们改了什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The template left both steps as TODOs. We implemented them with JSON schemas, wrote both prompts, and built the Gradio UI with an editable step in the middle. We also added the retry helper, removed the unused packages and the cell for pasting the API key, added support for nine languages, and made the test cell check for missing files.</p>
+            <p class="bi-zh" lang="zh-CN">模板里两个步骤都是 TODO。我们用 JSON schema 实现了它们，写了两个 prompt，搭建了中间带可编辑环节的 Gradio 界面。另外加了重试辅助函数，删掉了没用的依赖包和粘贴 API key 的 cell，支持了 9 种语言，并让测试 cell 检查缺失的文件。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="llm">
+          <h3><span class="en">LLM &amp; prompts</span><span class="zh">模型与 prompt</span></h3>
+          <details class="qa"><summary><span class="qn">Q6</span><span class="qt"><span class="bi-en">Which model do you use, and why?</span><span class="bi-zh" lang="zh-CN">你们用的什么模型？为什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">gemini-3.5-flash-lite, through the google-genai SDK. It's the model in the instructions and the starter notebook, it's multimodal so it can read images, and it's on the free tier. The name lives in one constant, MODEL_ID, so switching models is a one-line change.</p>
+            <p class="bi-zh" lang="zh-CN">gemini-3.5-flash-lite，通过 google-genai SDK 调用。它是作业说明和模板 notebook 里用的模型，是多模态的、能读图片，而且在免费额度内。模型名只在 MODEL_ID 这一个常量里，换模型只改一行。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q7</span><span class="qt"><span class="bi-en">The Canvas page mentions Gemini 2.5 Flash Lite. Why 3.5?</span><span class="bi-zh" lang="zh-CN">Canvas 页面写的是 Gemini 2.5 Flash Lite，你们为什么用 3.5？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The instructions PDF and the demo notebook both use gemini-3.5-flash-lite, so we followed the code we were given. Both are free-tier Flash Lite models. If you'd like us to use 2.5, we only need to change MODEL_ID and rerun the cell.</p>
+            <p class="bi-zh" lang="zh-CN">作业说明 PDF 和 demo notebook 用的都是 gemini-3.5-flash-lite，所以我们沿用了给定的代码。两者都是免费额度内的 Flash Lite 模型。如果您希望用 2.5，只需改 MODEL_ID 再重新运行那个 cell。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q8</span><span class="qt"><span class="bi-en">How do you send the image to the model?</span><span class="bi-zh" lang="zh-CN">你们怎么把图片发给模型？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The Gradio Image component is set to type="pil", so our function receives a PIL image. The google-genai SDK accepts PIL images directly, so the request contents are just a list: the image, then the prompt. The SDK encodes the image as inline data for us. It's one request with two parts.</p>
+            <p class="bi-zh" lang="zh-CN">Gradio 的 Image 组件设置了 type="pil"，所以函数收到的是 PIL 图片。google-genai SDK 可以直接接收 PIL 图片，所以请求内容就是一个列表：先图片、后 prompt。SDK 会帮我们把图片编码成内联数据。这是一个包含两部分的请求。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q9</span><span class="qt"><span class="bi-en">Why do you tell the model not to fix bugs during transcription?</span><span class="bi-zh" lang="zh-CN">为什么转写时要求模型不要修 bug？</span></span></summary><div class="qa-body">
+            <p class="bi-en">LLMs like to quietly "help" by correcting code. If the model fixed bugs while transcribing, the analysis step would have nothing to find, and the user would never see what was wrong in what they wrote. So transcription is strictly a copy, and fixing is the analysis step's job.</p>
+            <p class="bi-zh" lang="zh-CN">大模型喜欢悄悄“帮忙”纠正代码。如果转写时就把 bug 修了，分析环节就找不到问题，用户也永远看不到自己写错了什么。所以转写严格只做抄写，修复是分析环节的工作。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q10</span><span class="qt"><span class="bi-en">How do you deal with handwriting that's hard to read?</span><span class="bi-zh" lang="zh-CN">字迹难认时怎么处理？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The prompt says that when a character is ambiguous, like a bracket versus a C, a colon versus a semicolon, or 1 versus l, the model should pick the reading that's valid in the language and consistent with the rest of the code. That's the advantage over plain OCR: the model uses the language's syntax as context. It also ignores paper lines and crossed-out text. If it still gets something wrong, the user fixes it in the editor.</p>
+            <p class="bi-zh" lang="zh-CN">prompt 规定：遇到有歧义的字符，比如方括号和 C、冒号和分号、1 和 l，要选在该语言中合法、且与其他代码一致的读法。这是比普通 OCR 强的地方：模型会利用语言的语法作为上下文。它还会忽略纸上的横线和划掉的字。如果仍然读错，用户可以在编辑器里修改。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q11</span><span class="qt"><span class="bi-en">What is structured output, and why use it?</span><span class="bi-zh" lang="zh-CN">什么是结构化输出？为什么用它？</span></span></summary><div class="qa-body">
+            <p class="bi-en">We set response_mime_type to application/json and pass a Pydantic model as response_schema, so Gemini has to answer with JSON that matches our schema. That means no regex parsing of free text: the summary, the bug list and the fixed code each arrive in their own field, and we validate them with model_validate_json. It also keeps the output format the same on every run.</p>
+            <p class="bi-zh" lang="zh-CN">我们把 response_mime_type 设为 application/json，并把 Pydantic 模型作为 response_schema 传入，Gemini 就必须返回符合 schema 的 JSON。这样不需要用正则解析自由文本：总结、bug 列表、修复代码各在自己的字段里，再用 model_validate_json 校验。每次运行的输出格式也保持一致。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q12</span><span class="qt"><span class="bi-en">Why Pydantic?</span><span class="bi-zh" lang="zh-CN">为什么用 Pydantic？</span></span></summary><div class="qa-body">
+            <p class="bi-en">It lets us define the schema as ordinary Python classes with type hints. The SDK turns the class into a JSON schema for the request, and Pydantic parses the reply back into typed objects, so we get validation for free. For example, the language field must be one of the enum values.</p>
+            <p class="bi-zh" lang="zh-CN">它让我们用带类型注解的普通 Python 类来定义 schema。SDK 把类转换成请求用的 JSON schema，Pydantic 再把回复解析成有类型的对象，校验是自带的。比如 language 字段必须是枚举中的某个值。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q13</span><span class="qt"><span class="bi-en">How do you make sure the model doesn't make things up?</span><span class="bi-zh" lang="zh-CN">怎么保证模型不会胡编？</span></span></summary><div class="qa-body">
+            <p class="bi-en">We can't guarantee it, but we reduce the risk at each step. The transcription prompt forbids changes, the schema restricts the format and the language values, and the user reviews the transcription before the analysis. For Python, we check the fixed code against the provided test cases instead of trusting the explanation.</p>
+            <p class="bi-zh" lang="zh-CN">无法完全保证，但每一步都在降低风险。转写 prompt 禁止修改代码，schema 限制了格式和语言取值，用户在分析前会检查转写结果。对于 Python，我们用提供的测试用例验证修复代码，而不是只相信模型的解释。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q14</span><span class="qt"><span class="bi-en">Did you tune temperature or other generation settings?</span><span class="bi-zh" lang="zh-CN">有没有调 temperature 等生成参数？</span></span></summary><div class="qa-body">
+            <p class="bi-en">No. We kept the model's default sampling settings and only set the response format and schema. Because of that, the wording can vary a little between runs. If we wanted more repeatable output, we'd set temperature to 0 in GenerateContentConfig.</p>
+            <p class="bi-zh" lang="zh-CN">没有。我们保留了模型默认的采样设置，只设置了响应格式和 schema。因此每次运行的措辞可能略有不同。如果想要更稳定的输出，可以在 GenerateContentConfig 里把 temperature 设为 0。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q15</span><span class="qt"><span class="bi-en">Is it really "static analysis" if an LLM does it?</span><span class="bi-zh" lang="zh-CN">用 LLM 做的也算“静态分析”吗？</span></span></summary><div class="qa-body">
+            <p class="bi-en">It's static in the sense that the code is never executed. The model reasons about it by reading it, and our prompt says so explicitly. It isn't a traditional analyzer like pylint or mypy, which apply fixed rules. The upside is that the LLM can explain logic bugs in plain English, which rule-based tools can't do. Running the test cases afterwards is our dynamic check.</p>
+            <p class="bi-zh" lang="zh-CN">从“代码从不被执行”这个意义上说，它是静态的：模型通过阅读来推理代码，我们的 prompt 也明确这样要求。它不是 pylint 或 mypy 那种基于固定规则的传统分析器。好处是 LLM 能用通俗的语言解释逻辑 bug，这是基于规则的工具做不到的。之后运行测试用例则是我们的动态检查。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q16</span><span class="qt"><span class="bi-en">What's in your analysis prompt?</span><span class="bi-zh" lang="zh-CN">分析 prompt 里写了什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">A code-reviewer role, the language sentence, and a note that the code came from a handwritten photo. Then five numbered instructions that mirror the schema fields: language, summary, bugs, improvements and fixed code. For each bug we ask for the location, a plain-English explanation with a concrete input that triggers it, and the fix. For the fixed code we ask it to keep the same function names and parameters and not to add example usage or prints, so it can be imported and tested.</p>
+            <p class="bi-zh" lang="zh-CN">代码审查者的角色设定、语言说明，以及“代码来自手写照片”的提示。然后是与 schema 字段一一对应的 5 条编号指令：语言、总结、bug、改进建议、修复代码。每个 bug 要求给出位置、带具体触发输入的通俗解释和修复方法。修复代码要求保持函数名和参数不变，不添加示例调用或 print，这样才能被导入和测试。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="code">
+          <h3><span class="en">Code details</span><span class="zh">代码细节</span></h3>
+          <details class="qa"><summary><span class="qn">Q17</span><span class="qt"><span class="bi-en">What does generate_with_retry do?</span><span class="bi-zh" lang="zh-CN">generate_with_retry 是做什么的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Every model call goes through it. It calls generate_content, and if the API returns a 429 rate-limit error, it waits and tries again: 5 seconds, then 10, for up to three attempts. Any other error, or a 429 on the last attempt, is raised so the user sees a clear message.</p>
+            <p class="bi-zh" lang="zh-CN">所有模型调用都经过它。它调用 generate_content，如果 API 返回 429 限流错误，就等待后重试：先 5 秒、再 10 秒，最多尝试 3 次。其他错误，或最后一次仍是 429，就直接抛出，让用户看到清楚的错误信息。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q18</span><span class="qt"><span class="bi-en">If the reply is JSON, why do you still strip code fences?</span><span class="bi-zh" lang="zh-CN">既然返回 JSON，为什么还要去掉代码围栏？</span></span></summary><div class="qa-body">
+            <p class="bi-en">It's a safety net. Even inside a JSON string field, models sometimes wrap the code in ```python fences. That would break the code editor and the saved .py file, so strip_code_fences removes a leading and a trailing fence and keeps the indentation.</p>
+            <p class="bi-zh" lang="zh-CN">这是一道保险。即使在 JSON 的字符串字段里，模型有时也会把代码包在 ```python 围栏中。这会破坏代码编辑器和保存的 .py 文件，所以 strip_code_fences 去掉开头和结尾的围栏，同时保留缩进。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q19</span><span class="qt"><span class="bi-en">Why is the language an Enum?</span><span class="bi-zh" lang="zh-CN">为什么语言要用 Enum？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Because the enum becomes part of the JSON schema, the model can only answer with one of our nine language names. It can't return something like "python3". That guarantees the lookup in the LANGUAGES table always works, which gives us the right highlighter and file extension.</p>
+            <p class="bi-zh" lang="zh-CN">因为枚举会成为 JSON schema 的一部分，模型只能从 9 个语言名中选一个回答，不会返回 “python3” 之类的值。这保证了在 LANGUAGES 表里查找一定成功，从而拿到正确的高亮名称和文件扩展名。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q20</span><span class="qt"><span class="bi-en">What does gr.update do?</span><span class="bi-zh" lang="zh-CN">gr.update 是做什么的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Returning gr.update instead of a plain value lets us change several properties of an output component at once. After transcription, we set the code, switch the syntax highlighting to the detected language, and update the label, for example to "Transcribed code (Java, editable)".</p>
+            <p class="bi-zh" lang="zh-CN">返回 gr.update 而不是普通值，可以一次修改输出组件的多个属性。转写之后，我们同时设置代码内容、把语法高亮切换成检测到的语言，并更新标签，例如 “Transcribed code (Java, editable)”。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q21</span><span class="qt"><span class="bi-en">What happens if the JSON is invalid or the API call fails?</span><span class="bi-zh" lang="zh-CN">JSON 无效或 API 调用失败会怎样？</span></span></summary><div class="qa-body">
+            <p class="bi-en">model_validate_json raises a validation error, and the SDK raises its own API errors. Both are caught in the step function and re-raised as gr.Error, so the app shows a readable error message instead of crashing. The user can just click the button again.</p>
+            <p class="bi-zh" lang="zh-CN">model_validate_json 会抛出校验错误，SDK 也会抛出自己的 API 错误。两者都会在步骤函数里被捕获，再作为 gr.Error 抛出，所以应用会显示可读的错误信息而不是崩溃。用户再点一次按钮就行。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q22</span><span class="qt"><span class="bi-en">Why raise gr.Error instead of returning an error string?</span><span class="bi-zh" lang="zh-CN">为什么用 gr.Error 而不是返回错误字符串？</span></span></summary><div class="qa-body">
+            <p class="bi-en">gr.Error shows a proper error popup in the UI and stops the event, so error text never ends up in the code editor or gets saved as code. We also use it for input checks, like no image, empty code, or no code found in the image, so we don't waste an API request.</p>
+            <p class="bi-zh" lang="zh-CN">gr.Error 会在界面上弹出正式的错误提示并中止该事件，错误文字不会出现在代码编辑器里，也不会被当成代码保存。我们还用它做输入检查，比如没上传图片、代码为空、图片里没有代码，避免浪费 API 请求。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q23</span><span class="qt"><span class="bi-en">How are the buttons connected to your functions?</span><span class="bi-zh" lang="zh-CN">按钮是怎么和函数关联起来的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">With .click(fn, inputs, outputs). Gradio passes the current values of the input components as arguments, in order, and writes the return values into the output components. Transcribe takes the image and the language and fills the code editor. Analyze takes the code and the language and returns two values: the Markdown report and the refined code.</p>
+            <p class="bi-zh" lang="zh-CN">用 .click(fn, inputs, outputs)。Gradio 按顺序把输入组件的当前值作为参数传入，再把返回值写到输出组件。Transcribe 接收图片和语言，填充代码编辑器；Analyze 接收代码和语言，返回两个值：Markdown 报告和修复代码。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q24</span><span class="qt"><span class="bi-en">Why save the refined code to file.py?</span><span class="bi-zh" lang="zh-CN">为什么把修复代码保存为 file.py？</span></span></summary><div class="qa-body">
+            <p class="bi-en">So we can test it. run_tests imports a function from a .py file, so analyze_code writes the refined code to "file" plus the language's extension. The base name is one constant, FIXED_CODE_BASENAME, so it's easy to change. Each analysis overwrites the previous file.</p>
+            <p class="bi-zh" lang="zh-CN">为了测试。run_tests 是从 .py 文件导入函数的，所以 analyze_code 把修复代码写入 “file” 加上对应语言的扩展名。文件名是常量 FIXED_CODE_BASENAME，方便修改。每次分析都会覆盖上一次的文件。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q25</span><span class="qt"><span class="bi-en">How does run_tests load the function?</span><span class="bi-zh" lang="zh-CN">run_tests 是怎么加载函数的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">With importlib. spec_from_file_location creates a module spec from the file path, module_from_spec creates an empty module, and exec_module runs the file inside it. Then getattr fetches the function by name. Each test's input list is unpacked as the arguments, and the result is compared to the expected value.</p>
+            <p class="bi-zh" lang="zh-CN">用 importlib。spec_from_file_location 根据文件路径创建模块 spec，module_from_spec 创建一个空模块，exec_module 在模块里执行文件，然后用 getattr 按名字取到函数。每个测试的 input 列表被解包成参数，结果与 expected 比较。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q26</span><span class="qt"><span class="bi-en">What does share=True do?</span><span class="bi-zh" lang="zh-CN">share=True 有什么作用？</span></span></summary><div class="qa-body">
+            <p class="bi-en">It creates a temporary public gradio.live URL that tunnels to the app running in Colab, so anyone with the link can open it in a browser. Without it, the app only shows inline in the notebook. According to the launch output, the link lasts up to a week.</p>
+            <p class="bi-zh" lang="zh-CN">它会生成一个临时的公开 gradio.live 链接，转发到 Colab 里运行的应用，任何拿到链接的人都能在浏览器里打开。没有它的话，应用只在 notebook 里内嵌显示。根据启动输出，这个链接最多保留一周。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="limits">
+          <h3><span class="en">Rate limits &amp; keys</span><span class="zh">限流与密钥</span></h3>
+          <details class="qa"><summary><span class="qn">Q27</span><span class="qt"><span class="bi-en">What causes a 429 error, and how do you handle it?</span><span class="bi-zh" lang="zh-CN">什么会触发 429？怎么处理？</span></span></summary><div class="qa-body">
+            <p class="bi-en">429 RESOURCE_EXHAUSTED means we went over a free-tier limit: requests per minute, input tokens per minute, or requests per day. We handle it in two ways. Each button click makes exactly one request, and generate_with_retry waits and retries automatically. If the daily quota is used up, retrying won't help; it resets at midnight Pacific time.</p>
+            <p class="bi-zh" lang="zh-CN">429 RESOURCE_EXHAUSTED 表示超过了免费额度的某项限制：每分钟请求数、每分钟输入 token 数或每天请求数。我们有两种应对：每次点击只发一个请求；generate_with_retry 自动等待并重试。如果每日额度用完了，重试也没用，要等太平洋时间午夜重置。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q28</span><span class="qt"><span class="bi-en">Which errors don't you retry?</span><span class="bi-zh" lang="zh-CN">哪些错误不会重试？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Everything except 429. An invalid key or a malformed request won't succeed on a retry, so we fail fast and show the message. One gap is a 503 "model overloaded" error, which could succeed on a retry. Adding 503 to the retry condition would be an easy improvement.</p>
+            <p class="bi-zh" lang="zh-CN">除了 429 以外都不重试。key 无效或请求格式错误，重试也不会成功，所以直接失败并显示信息。一个不足是 503 “模型过载”错误，重试有可能成功。把 503 加进重试条件是个很容易的改进。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q29</span><span class="qt"><span class="bi-en">How do you keep the API key safe?</span><span class="bi-zh" lang="zh-CN">怎么保证 API key 的安全？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The key is never in the notebook. In Colab we read it from the Secrets tab with userdata.get, and locally we read the GEMINI_API_KEY environment variable. The starter template had a cell for pasting the key directly, which we removed, so the file we submit contains no secret.</p>
+            <p class="bi-zh" lang="zh-CN">key 从不出现在 notebook 里。在 Colab 中用 userdata.get 从 Secrets 标签页读取，在本地读取 GEMINI_API_KEY 环境变量。模板里有一个直接粘贴 key 的 cell，我们删掉了，所以提交的文件里没有任何密钥。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q30</span><span class="qt"><span class="bi-en">How many API calls does one full run make?</span><span class="bi-zh" lang="zh-CN">完整跑一遍会调用多少次 API？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Two: one for transcription and one for analysis. Extra calls only happen when a 429 triggers a retry. Running the test cases is local and doesn't call the API at all.</p>
+            <p class="bi-zh" lang="zh-CN">两次：转写一次、分析一次。只有遇到 429 触发重试时才会多调用。运行测试用例是在本地进行的，完全不调用 API。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="lang">
+          <h3><span class="en">Multi-language (extra credit)</span><span class="zh">多语言（额外加分）</span></h3>
+          <details class="qa"><summary><span class="qn">Q31</span><span class="qt"><span class="bi-en">How does the multi-language support work?</span><span class="bi-zh" lang="zh-CN">多语言支持是怎么实现的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">There's a LANGUAGES table with nine languages: Python, Java, C, C++, C#, JavaScript, TypeScript, Go and Rust. Each entry has a syntax highlighter for the code box and a file extension. You either pick the language in the dropdown or leave it on Auto-detect. Both prompts are language-agnostic, the schema returns the language, and the UI and the saved file adapt to it.</p>
+            <p class="bi-zh" lang="zh-CN">有一张 LANGUAGES 表，包含 9 种语言：Python、Java、C、C++、C#、JavaScript、TypeScript、Go 和 Rust。每一项都有代码框的语法高亮名称和文件扩展名。可以在下拉框选语言，也可以保持 Auto-detect。两个 prompt 都不限定语言，schema 会返回语言，界面和保存的文件随之调整。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q32</span><span class="qt"><span class="bi-en">How does auto-detect work?</span><span class="bi-zh" lang="zh-CN">自动检测是怎么做的？</span></span></summary><div class="qa-body">
+            <p class="bi-en">On Auto-detect, the prompt asks the model to first identify the language and report it in the language field. Because that field is an enum, the answer is always one of the nine supported names. The editor label then shows the detected language, such as "Java".</p>
+            <p class="bi-zh" lang="zh-CN">选 Auto-detect 时，prompt 要求模型先识别语言并填在 language 字段里。因为这个字段是枚举，答案一定是 9 个支持的名字之一。然后编辑器的标签会显示检测到的语言，比如 “Java”。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q33</span><span class="qt"><span class="bi-en">Why is there no syntax highlighting for Java, C#, Go or Rust?</span><span class="bi-zh" lang="zh-CN">为什么 Java、C#、Go、Rust 没有语法高亮？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Gradio's Code component only ships highlighters for a fixed set of languages, and those four aren't in it. For them we pass None, so the code shows as plain text. Transcription and analysis work exactly the same; only the coloring is missing.</p>
+            <p class="bi-zh" lang="zh-CN">Gradio 的 Code 组件只内置了固定几种语言的高亮，这四种不在其中。对它们我们传 None，代码以纯文本显示。转写和分析完全一样，只是没有颜色。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q34</span><span class="qt"><span class="bi-en">Can you run tests on non-Python code?</span><span class="bi-zh" lang="zh-CN">非 Python 代码能跑测试吗？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Not with run_tests. It imports a Python module, so it only works for Python. For other languages we still save the refined code with the right extension, like file.java, but running it would need a compiler or runtime and a different test harness.</p>
+            <p class="bi-zh" lang="zh-CN">用 run_tests 不行，它导入的是 Python 模块，只适用于 Python。其他语言的修复代码仍会以正确的扩展名保存，比如 file.java，但要运行它需要编译器或运行时，以及另一套测试框架。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="testing">
+          <h3><span class="en">Testing &amp; robustness</span><span class="zh">测试与健壮性</span></h3>
+          <details class="qa"><summary><span class="qn">Q35</span><span class="qt"><span class="bi-en">How did you check that it works?</span><span class="bi-zh" lang="zh-CN">你们怎么验证它能正常工作？</span></span></summary><div class="qa-body">
+            <p class="bi-en">We ran the app on the course's example images, which cover five Python programs written on different paper with different pens, plus a Java example. For Python, we ran the provided JSON test cases on the refined code. For example, bucketsort passes all six tests in the notebook.</p>
+            <p class="bi-zh" lang="zh-CN">我们用课程提供的示例图片运行了应用，涵盖用不同纸张和不同颜色的笔写的 5 个 Python 程序，以及一个 Java 例子。对 Python，我们用提供的 JSON 测试用例检查修复代码，例如 notebook 里 bucketsort 的 6 个测试全部通过。（请按你们实际测过的情况调整这段回答。）</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q36</span><span class="qt"><span class="bi-en">What if the photo uses a colored pen or messy handwriting?</span><span class="bi-zh" lang="zh-CN">照片用彩色笔或字迹潦草怎么办？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The model reads the image directly, so ink color doesn't really matter. The examples include blue, black and green ink on lined and blank paper. The prompt tells it to ignore paper lines and crossed-out text. If the handwriting is really messy and it misreads something, the user fixes it in the editor before analyzing.</p>
+            <p class="bi-zh" lang="zh-CN">模型直接读取图片，墨水颜色影响不大。示例里就有蓝色、黑色和绿色墨水，以及横线纸和白纸。prompt 要求忽略纸上的横线和划掉的字。如果字迹实在潦草导致读错，用户可以在分析前在编辑器里改正。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q37</span><span class="qt"><span class="bi-en">What if the image has no code in it?</span><span class="bi-zh" lang="zh-CN">如果图片里没有代码呢？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The prompt tells the model to return the sentinel NO_CODE_FOUND in that case. We check for it, or for an empty result, and show "No code could be read from this image. Please try a clearer photo." instead of passing junk to the analysis step.</p>
+            <p class="bi-zh" lang="zh-CN">prompt 要求模型在这种情况下返回标记 NO_CODE_FOUND。我们检查这个标记或空结果，显示 “No code could be read from this image. Please try a clearer photo.”，而不是把无效内容传给分析环节。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q38</span><span class="qt"><span class="bi-en">Why might results differ between runs?</span><span class="bi-zh" lang="zh-CN">为什么每次结果可能不同？</span></span></summary><div class="qa-body">
+            <p class="bi-en">LLM output is sampled, and we use the default temperature, so the wording of the explanations can change between runs. The structure stays the same because of the schema. Setting temperature to 0 would make it more repeatable.</p>
+            <p class="bi-zh" lang="zh-CN">LLM 的输出是采样得到的，而我们用的是默认 temperature，所以每次解释的措辞可能不同。由于有 schema，结构保持不变。把 temperature 设为 0 可以让结果更稳定。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q39</span><span class="qt"><span class="bi-en">What if the fixed code still fails a test?</span><span class="bi-zh" lang="zh-CN">修复后的代码仍然没通过测试怎么办？</span></span></summary><div class="qa-body">
+            <p class="bi-en">That's exactly why we run tests instead of trusting the explanation. The failure message prints the input, the expected value and what we got, so we can see what went wrong, fix the code in the editor and analyze again. One known case is flatten: it's a generator, but the tests expect a list, so the comparison fails unless the function returns a list.</p>
+            <p class="bi-zh" lang="zh-CN">这正是我们要跑测试而不是只信解释的原因。失败信息会打印输入、期望值和实际结果，我们能看出哪里错了，在编辑器里修改后再分析一次。一个已知情况是 flatten：它是生成器，但测试期望列表，所以除非函数返回列表，否则比较会失败。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q40</span><span class="qt"><span class="bi-en">Is it safe to run LLM-generated code?</span><span class="bi-zh" lang="zh-CN">运行 LLM 生成的代码安全吗？</span></span></summary><div class="qa-body">
+            <p class="bi-en">Not in general, because exec_module runs whatever is in the file. We only run it in the test cell, when we choose to, inside a Colab VM, and the prompt tells the model not to add extra statements. In a real product we'd run it in a sandbox with a timeout.</p>
+            <p class="bi-zh" lang="zh-CN">一般来说不安全，因为 exec_module 会执行文件里的任何内容。我们只在测试 cell 里、由我们主动运行，而且是在 Colab 虚拟机中，prompt 也要求模型不要添加多余语句。如果是真正的产品，我们会放在带超时的沙箱里运行。</p>
+          </div></details>
+        </div>
+
+        <div class="qa-group" data-cat="future">
+          <h3><span class="en">Limitations &amp; future work</span><span class="zh">局限与改进</span></h3>
+          <details class="qa"><summary><span class="qn">Q41</span><span class="qt"><span class="bi-en">What are the main limitations?</span><span class="bi-zh" lang="zh-CN">主要的局限是什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The analysis depends on the model's judgment, so it can miss a bug or flag something that isn't one. The wording varies between runs. We only retry 429 errors. Tests only run for Python, and you run them by hand. And each image is treated as a single snippet.</p>
+            <p class="bi-zh" lang="zh-CN">分析依赖模型的判断，可能漏掉 bug，也可能误报。每次运行措辞不同。只对 429 错误重试。测试只支持 Python，而且需要手动运行。每张图片都被当作一个代码片段处理。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q42</span><span class="qt"><span class="bi-en">What would you improve with more time?</span><span class="bi-zh" lang="zh-CN">如果有更多时间，你们会改进什么？</span></span></summary><div class="qa-body">
+            <p class="bi-en">First, set temperature to 0 for repeatable output. Second, run ast.parse or a linter like pyflakes before the LLM and include its findings in the prompt, so the analysis is grounded in real checks. Third, run the tests automatically and feed failures back to the model so it can repair the code. Smaller things: downscale large photos to save tokens, and retry 503 errors too.</p>
+            <p class="bi-zh" lang="zh-CN">第一，把 temperature 设为 0，让输出可复现。第二，在调用 LLM 前先跑 ast.parse 或 pyflakes 之类的 linter，把结果放进 prompt，让分析有真实检查作为依据。第三，自动运行测试并把失败结果反馈给模型，让它修复代码。小改进：缩小大尺寸照片以节省 token，以及对 503 错误也进行重试。</p>
+          </div></details>
+          <details class="qa"><summary><span class="qn">Q43</span><span class="qt"><span class="bi-en">Why Gradio?</span><span class="bi-zh" lang="zh-CN">为什么用 Gradio？</span></span></summary><div class="qa-body">
+            <p class="bi-en">The assignment recommends it, and it fits the task well. It runs inside the notebook, has ready-made image upload and code-editor components, wires buttons to Python functions in one line, and gives us a shareable link for the demo without deploying anything.</p>
+            <p class="bi-zh" lang="zh-CN">作业推荐用它，而且很适合这个任务。它能在 notebook 里直接运行，有现成的图片上传和代码编辑器组件，一行代码就能把按钮绑定到 Python 函数，不用部署就能生成 demo 用的分享链接。</p>
+          </div></details>
+        </div>
+      </div>
+      <p class="empty" id="qa-empty" hidden><span class="en">No questions match. Try another word or pick "All".</span><span class="zh">没有匹配的问题。换个关键词，或选择“全部”。</span></p>
+    </section>
+
+    <!-- ================= GLOSSARY ================= -->
+    <section id="glossary" data-spy>
+      <div class="sec-head">
+        <p class="kicker"><span class="en">Terms you'll use in the demo</span><span class="zh">demo 中会用到的术语</span></p>
+        <h2><span class="en">Glossary</span><span class="zh">术语表</span></h2>
+      </div>
+      <dl class="gloss">
+        <div><dt>Multimodal LLM<span class="zh">多模态大模型</span></dt><dd><span class="en">A language model that accepts more than text, here an image plus a text prompt in one request.</span><span class="zh">不只接收文本的语言模型，这里是在一次请求中同时接收图片和文字 prompt。</span></dd></div>
+        <div><dt>Transcription<span class="zh">转写</span></dt><dd><span class="en">Turning the handwritten code in the photo into text, exactly as written.</span><span class="zh">把照片里的手写代码原样转成文本。</span></dd></div>
+        <div><dt>Static analysis<span class="zh">静态分析</span></dt><dd><span class="en">Finding problems by reading code without running it. In our app the LLM does the reading.</span><span class="zh">不运行代码、通过阅读来发现问题。在我们的应用里由 LLM 来“阅读”。</span></dd></div>
+        <div><dt>Structured output<span class="zh">结构化输出</span></dt><dd><span class="en"><code>response_mime_type="application/json"</code> plus <code>response_schema</code>: the model must reply with JSON that matches the schema.</span><span class="zh"><code>response_mime_type="application/json"</code> 加 <code>response_schema</code>：模型必须返回符合 schema 的 JSON。</span></dd></div>
+        <div><dt>Pydantic <code>BaseModel</code></dt><dd><span class="en">A Python class with typed fields. It defines the schema and validates the reply with <code>model_validate_json</code>.</span><span class="zh">带类型字段的 Python 类，用来定义 schema，并通过 <code>model_validate_json</code> 校验回复。</span></dd></div>
+        <div><dt>Enum<span class="zh">枚举</span></dt><dd><span class="en">A fixed set of allowed values. In a schema it limits what the model can answer.</span><span class="zh">一组固定的取值。放在 schema 里可以限制模型能回答的内容。</span></dd></div>
+        <div><dt>Prompt<span class="zh">提示词</span></dt><dd><span class="en">The instructions sent with the input. We have two: <code>TRANSCRIBE_PROMPT</code> and the review prompt in <code>analyze_code</code>.</span><span class="zh">随输入一起发送的指令。我们有两个：<code>TRANSCRIBE_PROMPT</code> 和 <code>analyze_code</code> 里的审查 prompt。</span></dd></div>
+        <div><dt>Hallucination<span class="zh">幻觉</span></dt><dd><span class="en">When a model states something that isn't true, such as a bug that doesn't exist.</span><span class="zh">模型说出不真实的内容，比如报告一个并不存在的 bug。</span></dd></div>
+        <div><dt>Temperature</dt><dd><span class="en">A sampling setting. Lower means more repeatable output. We use the default.</span><span class="zh">采样参数，越低输出越稳定。我们用的是默认值。</span></dd></div>
+        <div><dt>Gradio Blocks</dt><dd><span class="en">Gradio's layout API: components inside <code>with gr.Blocks()</code>, arranged with <code>Row</code> and <code>Column</code>, connected with <code>.click()</code>.</span><span class="zh">Gradio 的布局 API：组件写在 <code>with gr.Blocks()</code> 里，用 <code>Row</code> 和 <code>Column</code> 排版，用 <code>.click()</code> 绑定事件。</span></dd></div>
+        <div><dt><code>gr.update</code></dt><dd><span class="en">Return value that changes several properties of an output component at once (value, language, label).</span><span class="zh">一次修改输出组件多个属性（内容、语言、标签）的返回值。</span></dd></div>
+        <div><dt><code>gr.Error</code></dt><dd><span class="en">An exception Gradio shows to the user as an error message.</span><span class="zh">Gradio 会以错误提示形式展示给用户的异常。</span></dd></div>
+        <div><dt>Share link<span class="zh">分享链接</span></dt><dd><span class="en">The temporary public <code>*.gradio.live</code> URL created by <code>launch(share=True)</code>.</span><span class="zh"><code>launch(share=True)</code> 生成的临时公开 <code>*.gradio.live</code> 链接。</span></dd></div>
+        <div><dt>RPM / TPM / RPD</dt><dd><span class="en">Requests per minute, input tokens per minute, requests per day: the three free-tier limits.</span><span class="zh">每分钟请求数、每分钟输入 token 数、每天请求数：免费额度的三项限制。</span></dd></div>
+        <div><dt>429 RESOURCE_EXHAUSTED</dt><dd><span class="en">The error returned when one of those limits is exceeded.</span><span class="zh">超过上述任一限制时返回的错误。</span></dd></div>
+        <div><dt>Backoff<span class="zh">退避</span></dt><dd><span class="en">Waiting before a retry. Ours is linear: 5 s, then 10 s.</span><span class="zh">重试前等待一段时间。我们是线性退避：5 秒、再 10 秒。</span></dd></div>
+        <div><dt>Human in the loop<span class="zh">人工把关</span></dt><dd><span class="en">A person checks the model's output before the next step. Here, the editable transcription.</span><span class="zh">在进入下一步前由人检查模型输出。这里指可编辑的转写结果。</span></dd></div>
+        <div><dt>Colab Secrets</dt><dd><span class="en">Colab's store for private values like API keys, read with <code>userdata.get</code>.</span><span class="zh">Colab 存放 API key 等私密值的地方，用 <code>userdata.get</code> 读取。</span></dd></div>
+        <div><dt><code>importlib</code></dt><dd><span class="en">Python's import machinery. <code>run_tests</code> uses it to load a function from a file path.</span><span class="zh">Python 的导入机制。<code>run_tests</code> 用它从文件路径加载函数。</span></dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p class="en">Built from <code>SWE270P_A2_2.ipynb</code>, <code>SWE270P_A2demo.ipynb</code>, <code>requirement.txt</code>, the Assignment 2 instructions PDF and the files in <code>code_images_example/</code>. Code is copied verbatim from the notebook.</p>
+      <p class="zh">内容来自 <code>SWE270P_A2_2.ipynb</code>、<code>SWE270P_A2demo.ipynb</code>、<code>requirement.txt</code>、作业 2 说明 PDF 以及 <code>code_images_example/</code> 里的文件。代码一字不差地取自 notebook。</p>
+    </footer>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+(function () {
+  var root = document.documentElement;
+  function store(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function lang() { return root.getAttribute("data-lang") === "zh" ? "zh" : "en"; }
+
+  /* ---- syntax highlighting (page still reads fine if the CDN is blocked) ---- */
+  if (window.hljs) {
+    document.querySelectorAll("pre code.language-python").forEach(function (el) { window.hljs.highlightElement(el); });
+  }
+
+  /* ---- language ---- */
+  var search = document.getElementById("qa-search");
+  function setLang(l) {
+    root.setAttribute("data-lang", l);
+    root.lang = l === "zh" ? "zh-CN" : "en";
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === l));
+    });
+    search.placeholder = l === "zh" ? "搜索问题（中英文均可）" : "Search questions";
+    document.querySelectorAll(".copy").forEach(function (b) { if (!b.dataset.busy) b.textContent = l === "zh" ? "复制" : "Copy"; });
+    store("a2guide-lang", l);
+    updateCount();
+  }
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+  });
+
+  /* ---- theme ---- */
+  var themeBtn = document.getElementById("theme-toggle");
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  function effectiveDark() {
+    var t = root.getAttribute("data-theme");
+    return t ? t === "dark" : mq.matches;
+  }
+  function paintThemeBtn() {
+    themeBtn.textContent = effectiveDark() ? "☀︎" : "☾";
+    themeBtn.setAttribute("aria-label", effectiveDark() ? "Switch to light mode" : "Switch to dark mode");
+  }
+  themeBtn.addEventListener("click", function () {
+    root.setAttribute("data-theme", effectiveDark() ? "light" : "dark");
+    paintThemeBtn();
+  });
+  if (mq.addEventListener) mq.addEventListener("change", paintThemeBtn);
+  paintThemeBtn();
+
+  /* ---- copy buttons ---- */
+  document.querySelectorAll("figure.code").forEach(function (fig) {
+    var btn = fig.querySelector(".copy");
+    var code = fig.querySelector("pre code");
+    btn.addEventListener("click", function () {
+      var text = code.textContent;
+      function done(ok) {
+        btn.dataset.busy = "1";
+        btn.textContent = ok ? (lang() === "zh" ? "已复制" : "Copied") : (lang() === "zh" ? "已选中" : "Selected");
+        setTimeout(function () { delete btn.dataset.busy; btn.textContent = lang() === "zh" ? "复制" : "Copy"; }, 1400);
+      }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(code);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        done(false);
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+      } catch (e) { fallback(); }
+    });
+  });
+
+  /* ---- checklists (remembered per browser) ---- */
+  document.querySelectorAll(".checklist input[type=checkbox]").forEach(function (cb) {
+    if (load("a2guide-" + cb.id) === "1") cb.checked = true;
+    cb.addEventListener("change", function () { store("a2guide-" + cb.id, cb.checked ? "1" : "0"); });
+  });
+
+  /* ---- Q&A: filter, search, expand ---- */
+  var items = Array.prototype.slice.call(document.querySelectorAll("details.qa"));
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".qa-group"));
+  var countEl = document.getElementById("qa-count");
+  var emptyEl = document.getElementById("qa-empty");
+  var toggleAll = document.getElementById("qa-toggle-all");
+  var activeCat = "all";
+
+  function applyFilter() {
+    var q = search.value.trim().toLowerCase();
+    groups.forEach(function (g) {
+      var catOk = activeCat === "all" || g.getAttribute("data-cat") === activeCat;
+      var any = false;
+      g.querySelectorAll("details.qa").forEach(function (d) {
+        var ok = catOk && (!q || d.textContent.toLowerCase().indexOf(q) !== -1);
+        d.hidden = !ok;
+        if (ok) any = true;
+      });
+      g.hidden = !any;
+    });
+    updateCount();
+  }
+  function updateCount() {
+    var shown = items.filter(function (d) { return !d.hidden; }).length;
+    emptyEl.hidden = shown !== 0;
+    countEl.textContent = lang() === "zh"
+      ? "显示 " + shown + " / " + items.length + " 个问题"
+      : "Showing " + shown + " of " + items.length + " questions";
+    var visible = items.filter(function (d) { return !d.hidden; });
+    var allOpen = visible.length > 0 && visible.every(function (d) { return d.open; });
+    toggleAll.dataset.mode = allOpen ? "collapse" : "expand";
+    toggleAll.innerHTML = allOpen
+      ? '<span class="en">Collapse all</span><span class="zh">全部收起</span>'
+      : '<span class="en">Expand all</span><span class="zh">全部展开</span>';
+  }
+  document.querySelectorAll(".filters button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      activeCat = b.getAttribute("data-cat");
+      document.querySelectorAll(".filters button").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      applyFilter();
+    });
+  });
+  search.addEventListener("input", applyFilter);
+  toggleAll.addEventListener("click", function () {
+    var open = toggleAll.dataset.mode !== "collapse";
+    items.forEach(function (d) { if (!d.hidden) d.open = open; });
+    updateCount();
+  });
+  items.forEach(function (d) { d.addEventListener("toggle", updateCount); });
+
+  /* ---- scrollspy for the contents rail ---- */
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a, .mobile-nav a"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll("[data-spy]"));
+  var cellsEls = Array.prototype.slice.call(document.querySelectorAll(".cell[id]"));
+  // Contents sub-links point at the first cell of a group (0, 7, 9, ...); map any cell to its group.
+  var subStarts = Array.prototype.slice.call(document.querySelectorAll(".toc .sub a")).map(function (a) {
+    return parseInt(a.getAttribute("href").replace("#cell-", ""), 10);
+  });
+  function cellGroup(id) {
+    var n = parseInt(id.replace("cell-", ""), 10), best = subStarts[0];
+    subStarts.forEach(function (s) { if (s <= n) best = s; });
+    return "cell-" + best;
+  }
+  if ("IntersectionObserver" in window) {
+    var key = "";
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target._vis = e.isIntersecting; });
+      var sec = sections.filter(function (t) { return t._vis; })[0];
+      var cell = cellsEls.filter(function (t) { return t._vis; })[0];
+      if (!sec) return;
+      var sub = sec.id === "walkthrough" && cell ? cellGroup(cell.id) : "";
+      if (sec.id + sub === key) return;
+      key = sec.id + sub;
+      links.forEach(function (a) {
+        var h = a.getAttribute("href").slice(1);
+        var on = a.closest(".sub") ? h === sub : h === sec.id;
+        a.setAttribute("aria-current", String(on));
+      });
+    }, { rootMargin: "-90px 0px -65% 0px" });
+    sections.concat(cellsEls).forEach(function (t) { io.observe(t); });
+  }
+
+  setLang(lang());
+  applyFilter();
+})();
+</script>
