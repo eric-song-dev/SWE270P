@@ -1,0 +1,101 @@
+Final Project
+Due: Wed Dec 2, 2026 11:59pm
+27 Points Possible
+Attempt 1
+In Progress
+NEXT UP: Submit Assignment
+
+Unlimited Attempts Allowed
+Please read the instructions for the Final Project (SWE270P Final Project-2.pdf) very carefully and make sure to register for a demo session with the TA.
+
+Select one software description from the Google Sheet (MSWE270P Final Project Signup Sheet.xlsx) for your group to work on. Each software description can be chosen by only one group.
+
+Please make sure to assign yourself to your group in the People tab. Only one submission per group is required.
+
+Demo Schedule Link
+
+If you are not assigned to a group, you will not receive any points for this project.
+
+Double-check your group status before the deadline!
+
+Some Rubric (2)
+Criteria	Ratings	Points
+Demo Presentation
+view longer description
+
+Full Marks
+The demo clearly shows a fully working multi-agent system where agents communicate via the Model Context Protocol (MCP). Each agent has a well-defined role, uses tools appropriately, and collaborates in a coordinated manner. The supporting infrastructure (clients, servers, tools) is correctly configured and performs smoothly during the demo. The student(s) explain the agent roles, collaboration pattern, and MCP integration clearly and answer all follow-up questions.
+12 pts
+
+Partial Credit
+MCP integration and agent communication are demonstrated, but with minor flaws. Roles are mostly clear, and the infrastructure is functional, though some steps required clarification during the demo. The student(s) are able to explain key aspects of the agent roles, collaboration pattern, and MCP integration, and answer most follow-up questions.
+9 pts
+
+Partial Credit
+The demo includes a basic multi-agent setup, but agent coordination is weak, and MCP usage is not clearly demonstrated or consistently applied. Agent roles are not well defined, and parts of the infrastructure or protocol are incomplete or unstable. The student(s) provide only partial explanations of the system and struggle to answer several follow-up questions.
+4 pts
+
+Partial Credit
+A partially working system is shown, but key components are missing or non-functional. MCP integration is not meaningfully demonstrated, and agent communication and collaboration within the multi-agent system are unclear. The student(s) are unable to explain the overall system architecture or justify agent behaviors, and they are unable to answer most follow-up questions related to MCP usage or the collaboration logic.
+2 pts
+
+No Marks
+No demo is conducted, or the demo fails to show any meaningful implementation of a multi-agent system using MCP. Agent roles, collaboration, and protocol usage are either entirely absent or non-functional. The student(s) are unable to explain the system or answer any questions related to the project.
+0 pts
+/12 pts
+LLM Usage Tracking
+
+Full Marks
+LLM usage is comprehensively tracked and reported, including both API call counts and total tokens consumed. Usage is clearly broken down by agent or component and discussed during the demo. The student(s) are able to explain how tracking was implemented and answer all related questions.
+3 pts
+
+Partial Credit
+Basic tracking is implemented, but one or more components are incomplete or unclear. The student(s) provide some explanation but are unable to fully describe how tracking integrates with the system or address follow-up questions.
+2 pts
+
+No Marks
+LLM usage tracking is not implemented or not shown during the demo. The student(s) are unable to explain how usage is measured.
+0 pts
+/3 pts
+User Interface
+
+Full Marks
+The UI allows users to input the description and requirements of the software application and returns both an executable code and the corresponding test cases. The interface is intuitive and fully integrated with the multi-agent system using MCP. The student(s) clearly demonstrate the end-to-end workflow during the demo and answer all related questions.
+3 pts
+
+Partial Credit
+The UI is functional but incomplete. One or two components are not working correctly or are missing. The student(s) can describe the interface but are unable to fully answer the questions asked during the demo regarding the UI’s integration, behavior, or expected output.
+2 pts
+
+No Marks
+No working UI is shown, or the interface does not support the expected input/output behavior. The student(s) are unable to answer any questions related to the UI’s implementation or functionality.
+0 pts
+/3 pts
+Submission Format
+
+Full Marks
+Correct submission format (Github repository ZIP) and scheduled the demo on time with a TA.
+1 pts
+
+No Marks
+0 pts
+/1 pts
+In-class Presentation
+
+Full Marks
+The presentation is complete, well-structured, and engaging. It clearly explains the Multi-Agent and MCP integration, discusses the chosen software description, and presents the group-defined functional requirements of the software. Slides are clean and visually organized; transitions between speakers are smooth. Presenters are confident, interactive, and kept the presentation within the given time limit.
+8 pts
+
+Partial Credit
+The presentation covers most required components but lacks clarity or depth in explaining the Multi-Agent or MCP integration. Slides are cluttered or incomplete, and the presentation portions between speakers are not balanced. Presenters show partial understanding of the project but had minor issues with timing or engagement.
+4 pts
+
+Partial Credit
+The presentation is incomplete or lacks a clear structure. Key aspects such as Multi-Agent integration or software requirements are missing or poorly explained. Slides are disorganized, and presenters appear unprepared or disconnected, with noticeable timing and coordination issues.
+2 pts
+
+No Marks
+No presentation is delivered. Major components are missing, slides are absent or unreadable, and presenters fail to demonstrate understanding of the project or system.
+0 pts
+/8 pts
+Keep in mind, this submission will count for everyone in your Final Project group group.
