@@ -1,0 +1,21 @@
+Presentation guidelines
+Prepare a 5-minute presentation with the following slides 
+1. Objective
+
+2. Software description and the requirements provided as an input to the MCP + multi-agent system 
+
+3. Method Illustration / Diagram
+
+4. Challenges
+
+5. Results
+
+6. Conclusions/ Lessons learned
+
+7. Anything else you want to add (optional)
+
+Everyone in the group should present.
+The presentation should be complete, well-structured, and engaging.
+Slides are clean and visually organized; transitions between speakers are smooth.
+Presenters are confident and interactive, and keep the presentation within the allotted time.
+The detailed rubric is on the project submission page. 
