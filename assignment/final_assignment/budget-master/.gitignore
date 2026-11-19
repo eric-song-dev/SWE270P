@@ -1,0 +1,13 @@
+# secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# projects produced by the AI Coder
+generated/
+
+# macOS
+.DS_Store

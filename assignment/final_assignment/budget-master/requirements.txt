@@ -1,0 +1,7 @@
+# Python 3.10 or newer
+mcp>=2.3,<3           # Model Context Protocol SDK (servers + clients)
+openai>=3.55,<4       # client for any OpenAI-compatible chat-completions API (DeepSeek)
+gradio>=6.32,<7       # web UI
+pytest>=9,<10         # runs the generated test cases
+streamlit>=1.67,<2    # user interface of the generated applications
+python-dotenv>=1.0    # loads the .env file
